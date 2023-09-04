@@ -82,11 +82,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\application.cpp" />
+    <ClCompile Include="src\input\input.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\widow\window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\input\keyCodes.h" />
+    <ClInclude Include="src\core\application.h" />
+    <ClInclude Include="src\input\events\event.h" />
+    <ClInclude Include="src\input\events\mouseEvent.h" />
+    <ClInclude Include="src\input\input.h" />
+    <ClInclude Include="src\input\inputCodes\keyCodes.h" />
+    <ClInclude Include="src\input\events\keyEvent.h" />
+    <ClInclude Include="src\input\events\windowEvent.h" />
     <ClInclude Include="src\widow\window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

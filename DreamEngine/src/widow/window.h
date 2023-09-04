@@ -1,19 +1,26 @@
 #pragma once
 #include <iostream>
 #include <GL/glew.h>
+#include <functional>
 #include <GLFW/glfw3.h>
-#include "../input/keyCodes.h"
+#include "../input/events/keyEvent.h"
 
-namespace dream { namespace window {
+namespace dream {
 	class Window
 	{
+	public:
+		using EventCallback = std::function<void(Event&)>;
 	private:
 		GLFWwindow* window;
-		int width, height;
-		const char* title;
-		bool vsync, closed;
-
+		struct WindowData
+		{
+			const char* title;
+			int width, height;
+			bool vsync, closed;
+			EventCallback eventCallback;
+		};
 		bool init();
+		WindowData m_WindowData;
 
 	public:
 		Window(const char* title, int width, int height, bool vsync);
@@ -21,11 +28,13 @@ namespace dream { namespace window {
 		void clear() const;
 		void update();
 		void setVSync(bool mode);
-
-		int getWidth() { return width; }
-		int getHeight() { return height; }
-		const char* getTitle() { return title; }
-		bool isVsync() { return vsync; }
-		bool isClosed() { return closed; }
+		void setEventCallback(const EventCallback& callback);
+		
+		int getWidth() { return m_WindowData.width; }
+		int getHeight() { return m_WindowData.height; }
+		const char* getTitle() { return m_WindowData.title; }
+		bool isVsync() { return m_WindowData.vsync; }
+		bool isClosed() { return m_WindowData.closed; }
+		void* getGLFWwindow() const { return window; }
 	};
-}}
+}

@@ -1,7 +1,6 @@
 #include "widow/window.h"
 
 using namespace dream;
-using namespace window;
 
 int main(void)
 {
