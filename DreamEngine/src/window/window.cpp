@@ -17,7 +17,7 @@ namespace dream {
 
 	Window::~Window()
 	{
-		glfwDestroyWindow(window);
+		glfwDestroyWindow(m_Window);
 	}
 
 	bool Window::init()
@@ -28,18 +28,18 @@ namespace dream {
 			return false;
 		}
 
-		window = glfwCreateWindow(m_WindowData.width, m_WindowData.height, m_WindowData.title, NULL, NULL);
+		m_Window = glfwCreateWindow(m_WindowData.width, m_WindowData.height, m_WindowData.title, NULL, NULL);
 
-		if (!window)
+		if (!m_Window)
 		{
 			std::cout << "Failed to Initilized GLFW Window!";
 			return false;
 		}
 
 		setVSync(true);
-		glfwMakeContextCurrent(window);
-		glfwSetWindowSizeCallback(window, resize);
-		glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+		glfwMakeContextCurrent(m_Window);
+		glfwSetWindowSizeCallback(m_Window, resize);
+		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
@@ -47,20 +47,16 @@ namespace dream {
 			{
 				case GLFW_PRESS:
 				{
-					KeyPressedEvent event(key, false);
-					data.eventCallback(event);
 					break;
 				}
 				case GLFW_RELEASE:
 				{
-					KeyReleasedEvent event(key);
-					data.eventCallback(event);
+					
 					break;
 				}
 				case GLFW_REPEAT:
 				{
-					KeyPressedEvent event(key, true);
-					data.eventCallback(event);
+					
 					break;
 				}
 			}
@@ -79,8 +75,13 @@ namespace dream {
 	void Window::update()
 	{
 		glfwPollEvents();
-		glfwGetFramebufferSize(window, &(m_WindowData.width), &(m_WindowData.height));
-		glfwSwapBuffers(window);
+		glfwGetFramebufferSize(m_Window, &(m_WindowData.width), &(m_WindowData.height));
+		glBegin(GL_TRIANGLES);
+		glVertex2f(-0.5, -0.5);
+		glVertex2f(0.0, 0.5);
+		glVertex2f(0.5, -0.5);
+		glEnd();
+		glfwSwapBuffers(m_Window);
 	}
 
 	void Window::clear() const
@@ -94,11 +95,6 @@ namespace dream {
 			glfwSwapInterval(1);
 		else
 			glfwSwapInterval(0);
-	}
-
-	void Window::setEventCallback(const EventCallback& callback)
-	{
-		m_WindowData.eventCallback = callback;
 	}
 
 	void resize(GLFWwindow* window, int width, int height)

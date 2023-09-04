@@ -2,14 +2,11 @@
 #include "application.h"
 
 namespace dream {
-#define HZ_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
-	Application* Application::s_application = nullptr;
 
 	Application::Application()
 	{
-		s_application = this;
-		Window* window = new Window("Dream Engine", 1280, 780, false);
-		window->setEventCallback(HZ_BIND_EVENT_FN(Application::onEvent));
+		m_Window2 = new Window("Game", 780, 780, false);
+		m_Window = new Window("Dream Engine", 780, 780, false);
 	}
 
 	Application::~Application()
@@ -17,39 +14,38 @@ namespace dream {
 		
 	}
 
-	void Application::onEvent(Event& e)
-	{
-		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(HZ_BIND_EVENT_FN(Application::onWindowClose));
-		dispatcher.Dispatch<WindowResizeEvent>(HZ_BIND_EVENT_FN(Application::onWindowResize, this, std::placeholders::_1));
-	}
-
 	void Application::run()
 	{
+		std::vector<int> keysTrack{ GLFW_KEY_SPACE, GLFW_KEY_1 };
+		KeyInput inputHandlerEngine(keysTrack);
+		KeyInput inputHandlerGame(keysTrack);
+		inputHandlerEngine.setupKeyInputs(*m_Window);
+		inputHandlerGame.setupKeyInputs(*m_Window2);
+
 		while (m_Running)
 		{
+			m_Window->clear();
+			m_Window2->clear();
+			if (inputHandlerEngine.getIsKeyDown(GLFW_KEY_SPACE))
+			{
+				r = r + 0.01;
+				std::cout << "SPACE! For ENGINE" << std::endl;
+			}
+			else
+				r = abs(r - 0.001);
+
+			if (inputHandlerGame.getIsKeyDown(GLFW_KEY_1))
+			{
+				r = r + 0.01;
+				std::cout << "1 FOR GAME!" << std::endl;
+			}
+			
+
+			glClearColor(r, 0.5, 0.5, 1.0);
 			float time = (float)glfwGetTime();
 			m_LastFrameTime = time;
 			m_Window->update();
+			m_Window2->update();
 		}
 	}
-
-	bool Application::onWindowClose(WindowCloseEvent& e)
-	{
-		m_Running = false;
-		return true;
-	}
-
-	bool Application::onWindowResize(WindowResizeEvent& e)
-	{
-		if (e.GetWidth() == 0 || e.GetHeight() == 0)
-		{
-			m_Minimized = true;
-			return false;
-		}
-
-		m_Minimized = false;
-		return false;
-	}
-
 }
