@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 #include <GL/glew.h>
-#include "indexBuffer.h"
-#include "buffer.h"
+#include "IndexBuffer.h"
+#include "Buffer.h"
 
 namespace dream { namespace graphics {
 

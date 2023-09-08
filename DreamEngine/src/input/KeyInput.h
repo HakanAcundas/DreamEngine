@@ -1,7 +1,7 @@
 #include <iostream>
 #include <map>
 #include <vector>
-#include "../window/window.h"
+#include "../window/Window.h"
 #include <GLFW/glfw3.h>
 
 namespace dream {
