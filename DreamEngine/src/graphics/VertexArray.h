@@ -15,8 +15,8 @@ namespace dream { namespace graphics {
 		VertexArray();
 		~VertexArray();
 
-		void addBuffer(Buffer* buffer, int index);
-		void bind() const;
-		void unbind() const;
+		void AddBuffer(Buffer* buffer, int index);
+		void Bind() const;
+		void Unbind() const;
 	};
 }}

@@ -23,8 +23,8 @@ namespace dream { namespace graphics {
 		std::string vertexSourceString = FileUtils::read_file(m_VertexPath);
 		const char* vertexShaderSource = vertexSourceString.c_str();
 
-		glShaderSource(m_ShaderID, 1, &vertexShaderSource, NULL);
-		glCompileShader(m_ShaderID);
+		glShaderSource(vertex, 1, &vertexShaderSource, NULL);
+		glCompileShader(vertex);
 
 		int result;
 		glGetShaderiv(vertex, GL_COMPILE_STATUS, &result);
@@ -44,8 +44,8 @@ namespace dream { namespace graphics {
 		std::string fragmentSourceString = FileUtils::read_file(m_FragmentPath);
 		const char* fragmentShaderSource = fragmentSourceString.c_str();
 
-		glShaderSource(m_ShaderID, 1, &fragmentShaderSource, NULL);
-		glCompileShader(m_ShaderID);
+		glShaderSource(fragment, 1, &fragmentShaderSource, NULL);
+		glCompileShader(fragment);
 		glGetShaderiv(fragment, GL_COMPILE_STATUS, &result);
 		if (result == GL_FALSE)
 		{
