@@ -2,6 +2,7 @@
 #include "../window/Window.h"
 #include "../input/KeyInput.h"
 #include "../input/inputCodes/KeyCodes.h"
+#include "../graphics/Shader.h"
 #include <glfw/glfw3.h>
 
 namespace dream {

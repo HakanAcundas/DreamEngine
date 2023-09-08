@@ -89,7 +89,7 @@
     <ClCompile Include="src\graphics\VertexArray.cpp" />
     <ClCompile Include="src\input\KeyInput.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\window\window.cpp" />
+    <ClCompile Include="src\window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\Application.h" />
@@ -672,8 +672,8 @@
     <ClInclude Include="src\vendor\glm\vec3.hpp" />
     <ClInclude Include="src\vendor\glm\vec4.hpp" />
     <ClInclude Include="src\vendor\glm\vector_relational.hpp" />
-    <ClInclude Include="src\window\window.h" />
-    <ClInclude Include="src\utils\fileUtils.h" />
+    <ClInclude Include="src\window\Window.h" />
+    <ClInclude Include="src\utils\FileUtils.h" />
     <ClInclude Include="vendor\glm\detail\compute_common.hpp" />
     <ClInclude Include="vendor\glm\detail\compute_vector_relational.hpp" />
     <ClInclude Include="vendor\glm\detail\qualifier.hpp" />
@@ -940,6 +940,8 @@
     <ClInclude Include="vendor\glm\simd\vector_relational.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\shaders\fragment.shader" />
+    <None Include="src\shaders\vertex.shader" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
     <None Include="src\vendor\glm\detail\func_common_simd.inl" />
     <None Include="src\vendor\glm\detail\func_exponential.inl" />
