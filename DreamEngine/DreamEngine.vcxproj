@@ -82,21 +82,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\core\application.cpp" />
-    <ClCompile Include="src\graphics\buffer.cpp" />
-    <ClCompile Include="src\graphics\indexBuffer.cpp" />
-    <ClCompile Include="src\graphics\vertexArray.cpp" />
-    <ClCompile Include="src\input\keyInput.cpp" />
+    <ClCompile Include="src\core\Application.cpp" />
+    <ClCompile Include="src\graphics\Buffer.cpp" />
+    <ClCompile Include="src\graphics\IndexBuffer.cpp" />
+    <ClCompile Include="src\graphics\Shader.cpp" />
+    <ClCompile Include="src\graphics\VertexArray.cpp" />
+    <ClCompile Include="src\input\KeyInput.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\window\window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\core\application.h" />
-    <ClInclude Include="src\graphics\buffer.h" />
-    <ClInclude Include="src\graphics\indexBuffer.h" />
-    <ClInclude Include="src\graphics\vertexArray.h" />
-    <ClInclude Include="src\input\keyInput.h" />
-    <ClInclude Include="src\input\inputCodes\keyCodes.h" />
+    <ClInclude Include="src\core\Application.h" />
+    <ClInclude Include="src\graphics\Buffer.h" />
+    <ClInclude Include="src\graphics\IndexBuffer.h" />
+    <ClInclude Include="src\graphics\Shader.h" />
+    <ClInclude Include="src\graphics\VertexArray.h" />
+    <ClInclude Include="src\input\KeyInput.h" />
+    <ClInclude Include="src\input\inputCodes\KeyCodes.h" />
     <ClInclude Include="src\vendor\glm\detail\compute_common.hpp" />
     <ClInclude Include="src\vendor\glm\detail\compute_vector_relational.hpp" />
     <ClInclude Include="src\vendor\glm\detail\qualifier.hpp" />
