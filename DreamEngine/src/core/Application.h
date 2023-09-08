@@ -1,7 +1,7 @@
 #pragma once
-#include "../window/window.h"
-#include "../input/keyInput.h"
-#include "../input/inputCodes/keyCodes.h"
+#include "../window/Window.h"
+#include "../input/KeyInput.h"
+#include "../input/inputCodes/KeyCodes.h"
 #include <glfw/glfw3.h>
 
 namespace dream {

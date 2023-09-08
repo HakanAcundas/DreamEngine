@@ -1,4 +1,5 @@
 #pragma once
+
 namespace dream { namespace graphics {
 
 	class Shader

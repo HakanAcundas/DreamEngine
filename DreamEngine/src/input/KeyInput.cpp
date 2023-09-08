@@ -1,4 +1,4 @@
-#include "keyInput.h"
+#include "KeyInput.h"
 #include <algorithm>
 
 namespace dream {

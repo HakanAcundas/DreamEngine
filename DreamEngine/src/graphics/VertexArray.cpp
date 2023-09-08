@@ -1,4 +1,4 @@
-#include "vertexArray.h"
+#include "VertexArray.h"
 
 namespace dream { namespace graphics {
 
