@@ -11,9 +11,9 @@ namespace dream { namespace graphics {
 	public:
 		IndexBuffer(unsigned short* data, int count);
 
-		void bind();
-		void unbind();
+		void Bind();
+		void Unbind();
 
-		inline unsigned int getCount() const { return m_Count; }
+		inline unsigned int GetCount() const { return m_Count; }
 	};
 }}

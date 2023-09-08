@@ -75,12 +75,6 @@ namespace dream {
 	void Window::update()
 	{
 		glfwPollEvents();
-		glfwGetFramebufferSize(m_Window, &(m_WindowData.width), &(m_WindowData.height));
-		glBegin(GL_TRIANGLES);
-		glVertex2f(-0.5, -0.5);
-		glVertex2f(0.0, 0.5);
-		glVertex2f(0.5, -0.5);
-		glEnd();
 		glfwSwapBuffers(m_Window);
 	}
 
