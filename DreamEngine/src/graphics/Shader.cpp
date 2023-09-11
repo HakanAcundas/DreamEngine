@@ -9,7 +9,7 @@ namespace dream { namespace graphics {
 	{
 		this->m_VertexPath = vertexPath;
 		this->m_FragmentPath = fragPath;
-		m_ShaderID = Load();
+		m_ShaderID = CreateProgram();
 	}
 
 	Shader::~Shader()
@@ -17,8 +17,9 @@ namespace dream { namespace graphics {
 
 	}
 
-	unsigned int Shader::Load()
+	unsigned int Shader::CreateProgram()
 	{
+		// Vertex Shader
 		unsigned int vertex = glCreateShader(GL_VERTEX_SHADER);
 		std::string vertexSourceString = FileUtils::read_file(m_VertexPath);
 		const char* vertexShaderSource = vertexSourceString.c_str();
@@ -36,16 +37,16 @@ namespace dream { namespace graphics {
 			glGetShaderInfoLog(vertex, lenght, &lenght, &error[0]);
 			std::cout << "Failed to compile Vertex Shader: " << std::endl << &error[0] << std::endl;
 			glDeleteShader(vertex);
-
-			return 0;
 		}
 
+		// Fragment Shader
 		unsigned int fragment = glCreateShader(GL_FRAGMENT_SHADER);
 		std::string fragmentSourceString = FileUtils::read_file(m_FragmentPath);
 		const char* fragmentShaderSource = fragmentSourceString.c_str();
 
 		glShaderSource(fragment, 1, &fragmentShaderSource, NULL);
 		glCompileShader(fragment);
+		
 		glGetShaderiv(fragment, GL_COMPILE_STATUS, &result);
 		if (result == GL_FALSE)
 		{
@@ -55,10 +56,9 @@ namespace dream { namespace graphics {
 			glGetShaderInfoLog(fragment, lenght, &lenght, &error[0]);
 			std::cout << "Failed to compile Fragment Shader: " << std::endl << &error[0] << std::endl;
 			glDeleteShader(fragment);
-
-			return 0;
 		}
 
+		// Shader Program
 		unsigned int program = glCreateProgram();
 		glAttachShader(program, vertex);
 		glAttachShader(program, fragment);
@@ -66,9 +66,24 @@ namespace dream { namespace graphics {
 		glLinkProgram(program);
 		glValidateProgram(program);
 
+		int isLinked;
+		glGetProgramiv(program, GL_LINK_STATUS, &isLinked);
+		if (isLinked == GL_FALSE)
+		{
+			int lenght;
+			glGetProgramiv(program, GL_INFO_LOG_LENGTH, &lenght);
+
+			std::vector<char> error(lenght);
+			glGetProgramInfoLog(program, lenght, &lenght, &error[0]);
+			std::cout << "Shader linking failed: " << std::endl << &error[0] << std::endl;
+
+			glDeleteProgram(program);
+			glDeleteShader(vertex);
+			glDeleteShader(fragment);
+		}
+
 		glDeleteShader(vertex);
 		glDeleteShader(fragment);
-
 		return program;
 	}
 

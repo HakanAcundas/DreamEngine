@@ -10,6 +10,13 @@ namespace dream { namespace graphics {
 
 	class Shader
 	{
+	private:
+		unsigned int m_ShaderID;
+		const char* m_VertexPath;
+		const char* m_FragmentPath;
+
+		unsigned int CreateProgram();
+		int GetUniformLocation(const char* name);
 	public:
 		Shader(const char* vertexPath, const char* fragPath);
 		~Shader();
@@ -25,12 +32,5 @@ namespace dream { namespace graphics {
 
 		void Enable();
 		void Disable();
-	private:
-		unsigned int m_ShaderID;
-		const char* m_VertexPath;
-		const char* m_FragmentPath;
-
-		unsigned int Load();
-		int GetUniformLocation(const char* name);
 	};
 }}
