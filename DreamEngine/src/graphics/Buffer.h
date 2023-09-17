@@ -9,9 +9,14 @@ namespace dream { namespace graphics {
 		unsigned int m_BufferID;
 		unsigned int m_Count;
 	public:
-		Buffer(float* data, int count);
-		void bind() const;
-		void unbind() const;
+		Buffer(unsigned int size);
+		Buffer(float* data, unsigned int size);
+		~Buffer();
+
+		void Bind() const;
+		void Unbind() const;
+
+		void SetData(const void* data,  unsigned int size);
 
 		inline unsigned int const getCount() { return m_Count; }
 	};

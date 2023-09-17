@@ -2,21 +2,35 @@
 
 namespace dream { namespace graphics {
 
-	Buffer::Buffer(float* data, int count)
+	Buffer::Buffer(unsigned int size)
 	{
 		glGenBuffers(1, &m_BufferID);
 		glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);
-		glBufferData(GL_ARRAY_BUFFER, count * sizeof(float), data, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
-	void Buffer::bind() const
+	Buffer::Buffer(float* data, unsigned int size)
+	{
+		glGenBuffers(1, &m_BufferID);
+		glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);
+		glBufferData(GL_ARRAY_BUFFER, size, data, GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	void Buffer::Bind() const
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);
 	}
 
-	void Buffer::unbind() const
+	void Buffer::Unbind() const
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	void Buffer::SetData(const void* data, unsigned int size)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
 	}
 }}
