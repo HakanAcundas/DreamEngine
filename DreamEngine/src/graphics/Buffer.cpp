@@ -4,6 +4,7 @@ namespace dream { namespace graphics {
 
 	Buffer::Buffer(unsigned int size)
 	{
+		this->m_ComponentCount = componentCount;
 		glGenBuffers(1, &m_BufferID);
 		glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);
 		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);

@@ -7,7 +7,7 @@ namespace dream { namespace graphics {
 	{
 	private:
 		unsigned int m_BufferID;
-		unsigned int m_Count;
+		unsigned int m_ComponentCount;
 	public:
 		Buffer(unsigned int size);
 		Buffer(float* data, unsigned int size);
@@ -18,6 +18,6 @@ namespace dream { namespace graphics {
 
 		void SetData(const void* data,  unsigned int size);
 
-		inline unsigned int const getCount() { return m_Count; }
+		inline unsigned int const GetCount() { return m_ComponentCount; }
 	};
 }}

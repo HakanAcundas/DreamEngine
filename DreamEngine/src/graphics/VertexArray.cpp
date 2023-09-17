@@ -15,24 +15,25 @@ namespace dream { namespace graphics {
 		}
 	}
 
-	void VertexArray::addBuffer(Buffer* buffer, int index)
+	void VertexArray::AddBuffer(Buffer* buffer, int index)
 	{
-		bind();
-		buffer->bind();
+		Bind();
+		buffer->Bind();
 		glEnableVertexAttribArray(index);
-		glVertexAttribPointer(index, buffer->getCount(), GL_FLOAT, GL_FALSE, 0, 0);
-		buffer->unbind();
-		unbind();
+		glVertexAttribPointer(index, buffer->GetCount(), GL_FLOAT, GL_FALSE, 0, 0);
+		buffer->Unbind();
+		Unbind();
 	}
 
-	void VertexArray::bind() const
+	void VertexArray::Bind() const
 	{
 		glBindVertexArray(m_ArrayID);
 	}
 
-	void VertexArray::unbind() const
+	void VertexArray::Unbind() const
 
 	{
 		glBindVertexArray(0);
 	}
 }}
+ 

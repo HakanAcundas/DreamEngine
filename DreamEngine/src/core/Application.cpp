@@ -1,12 +1,18 @@
 #pragma once
 #include "Application.h"
 
+
+using namespace dream;
+using namespace graphics;
+
+#define SCREEN_WIDTH  960
+#define SCREEN_HEIGHT 540
+
 namespace dream {
 
 	Application::Application()
 	{
-		m_Window2 = new Window("Game", 780, 780, false);
-		m_Window = new Window("Dream Engine", 780, 780, false);
+		m_Window = new Window("Dream Engine", SCREEN_WIDTH, SCREEN_HEIGHT, false);
 	}
 
 	Application::~Application()
@@ -16,36 +22,93 @@ namespace dream {
 
 	void Application::run()
 	{
-		std::vector<int> keysTrack{ GLFW_KEY_SPACE, GLFW_KEY_1 };
+		float vertices[] =
+		{
+			0, 0, 0,
+			0, 3, 0,
+			8, 3, 0,
+			8 ,0, 0
+		};
+
+		unsigned short indices[] =
+		{
+			0, 1, 2,
+			2, 3, 0
+		};
+
+
+		float colors[] =
+		{
+			1, 0, 1, 1,
+			1, 0, 1, 1,
+			1, 0, 1, 1,
+			1, 0, 1, 1
+		};
+
+		VertexArray vbo;
+		IndexBuffer ibo(indices, 6);
+		vbo.AddBuffer(new Buffer(vertices, 4 * 3, 3), 0);
+		vbo.AddBuffer(new Buffer(colors, 4 * 4, 4), 1);
+
+		std::vector<int> keysTrack{ GLFW_KEY_ESCAPE ,GLFW_KEY_SPACE, GLFW_KEY_UP, GLFW_KEY_DOWN, GLFW_KEY_LEFT, GLFW_KEY_RIGHT };
 		KeyInput inputHandlerEngine(keysTrack);
-		KeyInput inputHandlerGame(keysTrack);
 		inputHandlerEngine.setupKeyInputs(*m_Window);
-		inputHandlerGame.setupKeyInputs(*m_Window2);
+
+		Shader shader("../DreamEngine/src/shaders/vertex.shader", "../DreamEngine/src/shaders/fragment.shader");
+		shader.Enable();
+
+		Camera camera(0.0f, 16.0f, 0.0f, 9.0f);
+		camera.SetPosition(glm::vec3(4, 3, 0));
+		shader.SetUniformMat4("pr_matrix", camera.GetProjectionMatrix());
+		shader.SetUniformMat4("ml_matrix", glm::translate(camera.GetViewMatrix(), camera.GetPosition()));
+
+		shader.SetUniform2f("light_pos", glm::vec2(4.0f, 1.5f));
+		shader.SetUniform4f("colour", glm::vec4(0.2f, 0.3f, 0.8f, 1.0f));
 
 		while (m_Running)
 		{
 			m_Window->clear();
-			m_Window2->clear();
-			if (inputHandlerEngine.getIsKeyDown(GLFW_KEY_SPACE))
-			{
-				r = r + 0.01;
-				std::cout << "SPACE! For ENGINE" << std::endl;
-			}
-			else
-				r = abs(r - 0.001);
-
-			if (inputHandlerGame.getIsKeyDown(GLFW_KEY_1))
-			{
-				r = r + 0.01;
-				std::cout << "1 FOR GAME!" << std::endl;
-			}
+			shader.SetUniformMat4("ml_matrix", glm::translate(camera.GetViewMatrix(), camera.GetPosition()));
+			vbo.Bind();
+			ibo.Bind();
+			glDrawElements(GL_TRIANGLES, ibo.GetCount(), GL_UNSIGNED_SHORT, 0);
 			
+			if (inputHandlerEngine.getIsKeyDown(GLFW_KEY_ESCAPE))
+			{
+				m_Window->~Window();
+				break;
+			}
+			if (inputHandlerEngine.getIsKeyDown(GLFW_KEY_UP))
+			{
+				glm::vec3 position= camera.GetPosition();
+				position.y -= 0.001f;
+				camera.SetPosition(position);
+			}
+			if (inputHandlerEngine.getIsKeyDown(GLFW_KEY_DOWN))
+			{
+				glm::vec3 position = camera.GetPosition();
+				position.y += 0.001f;
+				camera.SetPosition(position);
+			}
+			if (inputHandlerEngine.getIsKeyDown(GLFW_KEY_LEFT))
+			{
+				glm::vec3 position = camera.GetPosition();
+				position.x += 0.001f;
+				camera.SetPosition(position);
+			}
+			if (inputHandlerEngine.getIsKeyDown(GLFW_KEY_RIGHT))
+			{
+				glm::vec3 position = camera.GetPosition();
+				position.x -= 0.001f;
+				camera.SetPosition(position);
+			}
 
-			glClearColor(r, 0.5, 0.5, 1.0);
+			ibo.Unbind();
+			vbo.Unbind();
+
 			float time = (float)glfwGetTime();
 			m_LastFrameTime = time;
 			m_Window->update();
-			m_Window2->update();
 		}
 	}
 }
