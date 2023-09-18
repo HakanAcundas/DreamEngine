@@ -82,29 +82,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\core\Application.cpp" />
+    <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\graphics\buffers\Buffer.cpp" />
     <ClCompile Include="src\graphics\Camera.cpp" />
     <ClCompile Include="src\graphics\buffers\IndexBuffer.cpp" />
+    <ClCompile Include="src\graphics\layers\Group.cpp" />
+    <ClCompile Include="src\graphics\layers\Layer.cpp" />
+    <ClCompile Include="src\graphics\layers\TileLayer.cpp" />
     <ClCompile Include="src\graphics\renderer\Renderer2D.cpp" />
     <ClCompile Include="src\graphics\Shader.cpp" />
     <ClCompile Include="src\graphics\Texture2D.cpp" />
-    <ClCompile Include="src\graphics\renderer\VertexArray.cpp" />
+    <ClCompile Include="src\graphics\buffers\VertexArray.cpp" />
     <ClCompile Include="src\input\KeyInput.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\window\Window.cpp" />
     <ClCompile Include="vendor\stb_image\stb_vorbis.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\core\Application.h" />
+    <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\graphics\buffers\Buffer.h" />
     <ClInclude Include="src\graphics\Camera.h" />
     <ClInclude Include="src\graphics\buffers\IndexBuffer.h" />
+    <ClInclude Include="src\graphics\layers\Group.h" />
+    <ClInclude Include="src\graphics\layers\Layer.h" />
+    <ClInclude Include="src\graphics\layers\TileLayer.h" />
     <ClInclude Include="src\graphics\Renderable.h" />
     <ClInclude Include="src\graphics\renderer\Renderer2D.h" />
     <ClInclude Include="src\graphics\Shader.h" />
     <ClInclude Include="src\graphics\Texture2D.h" />
-    <ClInclude Include="src\graphics\renderer\VertexArray.h" />
+    <ClInclude Include="src\graphics\buffers\VertexArray.h" />
     <ClInclude Include="src\input\KeyInput.h" />
     <ClInclude Include="src\input\inputCodes\KeyCodes.h" />
     <ClInclude Include="src\vendor\glm\detail\compute_common.hpp" />
@@ -1386,6 +1392,9 @@
     <None Include="vendor\glm\gtx\vector_angle.inl" />
     <None Include="vendor\glm\gtx\vector_query.inl" />
     <None Include="vendor\glm\gtx\wrap.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="images\test.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

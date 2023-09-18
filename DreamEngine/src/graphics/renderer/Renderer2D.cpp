@@ -3,7 +3,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "../buffers/Buffer.h"
 #include "../buffers/IndexBuffer.h"
-#include "VertexArray.h"
+#include "../buffers/VertexArray.h"
 #include "../Shader.h"
 
 namespace dream { namespace graphics {

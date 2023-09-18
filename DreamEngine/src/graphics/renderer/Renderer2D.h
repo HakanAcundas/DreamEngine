@@ -28,7 +28,7 @@ namespace dream { namespace graphics {
 
 
 		// Primitives
-		void DrawRenderable(const Renderable* renderable);
+		//void DrawRenderable(const Renderable* renderable);
 		//static void DrawRenderable(const glm::vec2& position, const glm::vec2& size, const Texture2D* texture, float tilingFactor = 1.0f, const glm::vec4& tintColor = glm::vec4(1.0f));
 	};
 }}

@@ -2,6 +2,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include "Texture2D.h"
+#include "../renderer/Renderer2D.h"
 
 namespace dream { namespace graphics {
 
@@ -11,7 +12,7 @@ namespace dream { namespace graphics {
 		glm::vec3 Position;
 		unsigned int Color;
 		glm::vec2 TexCoord;
-		float TextureID
+		float TextureID;
 	};
 
 	class Renderable
@@ -43,6 +44,10 @@ namespace dream { namespace graphics {
 		~Renderable() { }
 
 		// Submit is neccesarry?? Investigate since we can diretly submit it via draw function in Renderer
+		void Submit(Renderer2D* renderer) const
+		{
+			renderer->Submit(this);
+		}
 
 		inline const glm::vec3& GetPosition() const { return m_Position; }
 		inline const glm::vec2& GetSize() const { return m_Size; }
