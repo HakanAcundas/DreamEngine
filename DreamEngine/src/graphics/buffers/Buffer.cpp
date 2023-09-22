@@ -28,7 +28,7 @@ namespace dream { namespace graphics {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
-	void Buffer::AddBufferElement(std::string name, ShaderDataType type, uint8_t count = 1, bool normalized = false)
+	void Buffer::AddBufferElement(std::string name, ShaderDataType type, uint8_t count, bool normalized)
 	{
 		BufferElement element(name, type, count, normalized);
 		m_BufferElements.push_back(&element);

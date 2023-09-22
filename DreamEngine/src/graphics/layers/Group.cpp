@@ -13,13 +13,13 @@ namespace dream { namespace graphics {
 	}
 
 	// TODO Transformation Matrix for models
-	void Group::Submit(Renderer2D* renderer) const
+	void Group::Submit(Renderer2D* renderer)
 	{
-		renderer->Push(m_TransformationMatrix);
+		//renderer->Push(m_TransformationMatrix);
 		for (const Renderable* renderable : m_Renderables)
 		{
 			renderable->Submit(renderer);
 		}
-		renderer->Pop();
+		//renderer->Pop();
 	}
 }}

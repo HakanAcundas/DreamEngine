@@ -1,4 +1,8 @@
 #pragma once
+#include "../buffers/Buffer.h"
+#include "../buffers/IndexBuffer.h"
+#include "../buffers/VertexArray.h"
+#include "../Shader.h"
 #include "../Texture2D.h"
 #include "../Camera.h"
 #include "../Renderable.h"
@@ -6,24 +10,35 @@
 
 namespace dream { namespace graphics {
 
+	//Data that goes into Shader
+	struct RenderableData
+	{
+		glm::vec3 Position;
+		unsigned int Color;
+		glm::vec2 TexCoord;
+		float TextureID;
+	};
+
 	class Renderer2D
 	{
 	private:
-		unsigned int m_VertexArray;
-		unsigned int m_Buffer;
-		// This buffer not only contains vertices, it also contains colors etc.
-		RenderableData* m_RenderableData;
-		IndexBuffer* m_IndexBuffer;
-		// We don't need to render RENDERER_MAX_SPRITES. This value counts how much sprite we want to render.
+		static Buffer* m_Buffer;
+		static VertexArray* m_VertexArray;
+		static IndexBuffer* m_IndexBuffer;
 		GLsizei m_IndexCount;
+		std::vector<Renderable*> m_Renderables;
 		std::vector<unsigned int> m_TextureSlots;
+
+		RenderableData* m_RenderableData;
 	public:
 		static void Init();
 		static void Shutdown();
 
 		void End();
 		void Begin();
-		void Submit(const Renderable* renderable);
+		void AddRenderable(Renderable* renderable);
+		void RemoveRenderable(Renderable* renderable);
+		void Render();
 		void Flush();
 
 
