@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 #include <GL/glew.h>
-#include "../buffers/IndexBuffer.h"
 #include "../buffers/Buffer.h"
+#include "../buffers/IndexBuffer.h"
 
 namespace dream { namespace graphics {
 
@@ -13,6 +13,7 @@ namespace dream { namespace graphics {
 		unsigned int m_BufferIndex = 0;
 		std::vector<Buffer*> m_Buffers;
 		IndexBuffer* m_IndexBuffer;
+		
 	public:
 		VertexArray();
 		~VertexArray();

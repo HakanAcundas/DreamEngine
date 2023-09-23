@@ -2,7 +2,7 @@
 
 namespace dream { namespace graphics {
 
-	IndexBuffer::IndexBuffer(unsigned short* data, int count)
+	IndexBuffer::IndexBuffer(unsigned int* data, int count)
 	{
 		this->m_Count = count;
 

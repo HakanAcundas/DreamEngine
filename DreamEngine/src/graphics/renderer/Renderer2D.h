@@ -1,7 +1,6 @@
 #pragma once
 #include "../buffers/VertexArray.h"
 #include "../Shader.h"
-#include "../Texture2D.h"
 #include "../Camera.h"
 #include "../Renderable.h"
 
@@ -20,17 +19,18 @@ namespace dream { namespace graphics {
 	class Renderer2D
 	{
 	private:
-		static Buffer* m_Buffer;
-		static VertexArray* m_VertexArray;
-		static IndexBuffer* m_IndexBuffer;
+		Buffer* m_Buffer;
+		VertexArray* m_VertexArray;
+		IndexBuffer* m_IndexBuffer;
 		GLsizei m_IndexCount;
 		std::vector<Renderable*> m_Renderables;
 		std::vector<unsigned int> m_TextureSlots;
 
 		RenderableData* m_RenderableData;
 	public:
-		static void Init();
-		static void Shutdown();
+		Renderer2D();
+		void Init();
+		void Shutdown();
 
 		void End();
 		void Begin();

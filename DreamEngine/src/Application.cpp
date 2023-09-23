@@ -26,12 +26,11 @@ namespace dream {
 		KeyInput inputHandlerEngine(keysTrack);
 		inputHandlerEngine.setupKeyInputs(*m_Window);
 
-		Texture2D* testTexture = new Texture2D("../images/test.png");
+		//Texture2D* testTexture = new Texture2D("../images/test.png");
 
 		Shader shader("../DreamEngine/src/shaders/vertex.shader", "../DreamEngine/src/shaders/fragment.shader");
 		shader.Enable();
 
-		Renderer2D* renderer = new Renderer2D();
 		TileLayer layer(&shader);
 		layer.AddRenderable(new Renderable(glm::vec3(0, 0, 2), glm::vec2(1.0f, 1.0f), glm::vec4(0.0f, 1.0f, 1.0f, 1.0f)));
 
@@ -56,29 +55,36 @@ namespace dream {
 			if (inputHandlerEngine.getIsKeyDown(GLFW_KEY_UP))
 			{
 				glm::vec3 position= camera.GetPosition();
-				position.y -= 0.001f;
+				position.y -= 0.005f;
 				camera.SetPosition(position);
 			}
 			if (inputHandlerEngine.getIsKeyDown(GLFW_KEY_DOWN))
 			{
 				glm::vec3 position = camera.GetPosition();
-				position.y += 0.001f;
+				position.y += 0.005f;
 				camera.SetPosition(position);
 			}
 			if (inputHandlerEngine.getIsKeyDown(GLFW_KEY_LEFT))
 			{
 				glm::vec3 position = camera.GetPosition();
-				position.x += 0.001f;
+				position.x += 0.005f;
 				camera.SetPosition(position);
 			}
 			if (inputHandlerEngine.getIsKeyDown(GLFW_KEY_RIGHT))
 			{
 				glm::vec3 position = camera.GetPosition();
-				position.x -= 0.001f;
+				position.x -= 0.005f;
 				camera.SetPosition(position);
 			}
-
-			//layer.Render();
+			// For Testing START
+			glClearColor(0.5, 0.5, 0.5, 1.0);
+			glBegin(GL_TRIANGLES);
+			glVertex2f(-0.5, -0.5);
+			glVertex2f(0.0, 0.5);
+			glVertex2f(0.5, -0.5);
+			glEnd();
+			// For Testing END
+			layer.Render();
 			float time = (float)glfwGetTime();
 			m_LastFrameTime = time;
 			m_Window->update();

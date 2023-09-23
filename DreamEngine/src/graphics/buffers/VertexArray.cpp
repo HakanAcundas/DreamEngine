@@ -30,13 +30,13 @@ namespace dream { namespace graphics {
 	{
 		Bind();
 		buffer->Bind();
-		for (BufferElement element : buffer->GetBufferElements())
+		for (BufferElement* element : buffer->GetBufferElements())
 		{
 			glEnableVertexAttribArray(m_BufferIndex);
 			glVertexAttribPointer(m_BufferIndex, buffer->GetCount(), 
-				BufferElement::ShaderDataTypeToOpenGLBaseType(element.Type), element.Normalized ? GL_TRUE : GL_FALSE, 
-				layout.GetStride(),
-				(const void*)element.Offset);
+				BufferElement::ShaderDataTypeToOpenGLBaseType(element->Type), element->Normalized ? GL_TRUE : GL_FALSE,
+				buffer->GetStride(),
+				(const void*)element->Offset);
 			m_BufferIndex++;
 		}
 		buffer->Unbind();

@@ -26,13 +26,18 @@ namespace dream { namespace graphics {
 
 	static RendererData s_Data;
 
+	Renderer2D::Renderer2D()
+	{
+		Init();
+	}
+
 	void Renderer2D::Init()
 	{
 		m_Buffer = new Buffer(s_Data.MaxVertices * sizeof(RendererData));
 		m_Buffer->AddBufferElement("a_Position", ShaderDataType::Float, 3);
-		m_Buffer->AddBufferElement("a_Color", ShaderDataType::Float, 4);
 		m_Buffer->AddBufferElement("a_TexCoord", ShaderDataType::Float, 2);
 		m_Buffer->AddBufferElement("a_TexIndex", ShaderDataType::Float, 1);
+		m_Buffer->AddBufferElement("a_Color", ShaderDataType::Float, 4);
 
 		m_VertexArray = new VertexArray();
 		m_VertexArray->AddBuffer(m_Buffer);
@@ -51,12 +56,15 @@ namespace dream { namespace graphics {
 
 			offset += 4;
 		}
+
+		m_IndexBuffer = new IndexBuffer(quadIndices, s_Data.MaxIndices);
+		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
+		delete[] quadIndices;
 	}
 
 	void Renderer2D::Begin()
 	{
 		m_Buffer->Bind();
-		//glBindBuffer(GL_ARRAY_BUFFER, m_Buffer);
 		m_RenderableData = (RenderableData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 	}
 
