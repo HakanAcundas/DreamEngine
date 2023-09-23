@@ -22,11 +22,6 @@ namespace dream {
 
 	void Application::run()
 	{
-		/*VertexArray vbo;
-		IndexBuffer ibo(indices, 6);
-		vbo.AddBuffer(new Buffer(vertices, 4 * 3, 3), 0);
-		vbo.AddBuffer(new Buffer(colors, 4 * 4, 4), 1);*/
-
 		std::vector<int> keysTrack{ GLFW_KEY_ESCAPE ,GLFW_KEY_SPACE, GLFW_KEY_UP, GLFW_KEY_DOWN, GLFW_KEY_LEFT, GLFW_KEY_RIGHT };
 		KeyInput inputHandlerEngine(keysTrack);
 		inputHandlerEngine.setupKeyInputs(*m_Window);
@@ -38,7 +33,7 @@ namespace dream {
 
 		Renderer2D* renderer = new Renderer2D();
 		TileLayer layer(&shader);
-		layer.Add(new Renderable(glm::vec3(0, 0, 2), glm::vec2(1.0f, 1.0f), glm::vec4(0.0f, 1.0f, 1.0f, 1.0f)));
+		layer.AddRenderable(new Renderable(glm::vec3(0, 0, 2), glm::vec2(1.0f, 1.0f), glm::vec4(0.0f, 1.0f, 1.0f, 1.0f)));
 
 		Camera camera(0.0f, 16.0f, 0.0f, 9.0f);
 		camera.SetPosition(glm::vec3(4, 3, 0));

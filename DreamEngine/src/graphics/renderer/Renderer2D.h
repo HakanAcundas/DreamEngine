@@ -1,6 +1,4 @@
 #pragma once
-#include "../buffers/Buffer.h"
-#include "../buffers/IndexBuffer.h"
 #include "../buffers/VertexArray.h"
 #include "../Shader.h"
 #include "../Texture2D.h"

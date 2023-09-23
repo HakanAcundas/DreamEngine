@@ -19,8 +19,8 @@ namespace dream { namespace graphics {
 
 		void Bind() const;
 		void Unbind() const;
-		void AddBuffer(Buffer* buffer, int index);
-		void SetIndexBuffer(Buffer* buffer);
+		void AddBuffer(Buffer* buffer);
+		void SetIndexBuffer(IndexBuffer* indexBuffer);
 
 		const std::vector<Buffer*> GetBuffers() { return m_Buffers; }
 		const IndexBuffer* GetIndexBuffers() { return m_IndexBuffer; }

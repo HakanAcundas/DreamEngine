@@ -15,16 +15,6 @@ namespace dream { namespace graphics {
 		}
 	}
 
-	void VertexArray::AddBuffer(Buffer* buffer, int index)
-	{
-		Bind();
-		buffer->Bind();
-		glEnableVertexAttribArray(index);
-		glVertexAttribPointer(index, buffer->GetCount(), GL_FLOAT, GL_FALSE, 0, 0);
-		buffer->Unbind();
-		Unbind();
-	}
-
 	void VertexArray::Bind() const
 	{
 		glBindVertexArray(m_ArrayID);
@@ -34,6 +24,31 @@ namespace dream { namespace graphics {
 
 	{
 		glBindVertexArray(0);
+	}
+
+	void VertexArray::AddBuffer(Buffer* buffer)
+	{
+		Bind();
+		buffer->Bind();
+		for (BufferElement element : buffer->GetBufferElements())
+		{
+			glEnableVertexAttribArray(m_BufferIndex);
+			glVertexAttribPointer(m_BufferIndex, buffer->GetCount(), 
+				BufferElement::ShaderDataTypeToOpenGLBaseType(element.Type), element.Normalized ? GL_TRUE : GL_FALSE, 
+				layout.GetStride(),
+				(const void*)element.Offset);
+			m_BufferIndex++;
+		}
+		buffer->Unbind();
+		Unbind();
+	}
+
+	void VertexArray::SetIndexBuffer(IndexBuffer* indexBuffer)
+	{
+		glBindVertexArray(m_ArrayID);
+		indexBuffer->Bind();
+
+		m_IndexBuffer = indexBuffer;
 	}
 }}
  

@@ -20,9 +20,14 @@ namespace dream { namespace graphics {
 			}
 		}
 
-		void Layer::Add(Renderable* renderable)
+		void Layer::AddRenderable(Renderable* renderable)
 		{
 			m_Renderables.push_back(renderable);
+		}
+
+		void Layer::RemoveRenderable(Renderable* renderable)
+		{
+			m_Renderables.erase(std::remove(m_Renderables.begin(), m_Renderables.end(), renderable), m_Renderables.end());
 		}
 
 		void Layer::Render()
@@ -30,10 +35,11 @@ namespace dream { namespace graphics {
 			m_Shader->Enable();
 			m_Renderer->Begin();
 
-			for (const Renderable* renderable : m_Renderables)
-			{
-				renderable->Submit(m_Renderer);
-			}
+			//for (Renderable* renderable : m_Renderables)
+			//{
+			//	m_Renderer->AddRenderable(renderable);
+			//}
+			m_Renderer->Render();
 
 			m_Renderer->End();
 			m_Renderer->Flush();

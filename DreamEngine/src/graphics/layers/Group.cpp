@@ -7,19 +7,23 @@ namespace dream { namespace graphics {
 	{
 	}
 
-	void Group::Add(Renderable* renderable)
+	void Group::AddRenderable(Renderable* renderable)
 	{
 		m_Renderables.push_back(renderable);
 	}
 
-	// TODO Transformation Matrix for models
-	void Group::Submit(Renderer2D* renderer)
+	void Group::RemoveRenderable(Renderable* renderable)
 	{
-		//renderer->Push(m_TransformationMatrix);
-		for (const Renderable* renderable : m_Renderables)
-		{
-			renderable->Submit(renderer);
-		}
-		//renderer->Pop();
+		m_Renderables.erase(std::remove(m_Renderables.begin(), m_Renderables.end(), renderable), m_Renderables.end());
 	}
+	// TODO Transformation Matrix for models
+	//void Group::Render()
+	//{
+	//	//renderer->Push(m_TransformationMatrix);
+	//	for (const Renderable* renderable : m_Renderables)
+	//	{
+	//		renderable->Submit(renderer);
+	//	}
+	//	//renderer->Pop();
+	//}
 }}

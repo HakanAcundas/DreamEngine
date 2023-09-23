@@ -35,7 +35,7 @@ namespace dream { namespace graphics {
 		m_Buffer->AddBufferElement("a_TexIndex", ShaderDataType::Float, 1);
 
 		m_VertexArray = new VertexArray();
-		m_VertexArray->AddBuffer(m_Buffer, 1);
+		m_VertexArray->AddBuffer(m_Buffer);
 		unsigned int* quadIndices = new unsigned int[s_Data.MaxIndices];
 
 		unsigned int offset = 0;
@@ -63,7 +63,7 @@ namespace dream { namespace graphics {
 	void Renderer2D::End()
 	{
 		glUnmapBuffer(GL_ARRAY_BUFFER);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		m_Buffer->Unbind();
 	}
 
 	void Renderer2D::AddRenderable(Renderable* renderable)

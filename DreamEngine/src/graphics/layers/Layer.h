@@ -1,7 +1,7 @@
 #pragma once
 #include "../renderer/Renderer2D.h"
-#include "../Renderable.h"
 #include "../Shader.h"
+#include "Group.h"
 
 namespace dream { namespace graphics {
 
@@ -18,7 +18,8 @@ namespace dream { namespace graphics {
 
 		public:
 			virtual ~Layer();
-			void Add(Renderable* renderable);
+			void AddRenderable(Renderable* renderable);
+			void RemoveRenderable(Renderable* renderable);
 			virtual void Render();
 		};
 }}

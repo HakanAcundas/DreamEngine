@@ -38,7 +38,7 @@ namespace dream { namespace graphics {
 			return 0;
 		}
 
-		GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type) const
+		static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
 		{
 			switch (type)
 			{
@@ -71,5 +71,6 @@ namespace dream { namespace graphics {
 		void SetData(const void* data,  unsigned int size);
 
 		inline unsigned int const GetCount() { return m_ComponentCount; }
+		std::vector<BufferElement*> GetBufferElements() { return m_BufferElements; }
 	};
 }}
