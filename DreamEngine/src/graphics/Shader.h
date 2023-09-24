@@ -30,14 +30,13 @@ namespace dream { namespace graphics {
 		void SetUniformMat4(const char* name, const glm::mat4& matrix);
 #pragma endregion Uniform Setters
 
-		// TO DO Change the second parameter for each data type
 #pragma region Uniform Getters
 		void GetUniform1f(const char* name, float* data);
-		void GetUniform1i(const char* name, int value);
+		void GetUniform1i(const char* name, int* data);
 		void GetUniform2f(const char* name, float data[2]);
 		void GetUniform3f(const char* name, float data[3]);
 		void GetUniform4f(const char* name, float data[4]);
-		void GetUniformMat4(const char* name, const glm::mat4* matrix);
+		void GetUniformMat4(const char* name, float data[16]);
 #pragma endregion Uniform Getters
 
 		void Enable();
