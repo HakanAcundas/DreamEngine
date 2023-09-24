@@ -104,6 +104,7 @@ namespace dream { namespace graphics {
 		return glGetUniformLocation(m_ShaderID, name);
 	}
 
+#pragma region Uniform Setters
 	void Shader::SetUniform1f(const char* name, float value)
 	{
 		glUniform1f(GetUniformLocation(name), value);
@@ -143,4 +144,43 @@ namespace dream { namespace graphics {
 	{
 		glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix));
 	}
+#pragma endregion Uniform Setters
+
+#pragma region Uniform Getters
+	void Shader::GetUniform1f(const char* name, float* data)
+	{
+		int b = GetUniformLocation("a_Positionss");
+		glGetUniformfv(m_ShaderID, GetUniformLocation(name), data);
+	}
+
+
+	void Shader::GetUniform1i(const char* name, int data)
+	{
+		glGetUniformiv(m_ShaderID, GetUniformLocation(name), data);
+	}
+
+
+	void Shader::GetUniform2f(const char* name, float data[2])
+	{
+		glGetnUniformfv(m_ShaderID, GetUniformLocation(name), 2, data);
+	}
+
+	void Shader::GetUniform3f(const char* name, float data[3])
+	{
+		glGetnUniformfv(m_ShaderID, GetUniformLocation(name), 2, data);
+	}
+
+	void Shader::GetUniform4f(const char* name, float data[4])
+	{
+		glGetUniformfv(m_ShaderID, GetUniformLocation(name), x);
+		glGetUniformfv(m_ShaderID, GetUniformLocation(name), y);
+		glGetUniformfv(m_ShaderID, GetUniformLocation(name), z);
+		glGetUniformfv(m_ShaderID, GetUniformLocation(name), w);
+	}
+	
+	void Shader::GetUniformMat4(const char* name, const glm::mat4* matrix)
+	{
+
+	}
+#pragma endregion Uniform Getters
 }}

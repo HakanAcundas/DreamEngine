@@ -33,15 +33,18 @@ namespace dream {
 
 		TileLayer layer(&shader);
 		layer.AddRenderable(new Renderable(glm::vec3(0, 0, 2), glm::vec2(1.0f, 1.0f), glm::vec4(0.0f, 1.0f, 1.0f, 1.0f)));
+		float colorTest = 0;
+		shader.SetUniform2f("a_Positionss", glm::vec2(31.0f, 41.0f));
+		shader.GetUniform2f("a_Positionss", &colorTest);
 
 		Camera camera(0.0f, 16.0f, 0.0f, 9.0f);
 		camera.SetPosition(glm::vec3(4, 3, 0));
+
 		shader.SetUniformMat4("pr_matrix", camera.GetProjectionMatrix());
 		shader.SetUniformMat4("ml_matrix", glm::translate(camera.GetViewMatrix(), camera.GetPosition()));
 
 		shader.SetUniform2f("light_pos", glm::vec2(4.0f, 1.5f));
-		shader.SetUniform4f("colour", glm::vec4(0.2f, 0.3f, 0.8f, 1.0f));
-
+		
 		while (m_Running)
 		{
 			m_Window->clear();
@@ -84,6 +87,7 @@ namespace dream {
 			glVertex2f(0.5, -0.5);
 			glEnd();
 			// For Testing END
+			//shader.GetUniform4f("a_Position", colorTestX, colorTestY, colorTestZ, colorTestW);
 			layer.Render();
 			float time = (float)glfwGetTime();
 			m_LastFrameTime = time;

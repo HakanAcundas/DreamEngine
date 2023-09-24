@@ -14,17 +14,16 @@ vec4 color;
 }
 fs_in;
 
-uniform sampler2D textures[32];
 
 void main()
 {
     float intensity = 1.0 / length(fs_in.position.xy - light_pos);
     vec4 texColor = fs_in.color;
-    if (fs_in.tid > 0.0)
-    {
-        int texID = int(fs_in.tid - 0.5);
-        texColor = texture(textures[texID], fs_in.uv);
-    }
+    //if (fs_in.tid > 0.0)
+    //{
+    //    int texID = int(fs_in.tid - 0.5);
+    //    texColor = texture(textures[texID], fs_in.uv);
+    //}
     color = texColor * intensity;
     //if (texID == 1)
     //{
