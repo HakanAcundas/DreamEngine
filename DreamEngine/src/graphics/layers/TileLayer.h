@@ -7,7 +7,8 @@ namespace dream {
 		class TileLayer : public Layer
 		{
 		public:
-			TileLayer(Shader* shader);
+			TileLayer();
+			TileLayer(Shader* shader, Camera camera);
 			~TileLayer();
 		};
 	}

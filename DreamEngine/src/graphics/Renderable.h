@@ -33,7 +33,7 @@ namespace dream { namespace graphics {
 		}
 		~Renderable() { }
 
-		//// Submit is neccesarry?? Investigate since we can diretly submit it via draw function in Renderer
+		//// Submit is necessary?? Investigate since we can directly submit it via draw function in Renderer
 		//void Submit(Renderer2D* renderer) const
 		//{
 		//	renderer->Submit(this);

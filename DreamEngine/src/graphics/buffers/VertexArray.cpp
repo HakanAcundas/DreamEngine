@@ -33,7 +33,7 @@ namespace dream { namespace graphics {
 		for (BufferElement* element : buffer->GetBufferElements())
 		{
 			glEnableVertexAttribArray(m_BufferIndex);
-			glVertexAttribPointer(m_BufferIndex, buffer->GetCount(), 
+			glVertexAttribPointer(m_BufferIndex, element->Count, 
 				BufferElement::ShaderDataTypeToOpenGLBaseType(element->Type), element->Normalized ? GL_TRUE : GL_FALSE,
 				buffer->GetStride(),
 				(const void*)element->Offset);

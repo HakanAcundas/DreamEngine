@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace dream { namespace graphics {
 
@@ -18,6 +19,10 @@ namespace dream { namespace graphics {
 
 	void Camera::RecalculateViewMatrix()
 	{
+		/*glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position) *
+			glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation), glm::vec3(0, 0, 1));
+
+		m_ViewMatrix = glm::inverse(transform);*/
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 

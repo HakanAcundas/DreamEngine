@@ -32,6 +32,8 @@ namespace dream { namespace graphics {
 		void Init();
 		void Shutdown();
 
+		void StartBatch();
+		void BeginScene(Camera& camera);
 		void End();
 		void Begin();
 		void AddRenderable(Renderable* renderable);

@@ -15,13 +15,19 @@ namespace dream { namespace graphics {
 
 		Buffer* RenderableBuffer;
 		VertexArray* RenderableVertexArray;
-		Shader* RenderableShader;
+		Shader* RendererShader;
 		Texture2D* WhiteTexture;
 
 		unsigned int renderableIndexCount = 0;
 
 		std::vector<Texture2D*> TextureSlots;
 		unsigned int TextureSlotIndex = 1; // 0 = white texture
+
+		struct CameraData
+		{
+			glm::mat4 ViewProjection;
+		};
+		CameraData CameraBuffer;
 	};
 
 	static RendererData s_Data;
@@ -33,13 +39,14 @@ namespace dream { namespace graphics {
 
 	void Renderer2D::Init()
 	{
+		m_VertexArray = new VertexArray();
 		m_Buffer = new Buffer(s_Data.MaxVertices * sizeof(RendererData));
 		m_Buffer->AddBufferElement("a_Position", ShaderDataType::Float, 3);
 		m_Buffer->AddBufferElement("a_TexCoord", ShaderDataType::Float, 2);
 		m_Buffer->AddBufferElement("a_TexIndex", ShaderDataType::Float, 1);
 		m_Buffer->AddBufferElement("a_Color", ShaderDataType::Float, 4);
+		m_Buffer->CalculateStride();
 
-		m_VertexArray = new VertexArray();
 		m_VertexArray->AddBuffer(m_Buffer);
 		unsigned int* quadIndices = new unsigned int[s_Data.MaxIndices];
 
@@ -60,6 +67,10 @@ namespace dream { namespace graphics {
 		m_IndexBuffer = new IndexBuffer(quadIndices, s_Data.MaxIndices);
 		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
 		delete[] quadIndices;
+
+		//s_Data.RendererShader = new Shader(
+		//	"../DreamEngine/src/shaders/vertex.shader",
+		//	"../DreamEngine/src/shaders/fragment.shader");
 	}
 
 	void Renderer2D::Begin()
@@ -74,6 +85,25 @@ namespace dream { namespace graphics {
 		m_Buffer->Unbind();
 	}
 
+	void Renderer2D::StartBatch()
+	{
+		s_Data.renderableIndexCount = 0;
+		s_Data.RenderableBuffer = nullptr;
+
+		s_Data.TextureSlotIndex = 1;
+	}
+
+	void Renderer2D::BeginScene(Camera& camera)
+	{
+		// pr_matrix * vw_matrix * ml_matrix
+
+		//s_Data.RendererShader->SetUniformMat4("pr_matrix", camera.GetProjectionMatrix());
+		//s_Data.RendererShader->SetUniformMat4("ml_matrix", glm::translate(camera.GetViewMatrix(), camera.GetPosition()));
+		//s_Data.RendererShader->SetUniform2f("light_pos", glm::vec2(4.0f, 1.5f));
+
+		StartBatch();
+	}
+
 	void Renderer2D::AddRenderable(Renderable* renderable)
 	{
 		m_Renderables.push_back(renderable);
@@ -84,6 +114,8 @@ namespace dream { namespace graphics {
 		m_Renderables.erase(std::remove(m_Renderables.begin(), m_Renderables.end(), renderable), m_Renderables.end());
 	}
 
+	// TO DO convert this function into DrawQuad (its is already converted but make a base 
+	// function to apply different variations of DrawQuad. Example DrawRotatedQuad etc...
 	void Renderer2D::Render()
 	{
 		for (Renderable* renderable : m_Renderables)
@@ -99,7 +131,7 @@ namespace dream { namespace graphics {
 			if (tid > 0)
 			{
 				bool found = false;
-				// Seach for renderable texture ID
+				// Search for texture ID
 				for (int i = 0; i < m_TextureSlots.size(); i++)
 				{
 					if (m_TextureSlots[i] == tid)
@@ -119,7 +151,7 @@ namespace dream { namespace graphics {
 						Flush();
 						Begin();
 					}
-					// Add the new texture ID to slot
+					// Else add the new texture ID to a slot
 					m_TextureSlots.push_back(tid);
 					ts = (float)(m_TextureSlots.size());
 				}
@@ -174,7 +206,7 @@ namespace dream { namespace graphics {
 
 		m_VertexArray->Bind();
 		m_IndexBuffer->Bind();
-
+		
 		glDrawElements(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_INT, NULL);
 
 		m_IndexBuffer->Unbind();

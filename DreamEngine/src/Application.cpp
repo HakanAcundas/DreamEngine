@@ -28,22 +28,23 @@ namespace dream {
 
 		//Texture2D* testTexture = new Texture2D("../images/test.png");
 
-		Shader shader("../DreamEngine/src/shaders/vertex.shader", "../DreamEngine/src/shaders/fragment.shader");
-		TileLayer layer(&shader);
-		shader.Enable();
-		layer.AddRenderable(new Renderable(glm::vec3(0, 0, 2), glm::vec2(1.0f, 1.0f), glm::vec4(0.31f, 1.0f, 1.0f, 1.0f)));
-
 		Camera camera(0.0f, 16.0f, 0.0f, 9.0f);
 		camera.SetPosition(glm::vec3(4, 3, 0));
 
-		shader.SetUniformMat4("pr_matrix", camera.GetProjectionMatrix());
+		Shader* shader = new Shader(
+			"../DreamEngine/src/shaders/vertex.shader",
+			"../DreamEngine/src/shaders/fragment.shader");
+		TileLayer layer(shader, camera);
+		layer.AddRenderable(new Renderable(glm::vec3(0, 0, 2), glm::vec2(1.0f, 1.0f), glm::vec4(0.31f, 1.0f, 1.0f, 1.0f)));
+
+		/*shader.SetUniformMat4("pr_matrix", camera.GetProjectionMatrix());
 		shader.SetUniformMat4("ml_matrix", glm::translate(camera.GetViewMatrix(), camera.GetPosition()));
-		shader.SetUniform2f("light_pos", glm::vec2(4.0f, 1.5f));
+		shader.SetUniform2f("light_pos", glm::vec2(4.0f, 1.5f));*/
 
 		while (m_Running)
 		{
 			m_Window->clear();
-			shader.SetUniformMat4("ml_matrix", glm::translate(camera.GetViewMatrix(), camera.GetPosition()));
+			//shader.SetUniformMat4("ml_matrix", glm::translate(camera.GetViewMatrix(), camera.GetPosition()));
 			if (inputHandlerEngine.getIsKeyDown(GLFW_KEY_ESCAPE))
 			{
 				m_Window->~Window();
@@ -81,6 +82,7 @@ namespace dream {
 			glVertex2f(0.5, -0.5);
 			glEnd();
 			
+			layer.SetCamera(camera);
 			layer.Render();
 			float time = (float)glfwGetTime();
 			m_LastFrameTime = time;

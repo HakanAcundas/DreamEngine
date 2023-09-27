@@ -1,13 +1,9 @@
 #version 450 core
 
-layout(location = 0) in
-vec3 a_Position;
-layout(location = 1) in
-vec2 a_TexCoord;
-layout(location = 2) in
-float a_TexIndex;
-layout(location = 3) in
-vec4 a_Color;
+layout(location = 0) in vec3 a_Position;
+layout(location = 1) in vec2 a_TexCoord;
+layout(location = 2) in float a_TexIndex;
+layout(location = 3) in vec4 a_Color;
 
 uniform mat4 pr_matrix;
 uniform mat4 vw_matrix = mat4(1.0);
@@ -19,8 +15,7 @@ vec4 position;
 vec2 uv;
 float tid;
 vec4 color;
-}
-vs_out;
+} vs_out;
 
 void main()
 {
