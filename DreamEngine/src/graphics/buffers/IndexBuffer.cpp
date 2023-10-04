@@ -8,6 +8,16 @@ namespace dream { namespace graphics {
 
 		glGenBuffers(1, &m_IndexBufferID);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBufferID);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), data, GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
+
+	IndexBuffer::IndexBuffer(unsigned short* data, int count)
+	{
+		this->m_Count = count;
+
+		glGenBuffers(1, &m_IndexBufferID);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBufferID);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned short), data, GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}

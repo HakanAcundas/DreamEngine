@@ -48,6 +48,7 @@ namespace dream { namespace graphics {
 		m_Buffer->CalculateStride();
 
 		m_VertexArray->AddBuffer(m_Buffer);
+		m_Buffer->Unbind();
 		unsigned int* quadIndices = new unsigned int[s_Data.MaxIndices];
 
 		unsigned int offset = 0;
@@ -66,11 +67,8 @@ namespace dream { namespace graphics {
 
 		m_IndexBuffer = new IndexBuffer(quadIndices, s_Data.MaxIndices);
 		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
+		m_VertexArray->Unbind();
 		delete[] quadIndices;
-
-		//s_Data.RendererShader = new Shader(
-		//	"../DreamEngine/src/shaders/vertex.shader",
-		//	"../DreamEngine/src/shaders/fragment.shader");
 	}
 
 	void Renderer2D::Begin()
@@ -207,7 +205,14 @@ namespace dream { namespace graphics {
 		m_VertexArray->Bind();
 		m_IndexBuffer->Bind();
 		
-		glDrawElements(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_INT, NULL);
+		glDrawElements(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_INT, nullptr);
+
+		// For testing erase later.
+		glBegin(GL_TRIANGLES);
+		glVertex2f(-0.5, -0.5);
+		glVertex2f(0.0, 0.5);
+		glVertex2f(0.5, -0.5);
+		glEnd();
 
 		m_IndexBuffer->Unbind();
 		m_VertexArray->Unbind();

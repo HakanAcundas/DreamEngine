@@ -21,7 +21,6 @@ namespace dream { namespace graphics {
 	}
 
 	void VertexArray::Unbind() const
-
 	{
 		glBindVertexArray(0);
 	}

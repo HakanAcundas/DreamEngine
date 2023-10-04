@@ -10,6 +10,7 @@ namespace dream { namespace graphics {
 		unsigned int m_Count;
 	public:
 		IndexBuffer(unsigned int* indices, int count);
+		IndexBuffer(unsigned short* data, int count);
 		~IndexBuffer();
 
 		void Bind();

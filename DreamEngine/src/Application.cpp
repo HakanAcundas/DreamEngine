@@ -74,13 +74,7 @@ namespace dream {
 				position.x -= 0.005f;
 				camera.SetPosition(position);
 			}
-			// For Testing START
 			glClearColor(0.5, 0.5, 0.5, 1.0);
-			glBegin(GL_TRIANGLES);
-			glVertex2f(-0.5, -0.5);
-			glVertex2f(0.0, 0.5);
-			glVertex2f(0.5, -0.5);
-			glEnd();
 			
 			layer.SetCamera(camera);
 			layer.Render();
