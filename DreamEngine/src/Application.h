@@ -1,12 +1,8 @@
 #pragma once
-#include "../window/Window.h"
-#include "../input/KeyInput.h"
-#include "../input/inputCodes/KeyCodes.h"
-#include "../graphics/Shader.h"
-#include "../graphics/Buffer.h"
-#include "../graphics/IndexBuffer.h"
-#include "../graphics/VertexArray.h"
-#include "../graphics/Camera.h"
+#include "window/Window.h"
+#include "input/KeyInput.h"
+#include "input/inputCodes/KeyCodes.h"
+#include "graphics/layers/TileLayer.h"
 #include <glfw/glfw3.h>
 
 namespace dream {

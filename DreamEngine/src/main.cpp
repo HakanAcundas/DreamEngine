@@ -1,4 +1,4 @@
-#include "core/Application.h"
+#include "Application.h"
 #include "utils/fileUtils.h"
 
 using namespace dream;

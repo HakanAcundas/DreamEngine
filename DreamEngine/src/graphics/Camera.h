@@ -20,6 +20,7 @@ namespace dream { namespace graphics {
 		//bool OnMouseScrolled();
 		//bool OnWindowResized();
 	public:
+		Camera() = default;
 		Camera(float left, float right, float bottom, float top);
 
 		void SetProjection(float left, float right, float bottom, float top);
