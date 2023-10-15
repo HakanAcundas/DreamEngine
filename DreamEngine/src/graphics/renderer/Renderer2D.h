@@ -7,7 +7,7 @@
 
 namespace dream { namespace graphics {
 
-	//Data that goes into Shader
+	// Data that goes into Shader
 	struct RenderableData
 	{
 		glm::vec3 Position;

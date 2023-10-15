@@ -2,13 +2,13 @@
 
 namespace dream { namespace graphics {
 
-	IndexBuffer::IndexBuffer(unsigned int* data, int count)
+	IndexBuffer::IndexBuffer(int32_t* data, int count)
 	{
 		this->m_Count = count;
 
 		glGenBuffers(1, &m_IndexBufferID);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBufferID);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), data, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), data, GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 

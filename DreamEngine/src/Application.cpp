@@ -28,14 +28,15 @@ namespace dream {
 
 		//Texture2D* testTexture = new Texture2D("../images/test.png");
 
-		Camera camera(0.0f, 16.0f, 0.0f, 9.0f);
+		Camera camera(-16.0f, 16.0f, -9.0f, 9.0f);
 		camera.SetPosition(glm::vec3(4, 3, 0));
 
 		Shader* shader = new Shader(
 			"../DreamEngine/src/shaders/vertex.shader",
 			"../DreamEngine/src/shaders/fragment.shader");
-		TileLayer layer(shader, camera);
-		layer.AddRenderable(new Renderable(glm::vec3(0, 0, 2), glm::vec2(1.0f, 1.0f), glm::vec4(0.31f, 1.0f, 1.0f, 1.0f)));
+		TileLayer testLayer(shader, camera);
+		testLayer.AddRenderable(new Renderable(glm::vec3(0, 0, 2), glm::vec2(1.0f, 1.0f), glm::vec4(0.31f, 1.0f, 1.0f, 1.0f)));
+		testLayer.AddRenderable(new Renderable(glm::vec3(0, 0, 2), glm::vec2(1.0f, 1.0f), glm::vec4(0.31f, 1.0f, 1.0f, 1.0f)));
 
 		/*shader.SetUniformMat4("pr_matrix", camera.GetProjectionMatrix());
 		shader.SetUniformMat4("ml_matrix", glm::translate(camera.GetViewMatrix(), camera.GetPosition()));
@@ -76,8 +77,8 @@ namespace dream {
 			}
 			glClearColor(0.5, 0.5, 0.5, 1.0);
 			
-			layer.SetCamera(camera);
-			layer.Render();
+			testLayer.SetCamera(camera);
+			testLayer.Render();
 			float time = (float)glfwGetTime();
 			m_LastFrameTime = time;
 			m_Window->update();

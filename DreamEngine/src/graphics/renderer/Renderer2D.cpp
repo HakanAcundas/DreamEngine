@@ -8,17 +8,19 @@ namespace dream { namespace graphics {
 
 	struct RendererData
 	{
-		static const unsigned int MaxQuads = 20000;
-		static const unsigned int MaxVertices = MaxQuads * 4;
-		static const unsigned int MaxIndices = MaxQuads * 6;
-		static const unsigned int MaxTextureSlots = 32; // TODO: RenderCaps
+		static const uint32_t MaxQuads = 20000;
+		static const uint32_t MaxVertices = MaxQuads * 4;
+		static const uint32_t MaxIndices = MaxQuads * 6;
+		static const uint32_t MaxTextureSlots = 32; // TO DO: RenderCaps
 
-		Buffer* RenderableBuffer;
-		VertexArray* RenderableVertexArray;
+		Buffer* RendererBuffer;
+		VertexArray* RendererVertexArray;
 		Shader* RendererShader;
 		Texture2D* WhiteTexture;
 
-		unsigned int renderableIndexCount = 0;
+		uint32_t renderableIndexCount = 0;
+		Renderable* RenderableVertexBufferBase = nullptr;
+		Renderable* RenderableVertexBufferPtr = nullptr;
 
 		std::vector<Texture2D*> TextureSlots;
 		unsigned int TextureSlotIndex = 1; // 0 = white texture
@@ -39,19 +41,20 @@ namespace dream { namespace graphics {
 
 	void Renderer2D::Init()
 	{
-		m_VertexArray = new VertexArray();
-		m_Buffer = new Buffer(s_Data.MaxVertices * sizeof(RendererData));
-		m_Buffer->AddBufferElement("a_Position", ShaderDataType::Float, 3);
-		m_Buffer->AddBufferElement("a_TexCoord", ShaderDataType::Float, 2);
-		m_Buffer->AddBufferElement("a_TexIndex", ShaderDataType::Float, 1);
-		m_Buffer->AddBufferElement("a_Color", ShaderDataType::Float, 4);
-		m_Buffer->CalculateStride();
+		s_Data.RendererVertexArray = new VertexArray();
+		s_Data.RendererBuffer = new Buffer(s_Data.MaxVertices * sizeof(RendererData));
+		s_Data.RendererBuffer->AddBufferElement("shader_Position", ShaderDataType::Float, 3);
+		s_Data.RendererBuffer->AddBufferElement("shader_TexCoord", ShaderDataType::Float, 2);
+		s_Data.RendererBuffer->AddBufferElement("shader_TexIndex", ShaderDataType::Float, 1);
+		s_Data.RendererBuffer->AddBufferElement("shader_Color", ShaderDataType::Float, 4);
+		s_Data.RendererBuffer->CalculateStride();
 
-		m_VertexArray->AddBuffer(m_Buffer);
-		m_Buffer->Unbind();
-		unsigned int* quadIndices = new unsigned int[s_Data.MaxIndices];
+		s_Data.RendererVertexArray->AddBuffer(s_Data.RendererBuffer);
+		s_Data.RenderableVertexBufferBase = new Renderable[s_Data.MaxVertices];
 
-		unsigned int offset = 0;
+		int32_t* quadIndices = new int32_t[s_Data.MaxIndices];
+
+		int32_t offset = 0;
 		for (unsigned int i = 0; i < s_Data.MaxIndices; i += 6)
 		{
 			quadIndices[i + 0] = offset + 0;
@@ -66,39 +69,30 @@ namespace dream { namespace graphics {
 		}
 
 		m_IndexBuffer = new IndexBuffer(quadIndices, s_Data.MaxIndices);
-		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
-		m_VertexArray->Unbind();
+		s_Data.RendererVertexArray->SetIndexBuffer(m_IndexBuffer);
 		delete[] quadIndices;
 	}
 
 	void Renderer2D::Begin()
 	{
-		m_Buffer->Bind();
+		s_Data.RendererBuffer->Bind();
 		m_RenderableData = (RenderableData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 	}
 
 	void Renderer2D::End()
 	{
 		glUnmapBuffer(GL_ARRAY_BUFFER);
-		m_Buffer->Unbind();
+		s_Data.RendererBuffer->Unbind();
 	}
 
 	void Renderer2D::StartBatch()
 	{
 		s_Data.renderableIndexCount = 0;
-		s_Data.RenderableBuffer = nullptr;
-
 		s_Data.TextureSlotIndex = 1;
 	}
 
 	void Renderer2D::BeginScene(Camera& camera)
 	{
-		// pr_matrix * vw_matrix * ml_matrix
-
-		//s_Data.RendererShader->SetUniformMat4("pr_matrix", camera.GetProjectionMatrix());
-		//s_Data.RendererShader->SetUniformMat4("ml_matrix", glm::translate(camera.GetViewMatrix(), camera.GetPosition()));
-		//s_Data.RendererShader->SetUniform2f("light_pos", glm::vec2(4.0f, 1.5f));
-
 		StartBatch();
 	}
 
@@ -190,22 +184,23 @@ namespace dream { namespace graphics {
 			m_RenderableData->Color = c;
 			m_RenderableData++;
 
-			m_IndexCount += 6;
+			s_Data.renderableIndexCount += 6;
 		}
 	}
 
 	void Renderer2D::Flush()
 	{
+		uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.RenderableVertexBufferPtr - (uint8_t*)s_Data.RenderableVertexBufferBase);
+		s_Data.RendererBuffer->SetData(s_Data.RenderableVertexBufferBase, dataSize);
+
 		for (int i = 0; i < m_TextureSlots.size(); i++)
 		{
 			glActiveTexture(GL_TEXTURE0 + i);
 			glBindTexture(GL_TEXTURE_2D, m_TextureSlots[i]);
 		}
 
-		m_VertexArray->Bind();
-		m_IndexBuffer->Bind();
-		
-		glDrawElements(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_INT, nullptr);
+		s_Data.RendererVertexArray->Bind();
+		glDrawElements(GL_TRIANGLES, s_Data.renderableIndexCount, GL_UNSIGNED_INT, nullptr);
 
 		// For testing erase later.
 		glBegin(GL_TRIANGLES);
@@ -214,9 +209,6 @@ namespace dream { namespace graphics {
 		glVertex2f(0.5, -0.5);
 		glEnd();
 
-		m_IndexBuffer->Unbind();
-		m_VertexArray->Unbind();
-
-		m_IndexCount = 0;
+		s_Data.renderableIndexCount = 0;
 	}
 }}

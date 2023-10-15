@@ -45,6 +45,7 @@ namespace dream { namespace graphics {
 	void Layer::Render()
 	{
 		m_Shader->Enable();
+
 		m_Renderer->Begin();
 		m_Shader->SetUniformMat4("pr_matrix", m_Camera.GetProjectionMatrix());
 		m_Shader->SetUniformMat4("ml_matrix", glm::translate(m_Camera.GetViewMatrix(), m_Camera.GetPosition()));
