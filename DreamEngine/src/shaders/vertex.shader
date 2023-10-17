@@ -11,10 +11,10 @@ uniform mat4 ml_matrix = mat4(1.0);
 
 out DATA
 {
-vec4 position;
-vec2 uv;
-float tid;
-vec4 color;
+    vec4 position;
+    vec2 uv;
+    float tid;
+    vec4 color;
 } vs_out;
 
 void main()
