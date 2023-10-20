@@ -28,16 +28,16 @@ namespace dream { namespace graphics {
 				dataFormat = GL_RGB;
 			}
 
-			glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
-			glTextureStorage2D(m_RendererID, 1, internalFormat, m_Width, m_Height);
+			glCreateTextures(GL_TEXTURE_2D, 1, &m_TID);
+			glTextureStorage2D(m_TID, 1, internalFormat, m_Width, m_Height);
 
-			glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTextureParameteri(m_TID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTextureParameteri(m_TID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-			glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTextureParameteri(m_TID, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTextureParameteri(m_TID, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-			glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, data);
+			glTextureSubImage2D(m_TID, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, data);
 
 			stbi_image_free(data);
 		}
@@ -45,11 +45,11 @@ namespace dream { namespace graphics {
 
 	Texture2D::~Texture2D()
 	{
-		glDeleteTextures(1, &m_RendererID);
+		glDeleteTextures(1, &m_TID);
 	}
 
 	void Texture2D::Bind(uint32_t slot) const
 	{
-		glBindTextureUnit(slot, m_RendererID);
+		glBindTextureUnit(slot, m_TID);
 	}
 }}

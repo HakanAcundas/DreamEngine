@@ -17,7 +17,6 @@ namespace dream { namespace graphics {
 		shader->SetUniformMat4("pr_matrix", camera.GetProjectionMatrix());
 		shader->SetUniformMat4("ml_matrix", glm::translate(camera.GetViewMatrix(), camera.GetPosition()));
 		shader->SetUniform2f("light_pos", glm::vec2(4.0f, 1.5f));
-		m_Renderer->BeginScene(camera);
 		m_Shader->Disable();
 	}
 
@@ -34,7 +33,6 @@ namespace dream { namespace graphics {
 	void Layer::AddRenderable(Renderable* renderable)
 	{
 		m_Renderables.push_back(renderable);
-		m_Renderer->AddRenderable(renderable);
 	}
 
 	void Layer::RemoveRenderable(Renderable* renderable)
@@ -46,10 +44,14 @@ namespace dream { namespace graphics {
 	{
 		m_Shader->Enable();
 		m_Renderer->Begin();
+
 		m_Shader->SetUniformMat4("pr_matrix", m_Camera.GetProjectionMatrix());
 		m_Shader->SetUniformMat4("ml_matrix", glm::translate(m_Camera.GetViewMatrix(), m_Camera.GetPosition()));
-		m_Renderer->Render();
+		for (Renderable* renderable : m_Renderables)
+		{
+			m_Renderer->Render(renderable);
 
+		}
 		m_Renderer->End();
 		m_Renderer->Flush();
 	}

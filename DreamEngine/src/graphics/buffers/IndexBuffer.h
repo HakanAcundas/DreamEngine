@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 #include <GL/glew.h>
 
 namespace dream { namespace graphics {
@@ -10,7 +11,7 @@ namespace dream { namespace graphics {
 		unsigned int m_Count;
 	public:
 		IndexBuffer(unsigned int* indices, int count);
-		IndexBuffer(unsigned short* data, int count);
+		IndexBuffer(unsigned short* indices, int count);
 		~IndexBuffer();
 
 		void Bind();

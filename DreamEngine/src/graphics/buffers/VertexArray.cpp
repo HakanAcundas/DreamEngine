@@ -13,6 +13,7 @@ namespace dream { namespace graphics {
 		{
 			delete m_Buffers[i];
 		}
+		glDeleteVertexArrays(1, &m_ArrayID);
 	}
 
 	void VertexArray::Bind() const
@@ -32,14 +33,13 @@ namespace dream { namespace graphics {
 		for (BufferElement* element : buffer->GetBufferElements())
 		{
 			glEnableVertexAttribArray(m_BufferIndex);
-			glVertexAttribPointer(m_BufferIndex, element->Count, 
-				BufferElement::ShaderDataTypeToOpenGLBaseType(element->Type), element->Normalized ? GL_TRUE : GL_FALSE,
+			glVertexAttribPointer(m_BufferIndex, element->Count,
+				GL_FLOAT, element->Normalized ? GL_TRUE : GL_FALSE,
 				buffer->GetStride(),
 				(const void*)element->Offset);
 			m_BufferIndex++;
 		}
-		buffer->Unbind();
-		Unbind();
+		m_Buffers.push_back(buffer);
 	}
 
 	void VertexArray::SetIndexBuffer(IndexBuffer* indexBuffer)

@@ -39,7 +39,7 @@ namespace dream { namespace graphics {
 		m_BufferElements.push_back(element);
 	}
 
-	void Buffer::SetData(const void* data, unsigned int size)
+	void Buffer::SetData(const void* data, uint32_t size)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);

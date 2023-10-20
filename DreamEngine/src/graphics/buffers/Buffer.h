@@ -14,14 +14,14 @@ namespace dream { namespace graphics {
 	{
 		std::string Name;
 		ShaderDataType Type;
-		uint8_t Count = 1;
-		uint32_t Size;
-		size_t Offset;
+		uint32_t Count = 1;
+		unsigned int Size;
+		size_t Offset = 0;
 		bool Normalized;
 
 		BufferElement() = default;
 
-		BufferElement(const std::string& name, ShaderDataType type, uint8_t count, bool normalized = false)
+		BufferElement(const std::string& name, ShaderDataType type, unsigned int count, bool normalized = false)
 			: Name(name), Type(type), Count(count), Size(ShaderDataTypeSize(type)), Offset(0), Normalized(normalized)
 		{
 		}
@@ -59,7 +59,7 @@ namespace dream { namespace graphics {
 		unsigned int m_BufferID;
 		unsigned int m_ComponentCount;
 		std::vector<BufferElement*> m_BufferElements;
-		unsigned int m_Stride = 0;
+		uint32_t m_Stride = 0;
 
 	public:
 		Buffer(unsigned int size);
@@ -70,7 +70,7 @@ namespace dream { namespace graphics {
 		void Unbind() const;
 
 		void AddBufferElement(std::string name, ShaderDataType type, uint8_t count = 1, bool normalized = false);
-		void SetData(const void* data,  unsigned int size);
+		void SetData(const void* data, uint32_t size);
 		void CalculateStride();
 
 		inline unsigned int const GetCount() { return m_ComponentCount; }
