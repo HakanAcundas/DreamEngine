@@ -37,8 +37,8 @@ namespace dream { namespace graphics {
 
 		m_VertexArray->AddBuffer(m_Buffer);
 
-		int32_t* quadIndices = new int32_t[RENDERER_INDICES_SIZE];
-		int32_t offset = 0;
+		unsigned int* quadIndices = new unsigned int[RENDERER_INDICES_SIZE];
+		unsigned int offset = 0;
 		for (unsigned int i = 0; i < RENDERER_INDICES_SIZE; i += 6)
 		{
 			quadIndices[i + 0] = offset + 0;
@@ -83,7 +83,6 @@ namespace dream { namespace graphics {
 
 		unsigned int c = 0;
 		float ts = 0.0f;
-
 		if (tid > 0)
 		{
 			bool found = false;

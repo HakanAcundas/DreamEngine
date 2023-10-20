@@ -35,14 +35,12 @@ namespace dream {
 			"../DreamEngine/src/shaders/vertex.shader",
 			"../DreamEngine/src/shaders/fragment.shader");
 		TileLayer testLayer(shader, camera);
-		/*testLayer.AddRenderable(new Renderable(glm::vec3(1.0f, 0, 1), glm::vec2(10.0f, 10.0f), glm::vec4(0.31f, 0.0f, 1.0f, 1.0f)));
-		testLayer.AddRenderable(new Renderable(glm::vec3(0, 0, 1), glm::vec2(10.0f, 10.0f), glm::vec4(0.31f, 1.0f, 1.0f, 1.0f)));*/
 
 		for (float y = -9.0f; y < 9.0f; y += 0.5)
 		{
 			for (float x = -16.0f; x < 16.0f; x += 0.5)
 			{
-				testLayer.AddRenderable(new Renderable(glm::vec3(x, y, 1), glm::vec2(4.2f, 4.2f), glm::vec4(rand() % 1000 / 1000.0f, 0, 1, 1)));
+				testLayer.AddRenderable(new Renderable(glm::vec3(x, y, 1), glm::vec2(8.2f, 8.2f), glm::vec4(rand() % 1000 / 1000.0f, 0, 1, 1)));
 			}
 		}
 

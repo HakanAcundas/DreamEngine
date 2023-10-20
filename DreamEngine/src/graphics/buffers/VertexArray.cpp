@@ -1,4 +1,5 @@
 #include "VertexArray.h"
+#include "../renderer/Renderer2D.h"
 
 namespace dream { namespace graphics {
 
@@ -35,7 +36,7 @@ namespace dream { namespace graphics {
 			glEnableVertexAttribArray(m_BufferIndex);
 			glVertexAttribPointer(m_BufferIndex, element->Count,
 				BufferElement::ShaderDataTypeToOpenGLBaseType(element->Type), element->Normalized ? GL_TRUE : GL_FALSE,
-				buffer->GetStride(),
+				sizeof(RenderableData),
 				(const void*)element->Offset);
 			m_BufferIndex++;
 		}
