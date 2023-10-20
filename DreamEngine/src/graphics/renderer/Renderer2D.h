@@ -23,9 +23,9 @@ namespace dream { namespace graphics {
 	struct RenderableData
 	{
 		glm::vec3 Position;
-		unsigned int Color;
 		glm::vec2 TextureCoord;
 		float TextureID;
+		glm::vec4 Color;
 	};
 
 	class Renderer2D

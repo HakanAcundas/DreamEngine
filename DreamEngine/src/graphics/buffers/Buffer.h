@@ -14,7 +14,7 @@ namespace dream { namespace graphics {
 	{
 		std::string Name;
 		ShaderDataType Type;
-		unsigned int Count = 1;
+		uint32_t Count = 1;
 		unsigned int Size;
 		size_t Offset = 0;
 		bool Normalized;
@@ -59,7 +59,7 @@ namespace dream { namespace graphics {
 		unsigned int m_BufferID;
 		unsigned int m_ComponentCount;
 		std::vector<BufferElement*> m_BufferElements;
-		unsigned int m_Stride = 0;
+		uint32_t m_Stride = 0;
 
 	public:
 		Buffer(unsigned int size);

@@ -2,6 +2,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Renderer2D.h"
+#include <iostream>
 
 
 namespace dream { namespace graphics {
@@ -81,7 +82,7 @@ namespace dream { namespace graphics {
 		const std::vector<glm::vec2>& uv = renderable->GetUV();
 		const unsigned int tid = renderable->GetTID();
 
-		unsigned int c = 0;
+		//unsigned int c = 0;
 		float ts = 0.0f;
 		if (tid > 0)
 		{
@@ -113,36 +114,36 @@ namespace dream { namespace graphics {
 		}
 		else
 		{
-#pragma region Color Optimization
-			int r = color.x * 255.0f;
-			int g = color.y * 255.0f;
-			int b = color.z * 255.0f;
-			int a = color.w * 255.0f;
-
-			c = a << 24 | b << 16 | g << 8 | r;
-#pragma endregion
+//#pragma region Color Optimization
+//			int r = color.x * 255.0f;
+//			int g = color.y * 255.0f;
+//			int b = color.z * 255.0f;
+//			int a = color.w * 255.0f;
+//
+//			c = a << 24 | b << 16 | g << 8 | r;
+//#pragma endregion
 		}
 
 		m_RenderableData->Position = position;
-		m_RenderableData->Color = c;
+		m_RenderableData->Color = color;
 		m_RenderableData->TextureCoord = uv[0];
 		m_RenderableData->TextureID = ts;
 		m_RenderableData++;
 			
 		m_RenderableData->Position = glm::vec3(position.x, position.y + size.y, position.z);
-		m_RenderableData->Color = c;
+		m_RenderableData->Color = color;
 		m_RenderableData->TextureCoord = uv[1];
 		m_RenderableData->TextureID = ts;
 		m_RenderableData++;
 
 		m_RenderableData->Position = glm::vec3(position.x + size.x, position.y + size.y, position.z);
-		m_RenderableData->Color = c;
+		m_RenderableData->Color = color;
 		m_RenderableData->TextureCoord = uv[2];
 		m_RenderableData->TextureID = ts;
 		m_RenderableData++;
 			
 		m_RenderableData->Position = glm::vec3(position.x + size.x, position.y, position.z);
-		m_RenderableData->Color = c;
+		m_RenderableData->Color = color;
 		m_RenderableData->TextureCoord = uv[3];
 		m_RenderableData->TextureID = ts;
 		m_RenderableData++;
