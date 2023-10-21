@@ -76,7 +76,6 @@ namespace dream {
 				position.x -= 0.005f;
 				camera.SetPosition(position);
 			}
-			glClearColor(0.5, 0.5, 0.5, 1.0);
 			
 			testLayer.SetCamera(camera);
 			testLayer.Render();
