@@ -3935,7 +3935,19 @@
     <None Include="src\shaders\vertex.shader" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="images\test.png">
+    <Image Include="images\test1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\test2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\test3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\test4.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\test7.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

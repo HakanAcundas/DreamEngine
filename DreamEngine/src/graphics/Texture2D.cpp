@@ -5,6 +5,7 @@
 namespace dream { namespace graphics {
 
 	Texture2D::Texture2D(std::string path)
+		: m_Path(path)
 	{
 		int width, height, channels;
 		stbi_set_flip_vertically_on_load(1);
@@ -12,7 +13,6 @@ namespace dream { namespace graphics {
 
 		if (data)
 		{
-			m_IsLoaded = true;
 			m_Width = width;
 			m_Height = height;
 
@@ -48,8 +48,13 @@ namespace dream { namespace graphics {
 		glDeleteTextures(1, &m_TID);
 	}
 
-	void Texture2D::Bind(uint32_t slot) const
+	void Texture2D::Bind() const
 	{
-		glBindTextureUnit(slot, m_TID);
+		glBindTextureUnit(GL_TEXTURE_2D, m_TID);
+	}
+
+	void Texture2D::Unbind() const
+	{
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }}

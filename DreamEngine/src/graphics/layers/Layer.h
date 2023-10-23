@@ -22,5 +22,7 @@ namespace dream { namespace graphics {
 			void RemoveRenderable(Renderable* renderable);
 			virtual void Render();
 			void SetCamera(Camera& camera) { m_Camera = camera; }
+
+			Shader* GetShader() { return m_Shader; }
 		};
 }}

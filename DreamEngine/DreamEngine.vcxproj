@@ -57,6 +57,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -1394,7 +1395,11 @@
     <None Include="vendor\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="images\test.png" />
+    <Image Include="images\test1.png" />
+    <Image Include="images\test2.png" />
+    <Image Include="images\test3.png" />
+    <Image Include="images\test4.png" />
+    <Image Include="images\test7.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

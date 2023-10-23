@@ -26,8 +26,6 @@ namespace dream {
 		KeyInput inputHandlerEngine(keysTrack);
 		inputHandlerEngine.setupKeyInputs(*m_Window);
 
-		//Texture2D* testTexture = new Texture2D("../images/test.png");
-
 		Camera camera(-16.0f, 16.0f, -9.0f, 9.0f);
 		camera.SetPosition(glm::vec3(4, 3, 0));
 
@@ -36,13 +34,25 @@ namespace dream {
 			"../DreamEngine/src/shaders/fragment.shader");
 		TileLayer testLayer(shader, camera);
 
-		for (float y = -9.0f; y < 9.0f; y += 0.5)
+		Texture2D* textures[] =
 		{
-			for (float x = -16.0f; x < 16.0f; x += 0.5)
-			{
-				testLayer.AddRenderable(new Renderable(glm::vec3(x, y, 1), glm::vec2(8.2f, 8.2f), glm::vec4(rand() % 1000 / 1000.0f, 0, 1, 1)));
-			}
-		}
+			new Texture2D("images/test1.png"),
+			new Texture2D("images/test2.png"),
+			new Texture2D("images/test3.png"),
+			new Texture2D("images/test4.png"),
+			new Texture2D("images/test7.png")
+		};
+
+		//for (float y = -9.0f; y < 9.0f; y++)
+		//{
+		//	for (float x = -16.0f; x < 16.0f; x++)
+		//	{
+		//		//testLayer.AddRenderable(new Renderable(glm::vec3(x, y, 1), glm::vec2(0.9f, 0.9f), glm::vec4(rand() % 1000 / 1000.0f, 0, 1, 1)));
+		//		testLayer.AddRenderable(new Renderable(glm::vec3(x, y, 1), glm::vec2(0.9f, 0.9f), textures[rand() % 5]));
+		//	}
+		//}
+		testLayer.AddRenderable(new Renderable(glm::vec3(-10, -3, 1), glm::vec2(6.0f, 6.0f), textures[1]));
+		testLayer.AddRenderable(new Renderable(glm::vec3(10, 3, 1), glm::vec2(6.0f, 6.0f), textures[2]));
 
 		while (m_Running)
 		{
@@ -79,8 +89,6 @@ namespace dream {
 			
 			testLayer.SetCamera(camera);
 			testLayer.Render();
-			float time = (float)glfwGetTime();
-			m_LastFrameTime = time;
 			m_Window->update();
 		}
 	}

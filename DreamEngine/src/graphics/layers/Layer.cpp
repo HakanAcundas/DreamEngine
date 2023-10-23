@@ -16,7 +16,12 @@ namespace dream { namespace graphics {
 		m_Shader->Enable();
 		shader->SetUniformMat4("pr_matrix", camera.GetProjectionMatrix());
 		shader->SetUniformMat4("ml_matrix", glm::translate(camera.GetViewMatrix(), camera.GetPosition()));
-		shader->SetUniform2f("light_pos", glm::vec2(4.0f, 1.5f));
+		shader->SetUniform2f("light_pos", glm::vec2(0.0f, 0.0f));
+		GLint texIDs[] =
+		{
+			0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+		};
+		m_Shader->SetUniform1iv("textures", texIDs, 10);
 		m_Shader->Disable();
 	}
 
