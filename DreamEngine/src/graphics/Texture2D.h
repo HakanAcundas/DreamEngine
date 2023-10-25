@@ -21,6 +21,6 @@ namespace dream { namespace graphics {
 		const std::string GetPath() const { return m_Path; }
 		unsigned int GetHeight() const { return m_Height; }
 		unsigned int GetWidth() const { return m_Width; }
-		unsigned int TID() const { return m_TID; }
+		unsigned int GetTID() const { return m_TID; }
 	};
 }}

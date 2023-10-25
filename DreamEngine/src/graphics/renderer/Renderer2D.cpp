@@ -4,14 +4,10 @@
 #include "Renderer2D.h"
 #include <iostream>
 
-
 namespace dream { namespace graphics {
 
 	struct RendererData
 	{
-		std::vector<Texture2D*> TextureSlots;
-		unsigned int TextureSlotIndex = 1;
-
 		struct CameraData
 		{
 			glm::mat4 ViewProjection;
@@ -19,7 +15,8 @@ namespace dream { namespace graphics {
 		CameraData CameraBuffer;
 	};
 
-	static RendererData s_Data;
+	static RendererData r_Data;
+	Renderer2D* Renderer2D::renderer2d = nullptr;
 
 	Renderer2D::Renderer2D()
 	{
@@ -28,14 +25,16 @@ namespace dream { namespace graphics {
 
 	void Renderer2D::Init()
 	{
+		m_RenderableIndexCount = 0;
+		
 		m_VertexArray = new VertexArray();
 		m_Buffer = new Buffer(RENDERER_BUFFER_SIZE);
-		m_Buffer->AddBufferElement("shader_Position", ShaderDataType::Float, 3);
 		m_Buffer->AddBufferElement("shader_TexCoord", ShaderDataType::Float, 2);
 		m_Buffer->AddBufferElement("shader_TexIndex", ShaderDataType::Float, 1);
 		m_Buffer->AddBufferElement("shader_Color", ShaderDataType::Float, 4);
+		m_Buffer->AddBufferElement("shader_Position", ShaderDataType::Float, 3);
 		m_Buffer->CalculateStride();
-
+		
 		m_VertexArray->AddBuffer(m_Buffer);
 
 		unsigned int* quadIndices = new unsigned int[RENDERER_INDICES_SIZE];
@@ -72,17 +71,15 @@ namespace dream { namespace graphics {
 
 	// TO DO convert this function into DrawQuad (its is already converted but make a base 
 	// function to apply different variations of DrawQuad. Example DrawRotatedQuad etc...
-	void Renderer2D::Render(Renderable* renderable)
+	void Renderer2D::DrawRenderable(const glm::vec2& position, const glm::vec2& size, const Texture2D* texture, const glm::vec4& color)
 	{
-		const glm::vec3& position = renderable->GetPosition();
-		const glm::vec2& size = renderable->GetSize();
-		const glm::vec4& color = renderable->GetColor();
+		/*glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 0))
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });*/
 
 		// Texture Information
-		const std::vector<glm::vec2>& uv = renderable->GetUV();
-		const unsigned int tid = renderable->GetTID();
+		glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+		const unsigned int tid = texture->GetTID();
 
-		//unsigned int c = 0;
 		float ts = 0.0f;
 		if (tid > 0)
 		{
@@ -112,39 +109,93 @@ namespace dream { namespace graphics {
 				ts = (float)(m_TextureSlots.size());
 			}
 		}
-		else
+
+		m_RenderableData->Position = glm::vec3(position.x, position.y, 0);
+		m_RenderableData->Color = color;
+		m_RenderableData->TextureCoord = textureCoords[0];
+		m_RenderableData->TextureID = ts;
+		m_RenderableData++;
+
+		m_RenderableData->Position = glm::vec3(position.x, position.y + size.y, 0);
+		m_RenderableData->Color = color;
+		m_RenderableData->TextureCoord = textureCoords[1];
+		m_RenderableData->TextureID = ts;
+		m_RenderableData++;
+
+		m_RenderableData->Position = glm::vec3(position.x + size.x, position.y + size.y, 0);
+		m_RenderableData->Color = color;
+		m_RenderableData->TextureCoord = textureCoords[2];
+		m_RenderableData->TextureID = ts;
+		m_RenderableData++;
+
+		m_RenderableData->Position = glm::vec3(position.x + size.x, position.y, 0);
+		m_RenderableData->Color = color;
+		m_RenderableData->TextureCoord = textureCoords[3];
+		m_RenderableData->TextureID = ts;
+		m_RenderableData++;
+
+		m_RenderableIndexCount += 6;
+	}
+
+	void Renderer2D::DrawRenderable(const glm::vec2& position, const glm::vec2& size, const unsigned int tid, const glm::vec4& color)
+	{
+		//glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 0))
+		//	* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+
+		// Texture Information
+		glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+		float ts = 0.0f;
+
+		if (tid > 0)
 		{
-//#pragma region Color Optimization
-//			int r = color.x * 255.0f;
-//			int g = color.y * 255.0f;
-//			int b = color.z * 255.0f;
-//			int a = color.w * 255.0f;
-//
-//			c = a << 24 | b << 16 | g << 8 | r;
-//#pragma endregion
+			bool found = false;
+			// Search for texture ID
+			for (int i = 0; i < m_TextureSlots.size(); i++)
+			{
+				if (m_TextureSlots[i] == tid)
+				{
+					ts = (float)(i + 1);
+					found = true;
+					break;
+				}
+			}
+
+			if (!found)
+			{
+				// If the texture slots are full
+				if (m_TextureSlots.size() >= 32)
+				{
+					End();
+					Flush();
+					Begin();
+				}
+				// Else add the new texture ID to a slot
+				m_TextureSlots.push_back(tid);
+				ts = (float)(m_TextureSlots.size());
+			}
 		}
 
-		m_RenderableData->Position = position;
+		m_RenderableData->Position = glm::vec3(position.x, position.y, 1);
 		m_RenderableData->Color = color;
-		m_RenderableData->TextureCoord = uv[0];
-		m_RenderableData->TextureID = ts;
-		m_RenderableData++;
-			
-		m_RenderableData->Position = glm::vec3(position.x, position.y + size.y, position.z);
-		m_RenderableData->Color = color;
-		m_RenderableData->TextureCoord = uv[1];
+		m_RenderableData->TextureCoord = textureCoords[0];
 		m_RenderableData->TextureID = ts;
 		m_RenderableData++;
 
-		m_RenderableData->Position = glm::vec3(position.x + size.x, position.y + size.y, position.z);
+		m_RenderableData->Position = glm::vec3(position.x, position.y + size.y, 1);
 		m_RenderableData->Color = color;
-		m_RenderableData->TextureCoord = uv[2];
+		m_RenderableData->TextureCoord = textureCoords[1];
 		m_RenderableData->TextureID = ts;
 		m_RenderableData++;
-			
-		m_RenderableData->Position = glm::vec3(position.x + size.x, position.y, position.z);
+
+		m_RenderableData->Position = glm::vec3(position.x + size.x, position.y + size.y, 1);
 		m_RenderableData->Color = color;
-		m_RenderableData->TextureCoord = uv[3];
+		m_RenderableData->TextureCoord = textureCoords[2];
+		m_RenderableData->TextureID = ts;
+		m_RenderableData++;
+
+		m_RenderableData->Position = glm::vec3(position.x + size.x, position.y, 1);
+		m_RenderableData->Color = color;
+		m_RenderableData->TextureCoord = textureCoords[3];
 		m_RenderableData->TextureID = ts;
 		m_RenderableData++;
 

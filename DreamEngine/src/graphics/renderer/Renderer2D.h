@@ -31,27 +31,23 @@ namespace dream { namespace graphics {
 	class Renderer2D
 	{
 	private:
+		static Renderer2D *renderer2d;
+
 		Buffer* m_Buffer;
 		VertexArray* m_VertexArray;
 		IndexBuffer* m_IndexBuffer;
 		std::vector<unsigned int> m_TextureSlots;
-
 		RenderableData* m_RenderableData;
-		uint32_t m_RenderableIndexCount = 0;
-
+		uint32_t m_RenderableIndexCount;
 	public:
 		Renderer2D();
 		void Init();
-		void Shutdown();
-
-		void End();
 		void Begin();
-		void Render(Renderable* renderable);
+		void End();
+		void DrawRenderable(const glm::vec2& position, const glm::vec2& size, const Texture2D* texture, const glm::vec4& color);
+		void DrawRenderable(const glm::vec2& position, const glm::vec2& size, const unsigned int tid, const glm::vec4& color);
 		void Flush();
 
-
-		// Primitives
-		//void DrawRenderable(const Renderable* renderable);
-		//static void DrawRenderable(const glm::vec2& position, const glm::vec2& size, const Texture2D* texture, float tilingFactor = 1.0f, const glm::vec4& tintColor = glm::vec4(1.0f));
+		static Renderer2D* GetSingelton() { return renderer2d; }
 	};
 }}

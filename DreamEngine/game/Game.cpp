@@ -1,5 +1,5 @@
 #pragma once
-#include "Application.h"
+#include "Game.h"
 
 
 using namespace dream;
@@ -12,6 +12,7 @@ namespace dream {
 
 	Application::Application()
 	{
+		Renderer2D::GetSingelton()->Init();
 		m_Window = new Window("Dream Engine", SCREEN_WIDTH, SCREEN_HEIGHT, false);
 	}
 
@@ -32,7 +33,7 @@ namespace dream {
 		Shader* shader = new Shader(
 			"../DreamEngine/src/shaders/vertex.shader",
 			"../DreamEngine/src/shaders/fragment.shader");
-		TileLayer testLayer(shader, camera);
+		GameLayer testLayer(shader, &camera);
 
 		Texture2D* textures[] =
 		{
@@ -43,16 +44,17 @@ namespace dream {
 			new Texture2D("images/test7.png")
 		};
 
-		//for (float y = -9.0f; y < 9.0f; y++)
-		//{
-		//	for (float x = -16.0f; x < 16.0f; x++)
-		//	{
-		//		//testLayer.AddRenderable(new Renderable(glm::vec3(x, y, 1), glm::vec2(0.9f, 0.9f), glm::vec4(rand() % 1000 / 1000.0f, 0, 1, 1)));
-		//		testLayer.AddRenderable(new Renderable(glm::vec3(x, y, 1), glm::vec2(0.9f, 0.9f), textures[rand() % 5]));
-		//	}
-		//}
-		testLayer.AddRenderable(new Renderable(glm::vec3(-10, -3, 1), glm::vec2(6.0f, 6.0f), textures[1]));
-		testLayer.AddRenderable(new Renderable(glm::vec3(10, 3, 1), glm::vec2(6.0f, 6.0f), textures[2]));
+		for (float y = -9.0f; y < 9.0f; y++)
+		{
+			for (float x = -16.0f; x < 16.0f; x++)
+			{
+				testLayer.AddRenderable(new Renderable(glm::vec3(x, y, 1), glm::vec2(0.9f, 0.9f), glm::vec4(rand() % 1000 / 1000.0f, 0, 1, 1)));
+				testLayer.AddRenderable(new Renderable(glm::vec3(x, y, 1), glm::vec2(0.9f, 0.9f), textures[rand() % 5]));
+				//Renderer2D::DrawRenderable(glm::vec2(x, y), glm::vec2(0.9f, 0.9f), textures[rand() % 5], glm::vec4(rand() % 1000 / 1000.0f, 0, 1, 1));
+			}
+		}
+		//testLayer.AddRenderable(new Renderable(glm::vec3(-10, -3, 1), glm::vec2(6.0f, 6.0f), textures[1]));
+		//testLayer.AddRenderable(new Renderable(glm::vec3(10, 3, 1), glm::vec2(6.0f, 6.0f), textures[2]));
 
 		while (m_Running)
 		{
@@ -87,7 +89,7 @@ namespace dream {
 				camera.SetPosition(position);
 			}
 			
-			testLayer.SetCamera(camera);
+			testLayer.SetCamera(&camera);
 			testLayer.Render();
 			m_Window->update();
 		}

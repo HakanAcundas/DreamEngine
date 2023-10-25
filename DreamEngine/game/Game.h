@@ -1,8 +1,8 @@
 #pragma once
-#include "window/Window.h"
-#include "input/KeyInput.h"
-#include "input/inputCodes/KeyCodes.h"
-#include "graphics/layers/TileLayer.h"
+#include "../src/window/Window.h"
+#include "../src/input/KeyInput.h"
+#include "../src/input/inputCodes/KeyCodes.h"
+#include "GameLayer.h"
 #include <glfw/glfw3.h>
 
 namespace dream {
@@ -24,7 +24,4 @@ namespace dream {
 		float r = 0;
 	private:
 	};
-
-	//Application* createApplication();
-
 }

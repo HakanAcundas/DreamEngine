@@ -83,7 +83,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="game\GameLayer.cpp" />
+    <ClCompile Include="game\Game.cpp" />
     <ClCompile Include="src\graphics\buffers\Buffer.cpp" />
     <ClCompile Include="src\graphics\Camera.cpp" />
     <ClCompile Include="src\graphics\buffers\IndexBuffer.cpp" />
@@ -95,12 +96,13 @@
     <ClCompile Include="src\graphics\Texture2D.cpp" />
     <ClCompile Include="src\graphics\buffers\VertexArray.cpp" />
     <ClCompile Include="src\input\KeyInput.cpp" />
-    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="game\main.cpp" />
     <ClCompile Include="src\window\Window.cpp" />
     <ClCompile Include="vendor\stb_image\stb_vorbis.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Application.h" />
+    <ClInclude Include="game\GameLayer.h" />
+    <ClInclude Include="game\Game.h" />
     <ClInclude Include="src\graphics\buffers\Buffer.h" />
     <ClInclude Include="src\graphics\Camera.h" />
     <ClInclude Include="src\graphics\buffers\IndexBuffer.h" />
