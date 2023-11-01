@@ -19,28 +19,13 @@ namespace dream { namespace graphics {
 #define RENDERER_BUFFER_SIZE	RENDERER_SPRITE_SIZE * RENDERER_MAX_RENDERABLE
 #define RENDERER_INDICES_SIZE	RENDERER_MAX_RENDERABLE * 6
 
-	// Data that goes into Shader
-	struct RenderableData
-	{
-		glm::vec3 Position;
-		glm::vec2 TextureCoord;
-		float TextureID;
-		glm::vec4 Color;
-	};
-
 	class Renderer2D
 	{
 	private:
-		static Renderer2D *renderer2d;
-
-		Buffer* m_Buffer;
-		VertexArray* m_VertexArray;
-		IndexBuffer* m_IndexBuffer;
-		std::vector<unsigned int> m_TextureSlots;
-		RenderableData* m_RenderableData;
-		uint32_t m_RenderableIndexCount;
-	public:
+		static Renderer2D *singleton;
 		Renderer2D();
+	public:
+		Renderer2D(const Renderer2D* obj) = delete;
 		void Init();
 		void Begin();
 		void End();
@@ -48,6 +33,6 @@ namespace dream { namespace graphics {
 		void DrawRenderable(const glm::vec2& position, const glm::vec2& size, const unsigned int tid, const glm::vec4& color);
 		void Flush();
 
-		static Renderer2D* GetSingelton() { return renderer2d; }
+		static Renderer2D* GetSingleton() { return singleton; }
 	};
 }}

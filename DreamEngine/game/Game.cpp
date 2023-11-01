@@ -12,7 +12,6 @@ namespace dream {
 
 	Application::Application()
 	{
-		Renderer2D::GetSingelton()->Init();
 		m_Window = new Window("Dream Engine", SCREEN_WIDTH, SCREEN_HEIGHT, false);
 	}
 
@@ -23,6 +22,8 @@ namespace dream {
 
 	void Application::run()
 	{
+		Renderer2D::GetSingleton()->Init();
+
 		std::vector<int> keysTrack{ GLFW_KEY_ESCAPE ,GLFW_KEY_SPACE, GLFW_KEY_UP, GLFW_KEY_DOWN, GLFW_KEY_LEFT, GLFW_KEY_RIGHT };
 		KeyInput inputHandlerEngine(keysTrack);
 		inputHandlerEngine.setupKeyInputs(*m_Window);

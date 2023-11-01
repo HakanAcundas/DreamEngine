@@ -6,8 +6,24 @@
 
 namespace dream { namespace graphics {
 
+	// Data that goes into Shader
+	struct RenderableData
+	{
+		glm::vec3 Position;
+		glm::vec2 TextureCoord;
+		float TextureID;
+		glm::vec4 Color;
+	};
+
 	struct RendererData
 	{
+		Buffer* Buffer;
+		VertexArray* VertexArray;
+		IndexBuffer* IndexBuffer;
+		std::vector<unsigned int> TextureSlots;
+		RenderableData* RenderableData = nullptr;
+		uint32_t RenderableIndexCount;
+
 		struct CameraData
 		{
 			glm::mat4 ViewProjection;
@@ -16,26 +32,20 @@ namespace dream { namespace graphics {
 	};
 
 	static RendererData r_Data;
-	Renderer2D* Renderer2D::renderer2d = nullptr;
-
-	Renderer2D::Renderer2D()
-	{
-		Init();
-	}
+	Renderer2D *Renderer2D::singleton = nullptr;
 
 	void Renderer2D::Init()
 	{
-		m_RenderableIndexCount = 0;
+		r_Data.RenderableIndexCount = 0;
+		r_Data.VertexArray = new VertexArray();
+		r_Data.Buffer = new Buffer(RENDERER_BUFFER_SIZE);
+		r_Data.Buffer->AddBufferElement("shader_TexCoord", ShaderDataType::Float, 2);
+		r_Data.Buffer->AddBufferElement("shader_TexIndex", ShaderDataType::Float, 1);
+		r_Data.Buffer->AddBufferElement("shader_Color", ShaderDataType::Float, 4);
+		r_Data.Buffer->AddBufferElement("shader_Position", ShaderDataType::Float, 3);
+		r_Data.Buffer->CalculateStride();
 		
-		m_VertexArray = new VertexArray();
-		m_Buffer = new Buffer(RENDERER_BUFFER_SIZE);
-		m_Buffer->AddBufferElement("shader_TexCoord", ShaderDataType::Float, 2);
-		m_Buffer->AddBufferElement("shader_TexIndex", ShaderDataType::Float, 1);
-		m_Buffer->AddBufferElement("shader_Color", ShaderDataType::Float, 4);
-		m_Buffer->AddBufferElement("shader_Position", ShaderDataType::Float, 3);
-		m_Buffer->CalculateStride();
-		
-		m_VertexArray->AddBuffer(m_Buffer);
+		r_Data.VertexArray->AddBuffer(r_Data.Buffer);
 
 		unsigned int* quadIndices = new unsigned int[RENDERER_INDICES_SIZE];
 		unsigned int offset = 0;
@@ -52,21 +62,21 @@ namespace dream { namespace graphics {
 			offset += 4;
 		}
 
-		m_IndexBuffer = new IndexBuffer(quadIndices, RENDERER_INDICES_SIZE);
-		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
-		m_VertexArray->Unbind();
+		r_Data.IndexBuffer = new IndexBuffer(quadIndices, RENDERER_INDICES_SIZE);
+		r_Data.VertexArray->SetIndexBuffer(r_Data.IndexBuffer);
+		r_Data.VertexArray->Unbind();
 	}
 
 	void Renderer2D::Begin()
 	{
-		m_Buffer->Bind();
-		m_RenderableData = (RenderableData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+		r_Data.Buffer->Bind();
+		r_Data.RenderableData = (RenderableData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 	}
 
 	void Renderer2D::End()
 	{
 		glUnmapBuffer(GL_ARRAY_BUFFER);
-		m_Buffer->Unbind();
+		r_Data.Buffer->Unbind();
 	}
 
 	// TO DO convert this function into DrawQuad (its is already converted but make a base 
@@ -85,9 +95,9 @@ namespace dream { namespace graphics {
 		{
 			bool found = false;
 			// Search for texture ID
-			for (int i = 0; i < m_TextureSlots.size(); i++)
+			for (int i = 0; i < r_Data.TextureSlots.size(); i++)
 			{
-				if (m_TextureSlots[i] == tid)
+				if (r_Data.TextureSlots[i] == tid)
 				{
 					ts = (float)(i + 1);
 					found = true;
@@ -98,43 +108,43 @@ namespace dream { namespace graphics {
 			if (!found)
 			{
 				// If the texture slots are full
-				if (m_TextureSlots.size() >= 32)
+				if (r_Data.TextureSlots.size() >= 32)
 				{
 					End();
 					Flush();
 					Begin();
 				}
 				// Else add the new texture ID to a slot
-				m_TextureSlots.push_back(tid);
-				ts = (float)(m_TextureSlots.size());
+				r_Data.TextureSlots.push_back(tid);
+				ts = (float)(r_Data.TextureSlots.size());
 			}
 		}
 
-		m_RenderableData->Position = glm::vec3(position.x, position.y, 0);
-		m_RenderableData->Color = color;
-		m_RenderableData->TextureCoord = textureCoords[0];
-		m_RenderableData->TextureID = ts;
-		m_RenderableData++;
-
-		m_RenderableData->Position = glm::vec3(position.x, position.y + size.y, 0);
-		m_RenderableData->Color = color;
-		m_RenderableData->TextureCoord = textureCoords[1];
-		m_RenderableData->TextureID = ts;
-		m_RenderableData++;
-
-		m_RenderableData->Position = glm::vec3(position.x + size.x, position.y + size.y, 0);
-		m_RenderableData->Color = color;
-		m_RenderableData->TextureCoord = textureCoords[2];
-		m_RenderableData->TextureID = ts;
-		m_RenderableData++;
-
-		m_RenderableData->Position = glm::vec3(position.x + size.x, position.y, 0);
-		m_RenderableData->Color = color;
-		m_RenderableData->TextureCoord = textureCoords[3];
-		m_RenderableData->TextureID = ts;
-		m_RenderableData++;
-
-		m_RenderableIndexCount += 6;
+		r_Data.RenderableData->Position = glm::vec3(position.x, position.y, 0);
+		r_Data.RenderableData->Color = color;
+		r_Data.RenderableData->TextureCoord = textureCoords[0];
+		r_Data.RenderableData->TextureID = ts;
+		r_Data.RenderableData++;
+		
+		r_Data.RenderableData->Position = glm::vec3(position.x, position.y + size.y, 0);
+		r_Data.RenderableData->Color = color;
+		r_Data.RenderableData->TextureCoord = textureCoords[1];
+		r_Data.RenderableData->TextureID = ts;
+		r_Data.RenderableData++;
+		
+		r_Data.RenderableData->Position = glm::vec3(position.x + size.x, position.y + size.y, 0);
+		r_Data.RenderableData->Color = color;
+		r_Data.RenderableData->TextureCoord = textureCoords[2];
+		r_Data.RenderableData->TextureID = ts;
+		r_Data.RenderableData++;
+		
+		r_Data.RenderableData->Position = glm::vec3(position.x + size.x, position.y, 0);
+		r_Data.RenderableData->Color = color;
+		r_Data.RenderableData->TextureCoord = textureCoords[3];
+		r_Data.RenderableData->TextureID = ts;
+		r_Data.RenderableData++;
+		
+		r_Data.RenderableIndexCount += 6;
 	}
 
 	void Renderer2D::DrawRenderable(const glm::vec2& position, const glm::vec2& size, const unsigned int tid, const glm::vec4& color)
@@ -150,9 +160,9 @@ namespace dream { namespace graphics {
 		{
 			bool found = false;
 			// Search for texture ID
-			for (int i = 0; i < m_TextureSlots.size(); i++)
+			for (int i = 0; i < r_Data.TextureSlots.size(); i++)
 			{
-				if (m_TextureSlots[i] == tid)
+				if (r_Data.TextureSlots[i] == tid)
 				{
 					ts = (float)(i + 1);
 					found = true;
@@ -163,59 +173,59 @@ namespace dream { namespace graphics {
 			if (!found)
 			{
 				// If the texture slots are full
-				if (m_TextureSlots.size() >= 32)
+				if (r_Data.TextureSlots.size() >= 32)
 				{
 					End();
 					Flush();
 					Begin();
 				}
 				// Else add the new texture ID to a slot
-				m_TextureSlots.push_back(tid);
-				ts = (float)(m_TextureSlots.size());
+				r_Data.TextureSlots.push_back(tid);
+				ts = (float)(r_Data.TextureSlots.size());
 			}
 		}
 
-		m_RenderableData->Position = glm::vec3(position.x, position.y, 1);
-		m_RenderableData->Color = color;
-		m_RenderableData->TextureCoord = textureCoords[0];
-		m_RenderableData->TextureID = ts;
-		m_RenderableData++;
-
-		m_RenderableData->Position = glm::vec3(position.x, position.y + size.y, 1);
-		m_RenderableData->Color = color;
-		m_RenderableData->TextureCoord = textureCoords[1];
-		m_RenderableData->TextureID = ts;
-		m_RenderableData++;
-
-		m_RenderableData->Position = glm::vec3(position.x + size.x, position.y + size.y, 1);
-		m_RenderableData->Color = color;
-		m_RenderableData->TextureCoord = textureCoords[2];
-		m_RenderableData->TextureID = ts;
-		m_RenderableData++;
-
-		m_RenderableData->Position = glm::vec3(position.x + size.x, position.y, 1);
-		m_RenderableData->Color = color;
-		m_RenderableData->TextureCoord = textureCoords[3];
-		m_RenderableData->TextureID = ts;
-		m_RenderableData++;
-
-		m_RenderableIndexCount += 6;
+		r_Data.RenderableData->Position = glm::vec3(position.x, position.y, 1);
+		r_Data.RenderableData->Color = color;
+		r_Data.RenderableData->TextureCoord = textureCoords[0];
+		r_Data.RenderableData->TextureID = ts;
+		r_Data.RenderableData++;
+		
+		r_Data.RenderableData->Position = glm::vec3(position.x, position.y + size.y, 1);
+		r_Data.RenderableData->Color = color;
+		r_Data.RenderableData->TextureCoord = textureCoords[1];
+		r_Data.RenderableData->TextureID = ts;
+		r_Data.RenderableData++;
+		
+		r_Data.RenderableData->Position = glm::vec3(position.x + size.x, position.y + size.y, 1);
+		r_Data.RenderableData->Color = color;
+		r_Data.RenderableData->TextureCoord = textureCoords[2];
+		r_Data.RenderableData->TextureID = ts;
+		r_Data.RenderableData++;
+		
+		r_Data.RenderableData->Position = glm::vec3(position.x + size.x, position.y, 1);
+		r_Data.RenderableData->Color = color;
+		r_Data.RenderableData->TextureCoord = textureCoords[3];
+		r_Data.RenderableData->TextureID = ts;
+		r_Data.RenderableData++;
+		
+		r_Data.RenderableIndexCount += 6;
 	}
 
 	void Renderer2D::Flush()
 	{
-		for (int i = 0; i < m_TextureSlots.size(); i++)
+		for (int i = 0; i < r_Data.TextureSlots.size(); i++)
 		{
 			glActiveTexture(GL_TEXTURE0 + i);
-			glBindTexture(GL_TEXTURE_2D, m_TextureSlots[i]);
+			glBindTexture(GL_TEXTURE_2D, r_Data.TextureSlots[i]);
 		}
 
-		m_VertexArray->Bind();
-		m_IndexBuffer->Bind();
-		glDrawElements(GL_TRIANGLES, m_RenderableIndexCount, GL_UNSIGNED_INT, NULL);
-		m_IndexBuffer->Unbind();
-		m_VertexArray->Unbind();
-
-		m_RenderableIndexCount = 0;
+		r_Data.VertexArray->Bind();
+		r_Data.IndexBuffer->Bind();
+		glDrawElements(GL_TRIANGLES, r_Data.RenderableIndexCount, GL_UNSIGNED_INT, NULL);
+		r_Data.IndexBuffer->Unbind();
+		r_Data.VertexArray->Unbind();
+		
+		r_Data.RenderableIndexCount = 0;
 	}
 }}
