@@ -57,6 +57,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -82,30 +83,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="game\GameLayer.cpp" />
+    <ClCompile Include="game\Game.cpp" />
     <ClCompile Include="src\graphics\buffers\Buffer.cpp" />
     <ClCompile Include="src\graphics\Camera.cpp" />
     <ClCompile Include="src\graphics\buffers\IndexBuffer.cpp" />
     <ClCompile Include="src\graphics\layers\Group.cpp" />
     <ClCompile Include="src\graphics\layers\Layer.cpp" />
-    <ClCompile Include="src\graphics\layers\TileLayer.cpp" />
     <ClCompile Include="src\graphics\renderer\Renderer2D.cpp" />
     <ClCompile Include="src\graphics\Shader.cpp" />
     <ClCompile Include="src\graphics\Texture2D.cpp" />
     <ClCompile Include="src\graphics\buffers\VertexArray.cpp" />
     <ClCompile Include="src\input\KeyInput.cpp" />
-    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="game\main.cpp" />
     <ClCompile Include="src\window\Window.cpp" />
     <ClCompile Include="vendor\stb_image\stb_vorbis.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Application.h" />
+    <ClInclude Include="game\GameLayer.h" />
+    <ClInclude Include="game\Game.h" />
     <ClInclude Include="src\graphics\buffers\Buffer.h" />
     <ClInclude Include="src\graphics\Camera.h" />
     <ClInclude Include="src\graphics\buffers\IndexBuffer.h" />
     <ClInclude Include="src\graphics\layers\Group.h" />
     <ClInclude Include="src\graphics\layers\Layer.h" />
-    <ClInclude Include="src\graphics\layers\TileLayer.h" />
     <ClInclude Include="src\graphics\Renderable.h" />
     <ClInclude Include="src\graphics\renderer\Renderer2D.h" />
     <ClInclude Include="src\graphics\Shader.h" />
@@ -1394,7 +1395,11 @@
     <None Include="vendor\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="images\test.png" />
+    <Image Include="images\test1.png" />
+    <Image Include="images\test2.png" />
+    <Image Include="images\test3.png" />
+    <Image Include="images\test4.png" />
+    <Image Include="images\test7.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -19,39 +19,20 @@ namespace dream { namespace graphics {
 #define RENDERER_BUFFER_SIZE	RENDERER_SPRITE_SIZE * RENDERER_MAX_RENDERABLE
 #define RENDERER_INDICES_SIZE	RENDERER_MAX_RENDERABLE * 6
 
-	// Data that goes into Shader
-	struct RenderableData
-	{
-		glm::vec3 Position;
-		glm::vec2 TextureCoord;
-		float TextureID;
-		glm::vec4 Color;
-	};
-
 	class Renderer2D
 	{
 	private:
-		Buffer* m_Buffer;
-		VertexArray* m_VertexArray;
-		IndexBuffer* m_IndexBuffer;
-		std::vector<unsigned int> m_TextureSlots;
-
-		RenderableData* m_RenderableData;
-		uint32_t m_RenderableIndexCount = 0;
-
-	public:
+		static Renderer2D *singleton;
 		Renderer2D();
+	public:
+		Renderer2D(const Renderer2D* obj) = delete;
 		void Init();
-		void Shutdown();
-
-		void End();
 		void Begin();
-		void Render(Renderable* renderable);
+		void End();
+		void DrawRenderable(const glm::vec2& position, const glm::vec2& size, const Texture2D* texture, const glm::vec4& color);
+		void DrawRenderable(const glm::vec2& position, const glm::vec2& size, const unsigned int tid, const glm::vec4& color);
 		void Flush();
 
-
-		// Primitives
-		//void DrawRenderable(const Renderable* renderable);
-		//static void DrawRenderable(const glm::vec2& position, const glm::vec2& size, const Texture2D* texture, float tilingFactor = 1.0f, const glm::vec4& tintColor = glm::vec4(1.0f));
+		static Renderer2D* GetSingleton() { return singleton; }
 	};
 }}

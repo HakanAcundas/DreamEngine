@@ -33,6 +33,16 @@ namespace dream { namespace graphics {
 			m_TextureCoordinate.push_back(glm::vec2(1, 0));
 		}
 
+		Renderable(glm::vec3 position, glm::vec2 size, Texture2D* texture)
+			: m_Position(position), m_Size(size), m_Color(glm::vec4(1, 0, 1, 0))
+		{
+			m_Texture = texture;
+			m_TextureCoordinate.push_back(glm::vec2(0, 0));
+			m_TextureCoordinate.push_back(glm::vec2(0, 1));
+			m_TextureCoordinate.push_back(glm::vec2(1, 1));
+			m_TextureCoordinate.push_back(glm::vec2(1, 0));
+		}
+
 		~Renderable() 
 		{ 
 
@@ -42,6 +52,6 @@ namespace dream { namespace graphics {
 		inline const glm::vec2& GetSize() const { return m_Size; }
 		inline const glm::vec4& GetColor() const { return m_Color; }
 		inline const std::vector<glm::vec2>& GetUV() const { return m_TextureCoordinate; }
-		inline const unsigned int GetTID() const { return m_Texture == nullptr ? 0 : m_Texture->TID(); }
+		inline const unsigned int GetTID() const { return m_Texture == nullptr ? 0 : m_Texture->GetTID(); }
 	};
 }}

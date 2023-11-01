@@ -1,5 +1,5 @@
 #pragma once
-#include "Application.h"
+#include "Game.h"
 
 
 using namespace dream;
@@ -22,11 +22,11 @@ namespace dream {
 
 	void Application::run()
 	{
+		Renderer2D::GetSingleton()->Init();
+
 		std::vector<int> keysTrack{ GLFW_KEY_ESCAPE ,GLFW_KEY_SPACE, GLFW_KEY_UP, GLFW_KEY_DOWN, GLFW_KEY_LEFT, GLFW_KEY_RIGHT };
 		KeyInput inputHandlerEngine(keysTrack);
 		inputHandlerEngine.setupKeyInputs(*m_Window);
-
-		//Texture2D* testTexture = new Texture2D("../images/test.png");
 
 		Camera camera(-16.0f, 16.0f, -9.0f, 9.0f);
 		camera.SetPosition(glm::vec3(4, 3, 0));
@@ -34,15 +34,28 @@ namespace dream {
 		Shader* shader = new Shader(
 			"../DreamEngine/src/shaders/vertex.shader",
 			"../DreamEngine/src/shaders/fragment.shader");
-		TileLayer testLayer(shader, camera);
+		GameLayer testLayer(shader, &camera);
 
-		for (float y = -9.0f; y < 9.0f; y += 0.5)
+		Texture2D* textures[] =
 		{
-			for (float x = -16.0f; x < 16.0f; x += 0.5)
+			new Texture2D("images/test1.png"),
+			new Texture2D("images/test2.png"),
+			new Texture2D("images/test3.png"),
+			new Texture2D("images/test4.png"),
+			new Texture2D("images/test7.png")
+		};
+
+		for (float y = -9.0f; y < 9.0f; y++)
+		{
+			for (float x = -16.0f; x < 16.0f; x++)
 			{
-				testLayer.AddRenderable(new Renderable(glm::vec3(x, y, 1), glm::vec2(8.2f, 8.2f), glm::vec4(rand() % 1000 / 1000.0f, 0, 1, 1)));
+				testLayer.AddRenderable(new Renderable(glm::vec3(x, y, 1), glm::vec2(0.9f, 0.9f), glm::vec4(rand() % 1000 / 1000.0f, 0, 1, 1)));
+				testLayer.AddRenderable(new Renderable(glm::vec3(x, y, 1), glm::vec2(0.9f, 0.9f), textures[rand() % 5]));
+				//Renderer2D::DrawRenderable(glm::vec2(x, y), glm::vec2(0.9f, 0.9f), textures[rand() % 5], glm::vec4(rand() % 1000 / 1000.0f, 0, 1, 1));
 			}
 		}
+		//testLayer.AddRenderable(new Renderable(glm::vec3(-10, -3, 1), glm::vec2(6.0f, 6.0f), textures[1]));
+		//testLayer.AddRenderable(new Renderable(glm::vec3(10, 3, 1), glm::vec2(6.0f, 6.0f), textures[2]));
 
 		while (m_Running)
 		{
@@ -76,12 +89,9 @@ namespace dream {
 				position.x -= 0.005f;
 				camera.SetPosition(position);
 			}
-			glClearColor(0.5, 0.5, 0.5, 1.0);
 			
-			testLayer.SetCamera(camera);
+			testLayer.SetCamera(&camera);
 			testLayer.Render();
-			float time = (float)glfwGetTime();
-			m_LastFrameTime = time;
 			m_Window->update();
 		}
 	}

@@ -4,13 +4,25 @@
 #include "Renderer2D.h"
 #include <iostream>
 
-
 namespace dream { namespace graphics {
+
+	// Data that goes into Shader
+	struct RenderableData
+	{
+		glm::vec3 Position;
+		glm::vec2 TextureCoord;
+		float TextureID;
+		glm::vec4 Color;
+	};
 
 	struct RendererData
 	{
-		std::vector<Texture2D*> TextureSlots;
-		unsigned int TextureSlotIndex = 1;
+		Buffer* Buffer;
+		VertexArray* VertexArray;
+		IndexBuffer* IndexBuffer;
+		std::vector<unsigned int> TextureSlots;
+		RenderableData* RenderableData = nullptr;
+		uint32_t RenderableIndexCount;
 
 		struct CameraData
 		{
@@ -19,24 +31,21 @@ namespace dream { namespace graphics {
 		CameraData CameraBuffer;
 	};
 
-	static RendererData s_Data;
-
-	Renderer2D::Renderer2D()
-	{
-		Init();
-	}
+	static RendererData r_Data;
+	Renderer2D *Renderer2D::singleton = nullptr;
 
 	void Renderer2D::Init()
 	{
-		m_VertexArray = new VertexArray();
-		m_Buffer = new Buffer(RENDERER_BUFFER_SIZE);
-		m_Buffer->AddBufferElement("shader_Position", ShaderDataType::Float, 3);
-		m_Buffer->AddBufferElement("shader_TexCoord", ShaderDataType::Float, 2);
-		m_Buffer->AddBufferElement("shader_TexIndex", ShaderDataType::Float, 1);
-		m_Buffer->AddBufferElement("shader_Color", ShaderDataType::Float, 4);
-		m_Buffer->CalculateStride();
-
-		m_VertexArray->AddBuffer(m_Buffer);
+		r_Data.RenderableIndexCount = 0;
+		r_Data.VertexArray = new VertexArray();
+		r_Data.Buffer = new Buffer(RENDERER_BUFFER_SIZE);
+		r_Data.Buffer->AddBufferElement("shader_TexCoord", ShaderDataType::Float, 2);
+		r_Data.Buffer->AddBufferElement("shader_TexIndex", ShaderDataType::Float, 1);
+		r_Data.Buffer->AddBufferElement("shader_Color", ShaderDataType::Float, 4);
+		r_Data.Buffer->AddBufferElement("shader_Position", ShaderDataType::Float, 3);
+		r_Data.Buffer->CalculateStride();
+		
+		r_Data.VertexArray->AddBuffer(r_Data.Buffer);
 
 		unsigned int* quadIndices = new unsigned int[RENDERER_INDICES_SIZE];
 		unsigned int offset = 0;
@@ -53,44 +62,42 @@ namespace dream { namespace graphics {
 			offset += 4;
 		}
 
-		m_IndexBuffer = new IndexBuffer(quadIndices, RENDERER_INDICES_SIZE);
-		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
-		m_VertexArray->Unbind();
+		r_Data.IndexBuffer = new IndexBuffer(quadIndices, RENDERER_INDICES_SIZE);
+		r_Data.VertexArray->SetIndexBuffer(r_Data.IndexBuffer);
+		r_Data.VertexArray->Unbind();
 	}
 
 	void Renderer2D::Begin()
 	{
-		m_Buffer->Bind();
-		m_RenderableData = (RenderableData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+		r_Data.Buffer->Bind();
+		r_Data.RenderableData = (RenderableData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 	}
 
 	void Renderer2D::End()
 	{
 		glUnmapBuffer(GL_ARRAY_BUFFER);
-		m_Buffer->Unbind();
+		r_Data.Buffer->Unbind();
 	}
 
 	// TO DO convert this function into DrawQuad (its is already converted but make a base 
 	// function to apply different variations of DrawQuad. Example DrawRotatedQuad etc...
-	void Renderer2D::Render(Renderable* renderable)
+	void Renderer2D::DrawRenderable(const glm::vec2& position, const glm::vec2& size, const Texture2D* texture, const glm::vec4& color)
 	{
-		const glm::vec3& position = renderable->GetPosition();
-		const glm::vec2& size = renderable->GetSize();
-		const glm::vec4& color = renderable->GetColor();
+		/*glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 0))
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });*/
 
 		// Texture Information
-		const std::vector<glm::vec2>& uv = renderable->GetUV();
-		const unsigned int tid = renderable->GetTID();
+		glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+		const unsigned int tid = texture->GetTID();
 
-		//unsigned int c = 0;
 		float ts = 0.0f;
 		if (tid > 0)
 		{
 			bool found = false;
 			// Search for texture ID
-			for (int i = 0; i < m_TextureSlots.size(); i++)
+			for (int i = 0; i < r_Data.TextureSlots.size(); i++)
 			{
-				if (m_TextureSlots[i] == tid)
+				if (r_Data.TextureSlots[i] == tid)
 				{
 					ts = (float)(i + 1);
 					found = true;
@@ -101,70 +108,124 @@ namespace dream { namespace graphics {
 			if (!found)
 			{
 				// If the texture slots are full
-				if (m_TextureSlots.size() >= 32)
+				if (r_Data.TextureSlots.size() >= 32)
 				{
 					End();
 					Flush();
 					Begin();
 				}
 				// Else add the new texture ID to a slot
-				m_TextureSlots.push_back(tid);
-				ts = (float)(m_TextureSlots.size());
+				r_Data.TextureSlots.push_back(tid);
+				ts = (float)(r_Data.TextureSlots.size());
 			}
 		}
-		else
+
+		r_Data.RenderableData->Position = glm::vec3(position.x, position.y, 0);
+		r_Data.RenderableData->Color = color;
+		r_Data.RenderableData->TextureCoord = textureCoords[0];
+		r_Data.RenderableData->TextureID = ts;
+		r_Data.RenderableData++;
+		
+		r_Data.RenderableData->Position = glm::vec3(position.x, position.y + size.y, 0);
+		r_Data.RenderableData->Color = color;
+		r_Data.RenderableData->TextureCoord = textureCoords[1];
+		r_Data.RenderableData->TextureID = ts;
+		r_Data.RenderableData++;
+		
+		r_Data.RenderableData->Position = glm::vec3(position.x + size.x, position.y + size.y, 0);
+		r_Data.RenderableData->Color = color;
+		r_Data.RenderableData->TextureCoord = textureCoords[2];
+		r_Data.RenderableData->TextureID = ts;
+		r_Data.RenderableData++;
+		
+		r_Data.RenderableData->Position = glm::vec3(position.x + size.x, position.y, 0);
+		r_Data.RenderableData->Color = color;
+		r_Data.RenderableData->TextureCoord = textureCoords[3];
+		r_Data.RenderableData->TextureID = ts;
+		r_Data.RenderableData++;
+		
+		r_Data.RenderableIndexCount += 6;
+	}
+
+	void Renderer2D::DrawRenderable(const glm::vec2& position, const glm::vec2& size, const unsigned int tid, const glm::vec4& color)
+	{
+		//glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 0))
+		//	* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+
+		// Texture Information
+		glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+		float ts = 0.0f;
+
+		if (tid > 0)
 		{
-//#pragma region Color Optimization
-//			int r = color.x * 255.0f;
-//			int g = color.y * 255.0f;
-//			int b = color.z * 255.0f;
-//			int a = color.w * 255.0f;
-//
-//			c = a << 24 | b << 16 | g << 8 | r;
-//#pragma endregion
+			bool found = false;
+			// Search for texture ID
+			for (int i = 0; i < r_Data.TextureSlots.size(); i++)
+			{
+				if (r_Data.TextureSlots[i] == tid)
+				{
+					ts = (float)(i + 1);
+					found = true;
+					break;
+				}
+			}
+
+			if (!found)
+			{
+				// If the texture slots are full
+				if (r_Data.TextureSlots.size() >= 32)
+				{
+					End();
+					Flush();
+					Begin();
+				}
+				// Else add the new texture ID to a slot
+				r_Data.TextureSlots.push_back(tid);
+				ts = (float)(r_Data.TextureSlots.size());
+			}
 		}
 
-		m_RenderableData->Position = position;
-		m_RenderableData->Color = color;
-		m_RenderableData->TextureCoord = uv[0];
-		m_RenderableData->TextureID = ts;
-		m_RenderableData++;
-			
-		m_RenderableData->Position = glm::vec3(position.x, position.y + size.y, position.z);
-		m_RenderableData->Color = color;
-		m_RenderableData->TextureCoord = uv[1];
-		m_RenderableData->TextureID = ts;
-		m_RenderableData++;
-
-		m_RenderableData->Position = glm::vec3(position.x + size.x, position.y + size.y, position.z);
-		m_RenderableData->Color = color;
-		m_RenderableData->TextureCoord = uv[2];
-		m_RenderableData->TextureID = ts;
-		m_RenderableData++;
-			
-		m_RenderableData->Position = glm::vec3(position.x + size.x, position.y, position.z);
-		m_RenderableData->Color = color;
-		m_RenderableData->TextureCoord = uv[3];
-		m_RenderableData->TextureID = ts;
-		m_RenderableData++;
-
-		m_RenderableIndexCount += 6;
+		r_Data.RenderableData->Position = glm::vec3(position.x, position.y, 1);
+		r_Data.RenderableData->Color = color;
+		r_Data.RenderableData->TextureCoord = textureCoords[0];
+		r_Data.RenderableData->TextureID = ts;
+		r_Data.RenderableData++;
+		
+		r_Data.RenderableData->Position = glm::vec3(position.x, position.y + size.y, 1);
+		r_Data.RenderableData->Color = color;
+		r_Data.RenderableData->TextureCoord = textureCoords[1];
+		r_Data.RenderableData->TextureID = ts;
+		r_Data.RenderableData++;
+		
+		r_Data.RenderableData->Position = glm::vec3(position.x + size.x, position.y + size.y, 1);
+		r_Data.RenderableData->Color = color;
+		r_Data.RenderableData->TextureCoord = textureCoords[2];
+		r_Data.RenderableData->TextureID = ts;
+		r_Data.RenderableData++;
+		
+		r_Data.RenderableData->Position = glm::vec3(position.x + size.x, position.y, 1);
+		r_Data.RenderableData->Color = color;
+		r_Data.RenderableData->TextureCoord = textureCoords[3];
+		r_Data.RenderableData->TextureID = ts;
+		r_Data.RenderableData++;
+		
+		r_Data.RenderableIndexCount += 6;
 	}
 
 	void Renderer2D::Flush()
 	{
-		for (int i = 0; i < m_TextureSlots.size(); i++)
+		for (int i = 0; i < r_Data.TextureSlots.size(); i++)
 		{
 			glActiveTexture(GL_TEXTURE0 + i);
-			glBindTexture(GL_TEXTURE_2D, m_TextureSlots[i]);
+			glBindTexture(GL_TEXTURE_2D, r_Data.TextureSlots[i]);
 		}
 
-		m_VertexArray->Bind();
-		m_IndexBuffer->Bind();
-		glDrawElements(GL_TRIANGLES, m_RenderableIndexCount, GL_UNSIGNED_INT, NULL);
-		m_IndexBuffer->Unbind();
-		m_VertexArray->Unbind();
-
-		m_RenderableIndexCount = 0;
+		r_Data.VertexArray->Bind();
+		r_Data.IndexBuffer->Bind();
+		glDrawElements(GL_TRIANGLES, r_Data.RenderableIndexCount, GL_UNSIGNED_INT, NULL);
+		r_Data.IndexBuffer->Unbind();
+		r_Data.VertexArray->Unbind();
+		
+		r_Data.RenderableIndexCount = 0;
 	}
 }}
