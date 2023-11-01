@@ -90,7 +90,6 @@
     <ClCompile Include="src\graphics\buffers\IndexBuffer.cpp" />
     <ClCompile Include="src\graphics\layers\Group.cpp" />
     <ClCompile Include="src\graphics\layers\Layer.cpp" />
-    <ClCompile Include="src\graphics\layers\TileLayer.cpp" />
     <ClCompile Include="src\graphics\renderer\Renderer2D.cpp" />
     <ClCompile Include="src\graphics\Shader.cpp" />
     <ClCompile Include="src\graphics\Texture2D.cpp" />
@@ -108,7 +107,6 @@
     <ClInclude Include="src\graphics\buffers\IndexBuffer.h" />
     <ClInclude Include="src\graphics\layers\Group.h" />
     <ClInclude Include="src\graphics\layers\Layer.h" />
-    <ClInclude Include="src\graphics\layers\TileLayer.h" />
     <ClInclude Include="src\graphics\Renderable.h" />
     <ClInclude Include="src\graphics\renderer\Renderer2D.h" />
     <ClInclude Include="src\graphics\Shader.h" />

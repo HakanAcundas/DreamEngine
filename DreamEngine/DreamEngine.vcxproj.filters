@@ -57,9 +57,6 @@
     <ClCompile Include="src\graphics\buffers\VertexArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\layers\TileLayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="game\GameLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -2676,9 +2673,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics\buffers\VertexArray.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\layers\TileLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\GameLayer.h">
