@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="game\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\window\window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -36,9 +33,6 @@
     <ClCompile Include="vendor\stb_image\stb_vorbis.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\graphics\buffers\Buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -55,9 +49,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\buffers\VertexArray.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="game\GameLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -2651,9 +2642,6 @@
     <ClInclude Include="vendor\stb_image\stb_voxel_render.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\graphics\buffers\Buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -2673,9 +2661,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics\buffers\VertexArray.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game\GameLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -3933,22 +3918,5 @@
     </None>
     <None Include="src\shaders\fragment.shader" />
     <None Include="src\shaders\vertex.shader" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="images\test1.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="images\test2.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="images\test3.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="images\test4.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="images\test7.png">
-      <Filter>Resource Files</Filter>
-    </Image>
   </ItemGroup>
 </Project>

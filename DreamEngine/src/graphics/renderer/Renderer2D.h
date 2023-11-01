@@ -19,6 +19,15 @@ namespace dream { namespace graphics {
 #define RENDERER_BUFFER_SIZE	RENDERER_SPRITE_SIZE * RENDERER_MAX_RENDERABLE
 #define RENDERER_INDICES_SIZE	RENDERER_MAX_RENDERABLE * 6
 
+	// Renderable data that goes into Shader
+	struct RenderableData
+	{
+		glm::vec3 Position;
+		glm::vec2 TextureCoord;
+		float TextureID;
+		glm::vec4 Color;
+	};
+
 	class Renderer2D
 	{
 	private:
