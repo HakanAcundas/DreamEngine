@@ -137,11 +137,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DreamEngine\DreamEngine.vcxproj">
-      <Project>{24c5b71e-14fe-47a8-ac0c-8ddb9ce98811}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="game\Game.cpp" />
     <ClCompile Include="game\GameLayer.cpp" />
     <ClCompile Include="game\main.cpp" />
@@ -156,6 +151,11 @@
     <Image Include="images\test3.png" />
     <Image Include="images\test4.png" />
     <Image Include="images\test7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DreamEngine\DreamEngine.vcxproj">
+      <Project>{24c5b71e-14fe-47a8-ac0c-8ddb9ce98811}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
