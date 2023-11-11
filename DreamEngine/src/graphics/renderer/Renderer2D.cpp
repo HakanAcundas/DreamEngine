@@ -6,15 +6,6 @@
 
 namespace dream { namespace graphics {
 
-	// Data that goes into Shader
-	struct RenderableData
-	{
-		glm::vec3 Position;
-		glm::vec2 TextureCoord;
-		float TextureID;
-		glm::vec4 Color;
-	};
-
 	struct RendererData
 	{
 		Buffer* Buffer;

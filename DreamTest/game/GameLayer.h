@@ -1,5 +1,5 @@
 #pragma once
-#include "../src/graphics/layers/Layer.h"
+#include "graphics/layers/Layer.h"
 
 namespace dream {
 	namespace graphics {

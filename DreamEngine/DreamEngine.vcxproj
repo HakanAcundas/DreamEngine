@@ -19,13 +19,13 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -44,12 +44,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)vendor\GLEW\include;$(ProjectDir)vendor\GLFW\include;$(ProjectDir)vendor\glm;$(ProjectDir)vendor\stb_image;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)vendor\GLEW\lib\x64;$(ProjectDir)vendor\GLFW\lib-vc2022;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)vendor\GLEW\include;$(SolutionDir)vendor\GLFW\include;$(SolutionDir)vendor\glm;$(SolutionDir)vendor\stb_image;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)vendor\GLEW\lib\x64;$(SolutionDir)vendor\GLFW\lib-vc2022;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)vendor\GLEW\include;$(ProjectDir)vendor\GLFW\include;$(ProjectDir)vendor\glm;$(ProjectDir)vendor\stb_image;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)vendor\GLEW\lib\x64;$(ProjectDir)vendor\GLFW\lib-vc2022;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)vendor\GLEW\include;$(SolutionDir)vendor\GLFW\include;$(SolutionDir)vendor\glm;$(SolutionDir)vendor\stb_image;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)vendor\GLEW\lib\x64;$(SolutionDir)vendor\GLFW\lib-vc2022;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -73,6 +73,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -83,8 +84,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="game\GameLayer.cpp" />
-    <ClCompile Include="game\Game.cpp" />
     <ClCompile Include="src\graphics\buffers\Buffer.cpp" />
     <ClCompile Include="src\graphics\Camera.cpp" />
     <ClCompile Include="src\graphics\buffers\IndexBuffer.cpp" />
@@ -95,13 +94,9 @@
     <ClCompile Include="src\graphics\Texture2D.cpp" />
     <ClCompile Include="src\graphics\buffers\VertexArray.cpp" />
     <ClCompile Include="src\input\KeyInput.cpp" />
-    <ClCompile Include="game\main.cpp" />
     <ClCompile Include="src\window\Window.cpp" />
-    <ClCompile Include="vendor\stb_image\stb_vorbis.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="game\GameLayer.h" />
-    <ClInclude Include="game\Game.h" />
     <ClInclude Include="src\graphics\buffers\Buffer.h" />
     <ClInclude Include="src\graphics\Camera.h" />
     <ClInclude Include="src\graphics\buffers\IndexBuffer.h" />
@@ -953,25 +948,6 @@
     <ClInclude Include="vendor\glm\simd\platform.h" />
     <ClInclude Include="vendor\glm\simd\trigonometric.h" />
     <ClInclude Include="vendor\glm\simd\vector_relational.h" />
-    <ClInclude Include="vendor\stb_image\stb_connected_components.h" />
-    <ClInclude Include="vendor\stb_image\stb_c_lexer.h" />
-    <ClInclude Include="vendor\stb_image\stb_divide.h" />
-    <ClInclude Include="vendor\stb_image\stb_ds.h" />
-    <ClInclude Include="vendor\stb_image\stb_dxt.h" />
-    <ClInclude Include="vendor\stb_image\stb_easy_font.h" />
-    <ClInclude Include="vendor\stb_image\stb_herringbone_wang_tile.h" />
-    <ClInclude Include="vendor\stb_image\stb_hexwave.h" />
-    <ClInclude Include="vendor\stb_image\stb_image.h" />
-    <ClInclude Include="vendor\stb_image\stb_image_resize.h" />
-    <ClInclude Include="vendor\stb_image\stb_image_write.h" />
-    <ClInclude Include="vendor\stb_image\stb_include.h" />
-    <ClInclude Include="vendor\stb_image\stb_leakcheck.h" />
-    <ClInclude Include="vendor\stb_image\stb_rect_pack.h" />
-    <ClInclude Include="vendor\stb_image\stb_sprintf.h" />
-    <ClInclude Include="vendor\stb_image\stb_textedit.h" />
-    <ClInclude Include="vendor\stb_image\stb_tilemap_editor.h" />
-    <ClInclude Include="vendor\stb_image\stb_truetype.h" />
-    <ClInclude Include="vendor\stb_image\stb_voxel_render.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\fragment.shader" />
@@ -1393,13 +1369,6 @@
     <None Include="vendor\glm\gtx\vector_angle.inl" />
     <None Include="vendor\glm\gtx\vector_query.inl" />
     <None Include="vendor\glm\gtx\wrap.inl" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="images\test1.png" />
-    <Image Include="images\test2.png" />
-    <Image Include="images\test3.png" />
-    <Image Include="images\test4.png" />
-    <Image Include="images\test7.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

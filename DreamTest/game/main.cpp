@@ -1,5 +1,5 @@
 #include "Game.h"
-#include "../src/utils/FileUtils.h"
+#include "utils/FileUtils.h"
 
 using namespace dream;
 

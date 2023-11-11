@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DreamEngine", "DreamEngine\DreamEngine.vcxproj", "{24C5B71E-14FE-47A8-AC0C-8DDB9CE98811}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DreamTest", "DreamTest\DreamTest.vcxproj", "{640427CF-6045-49AD-90AB-BB3C32689178}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -15,6 +17,10 @@ Global
 		{24C5B71E-14FE-47A8-AC0C-8DDB9CE98811}.Debug|x64.Build.0 = Debug|x64
 		{24C5B71E-14FE-47A8-AC0C-8DDB9CE98811}.Release|x64.ActiveCfg = Release|x64
 		{24C5B71E-14FE-47A8-AC0C-8DDB9CE98811}.Release|x64.Build.0 = Release|x64
+		{640427CF-6045-49AD-90AB-BB3C32689178}.Debug|x64.ActiveCfg = Debug|x64
+		{640427CF-6045-49AD-90AB-BB3C32689178}.Debug|x64.Build.0 = Debug|x64
+		{640427CF-6045-49AD-90AB-BB3C32689178}.Release|x64.ActiveCfg = Release|x64
+		{640427CF-6045-49AD-90AB-BB3C32689178}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
