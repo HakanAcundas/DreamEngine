@@ -44,12 +44,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)vendor\GLEW\include;$(ProjectDir)vendor\GLFW\include;$(ProjectDir)vendor\glm;$(ProjectDir)vendor\stb_image;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)vendor\GLEW\lib\x64;$(ProjectDir)vendor\GLFW\lib-vc2022;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)vendor\GLEW\include;$(SolutionDir)vendor\GLFW\include;$(SolutionDir)vendor\glm;$(SolutionDir)vendor\stb_image;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)vendor\GLEW\lib\x64;$(SolutionDir)vendor\GLFW\lib-vc2022;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)vendor\GLEW\include;$(ProjectDir)vendor\GLFW\include;$(ProjectDir)vendor\glm;$(ProjectDir)vendor\stb_image;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)vendor\GLEW\lib\x64;$(ProjectDir)vendor\GLFW\lib-vc2022;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)vendor\GLEW\include;$(SolutionDir)vendor\GLFW\include;$(SolutionDir)vendor\glm;$(SolutionDir)vendor\stb_image;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)vendor\GLEW\lib\x64;$(SolutionDir)vendor\GLFW\lib-vc2022;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -95,7 +95,6 @@
     <ClCompile Include="src\graphics\buffers\VertexArray.cpp" />
     <ClCompile Include="src\input\KeyInput.cpp" />
     <ClCompile Include="src\window\Window.cpp" />
-    <ClCompile Include="vendor\stb_image\stb_vorbis.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\buffers\Buffer.h" />
@@ -949,25 +948,6 @@
     <ClInclude Include="vendor\glm\simd\platform.h" />
     <ClInclude Include="vendor\glm\simd\trigonometric.h" />
     <ClInclude Include="vendor\glm\simd\vector_relational.h" />
-    <ClInclude Include="vendor\stb_image\stb_connected_components.h" />
-    <ClInclude Include="vendor\stb_image\stb_c_lexer.h" />
-    <ClInclude Include="vendor\stb_image\stb_divide.h" />
-    <ClInclude Include="vendor\stb_image\stb_ds.h" />
-    <ClInclude Include="vendor\stb_image\stb_dxt.h" />
-    <ClInclude Include="vendor\stb_image\stb_easy_font.h" />
-    <ClInclude Include="vendor\stb_image\stb_herringbone_wang_tile.h" />
-    <ClInclude Include="vendor\stb_image\stb_hexwave.h" />
-    <ClInclude Include="vendor\stb_image\stb_image.h" />
-    <ClInclude Include="vendor\stb_image\stb_image_resize.h" />
-    <ClInclude Include="vendor\stb_image\stb_image_write.h" />
-    <ClInclude Include="vendor\stb_image\stb_include.h" />
-    <ClInclude Include="vendor\stb_image\stb_leakcheck.h" />
-    <ClInclude Include="vendor\stb_image\stb_rect_pack.h" />
-    <ClInclude Include="vendor\stb_image\stb_sprintf.h" />
-    <ClInclude Include="vendor\stb_image\stb_textedit.h" />
-    <ClInclude Include="vendor\stb_image\stb_tilemap_editor.h" />
-    <ClInclude Include="vendor\stb_image\stb_truetype.h" />
-    <ClInclude Include="vendor\stb_image\stb_voxel_render.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\fragment.shader" />
