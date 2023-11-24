@@ -44,12 +44,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)vendor\GLEW\include;$(SolutionDir)vendor\GLFW\include;$(SolutionDir)vendor\glm;$(SolutionDir)vendor\stb_image;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)vendor\GLEW\lib\x64;$(SolutionDir)vendor\GLFW\lib-vc2022;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)dependencies\GLEW\include;$(SolutionDir)dependencies\GLFW\include;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\stb_image;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)dependencies\GLEW\lib\x64;$(SolutionDir)dependencies\GLFW\lib-vc2022;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)vendor\GLEW\include;$(SolutionDir)vendor\GLFW\include;$(SolutionDir)vendor\glm;$(SolutionDir)vendor\stb_image;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)vendor\GLEW\lib\x64;$(SolutionDir)vendor\GLFW\lib-vc2022;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)dependencies\GLEW\include;$(SolutionDir)dependencies\GLFW\include;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\stb_image;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)dependencies\GLEW\lib\x64;$(SolutionDir)dependencies\GLFW\lib-vc2022;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
