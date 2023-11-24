@@ -51,11 +51,10 @@ namespace dream {
 			{
 				testLayer.AddRenderable(new Renderable(glm::vec3(x, y, 1), glm::vec2(0.9f, 0.9f), glm::vec4(rand() % 1000 / 1000.0f, 0, 1, 1)));
 				testLayer.AddRenderable(new Renderable(glm::vec3(x, y, 1), glm::vec2(0.9f, 0.9f), textures[rand() % 5]));
-				//Renderer2D::DrawRenderable(glm::vec2(x, y), glm::vec2(0.9f, 0.9f), textures[rand() % 5], glm::vec4(rand() % 1000 / 1000.0f, 0, 1, 1));
 			}
 		}
-		//testLayer.AddRenderable(new Renderable(glm::vec3(-10, -3, 1), glm::vec2(6.0f, 6.0f), textures[1]));
-		//testLayer.AddRenderable(new Renderable(glm::vec3(10, 3, 1), glm::vec2(6.0f, 6.0f), textures[2]));
+		testLayer.AddRenderable(new Renderable(glm::vec3(-10, -3, 1), glm::vec2(6.0f, 6.0f), textures[1]));
+		testLayer.AddRenderable(new Renderable(glm::vec3(10, 3, 1), glm::vec2(6.0f, 6.0f), textures[2]));
 
 		while (m_Running)
 		{
