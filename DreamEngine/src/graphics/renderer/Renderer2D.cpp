@@ -15,6 +15,9 @@ namespace dream { namespace graphics {
 		RenderableData* RenderableData = nullptr;
 		uint32_t RenderableIndexCount;
 
+		glm::vec4 RenderableVertexPositions[4];
+		glm::vec2 TextureCoords[4];
+
 		struct CameraData
 		{
 			glm::mat4 ViewProjection;
@@ -27,6 +30,16 @@ namespace dream { namespace graphics {
 
 	void Renderer2D::Init()
 	{
+		r_Data.TextureCoords[0] = { 0.0f, 0.0f };
+		r_Data.TextureCoords[1] = { 1.0f, 0.0f };
+		r_Data.TextureCoords[2] = { 1.0f, 1.0f };
+		r_Data.TextureCoords[3] = { 0.0f, 1.0f };
+
+		r_Data.RenderableVertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
+		r_Data.RenderableVertexPositions[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
+		r_Data.RenderableVertexPositions[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
+		r_Data.RenderableVertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
+
 		r_Data.RenderableIndexCount = 0;
 		r_Data.VertexArray = new VertexArray();
 		r_Data.Buffer = new Buffer(RENDERER_BUFFER_SIZE);
@@ -70,15 +83,30 @@ namespace dream { namespace graphics {
 		r_Data.Buffer->Unbind();
 	}
 
+	void Renderer2D::DrawRenderable(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
+	{
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 1.0f))
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+
+		for (int i = 0; i < 4; i++)
+		{
+			r_Data.RenderableData->Position = transform * r_Data.RenderableVertexPositions[i];
+			r_Data.RenderableData->Color = color;
+			r_Data.RenderableData->TextureCoord = r_Data.TextureCoords[i];
+			r_Data.RenderableData->TextureID = 0;
+			r_Data.RenderableData++;
+		}
+
+		r_Data.RenderableIndexCount += 6;
+	}
+
 	// TO DO convert this function into DrawQuad (its is already converted but make a base 
 	// function to apply different variations of DrawQuad. Example DrawRotatedQuad etc...
 	void Renderer2D::DrawRenderable(const glm::vec2& position, const glm::vec2& size, const Texture2D* texture, const glm::vec4& color)
 	{
-		/*glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 0))
-			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });*/
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 1.0f))
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		// Texture Information
-		glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
 		const unsigned int tid = texture->GetTID();
 
 		float ts = 0.0f;
@@ -111,42 +139,24 @@ namespace dream { namespace graphics {
 			}
 		}
 
-		r_Data.RenderableData->Position = glm::vec3(position.x, position.y, 0);
-		r_Data.RenderableData->Color = color;
-		r_Data.RenderableData->TextureCoord = textureCoords[0];
-		r_Data.RenderableData->TextureID = ts;
-		r_Data.RenderableData++;
-		
-		r_Data.RenderableData->Position = glm::vec3(position.x, position.y + size.y, 0);
-		r_Data.RenderableData->Color = color;
-		r_Data.RenderableData->TextureCoord = textureCoords[1];
-		r_Data.RenderableData->TextureID = ts;
-		r_Data.RenderableData++;
-		
-		r_Data.RenderableData->Position = glm::vec3(position.x + size.x, position.y + size.y, 0);
-		r_Data.RenderableData->Color = color;
-		r_Data.RenderableData->TextureCoord = textureCoords[2];
-		r_Data.RenderableData->TextureID = ts;
-		r_Data.RenderableData++;
-		
-		r_Data.RenderableData->Position = glm::vec3(position.x + size.x, position.y, 0);
-		r_Data.RenderableData->Color = color;
-		r_Data.RenderableData->TextureCoord = textureCoords[3];
-		r_Data.RenderableData->TextureID = ts;
-		r_Data.RenderableData++;
+		for (int i = 0; i < 4; i++)
+		{
+			r_Data.RenderableData->Position = transform * r_Data.RenderableVertexPositions[i];
+			r_Data.RenderableData->Color = color;
+			r_Data.RenderableData->TextureCoord = r_Data.TextureCoords[i];
+			r_Data.RenderableData->TextureID = ts;
+			r_Data.RenderableData++;
+		}
 		
 		r_Data.RenderableIndexCount += 6;
 	}
 
 	void Renderer2D::DrawRenderable(const glm::vec2& position, const glm::vec2& size, const unsigned int tid, const glm::vec4& color)
 	{
-		//glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 0))
-		//	* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 1.0f))
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		// Texture Information
-		glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
 		float ts = 0.0f;
-
 		if (tid > 0)
 		{
 			bool found = false;
@@ -176,29 +186,14 @@ namespace dream { namespace graphics {
 			}
 		}
 
-		r_Data.RenderableData->Position = glm::vec3(position.x, position.y, 1);
-		r_Data.RenderableData->Color = color;
-		r_Data.RenderableData->TextureCoord = textureCoords[0];
-		r_Data.RenderableData->TextureID = ts;
-		r_Data.RenderableData++;
-		
-		r_Data.RenderableData->Position = glm::vec3(position.x, position.y + size.y, 1);
-		r_Data.RenderableData->Color = color;
-		r_Data.RenderableData->TextureCoord = textureCoords[1];
-		r_Data.RenderableData->TextureID = ts;
-		r_Data.RenderableData++;
-		
-		r_Data.RenderableData->Position = glm::vec3(position.x + size.x, position.y + size.y, 1);
-		r_Data.RenderableData->Color = color;
-		r_Data.RenderableData->TextureCoord = textureCoords[2];
-		r_Data.RenderableData->TextureID = ts;
-		r_Data.RenderableData++;
-		
-		r_Data.RenderableData->Position = glm::vec3(position.x + size.x, position.y, 1);
-		r_Data.RenderableData->Color = color;
-		r_Data.RenderableData->TextureCoord = textureCoords[3];
-		r_Data.RenderableData->TextureID = ts;
-		r_Data.RenderableData++;
+		for (int i = 0; i < 4; i++)
+		{
+			r_Data.RenderableData->Position = transform * r_Data.RenderableVertexPositions[i];
+			r_Data.RenderableData->Color = color;
+			r_Data.RenderableData->TextureCoord = r_Data.TextureCoords[i];
+			r_Data.RenderableData->TextureID = ts;
+			r_Data.RenderableData++;
+		}
 		
 		r_Data.RenderableIndexCount += 6;
 	}

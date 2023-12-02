@@ -38,6 +38,7 @@ namespace dream { namespace graphics {
 		void Init();
 		void Begin();
 		void End();
+		void DrawRenderable(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
 		void DrawRenderable(const glm::vec2& position, const glm::vec2& size, const Texture2D* texture, const glm::vec4& color);
 		void DrawRenderable(const glm::vec2& position, const glm::vec2& size, const unsigned int tid, const glm::vec4& color);
 		void Flush();
