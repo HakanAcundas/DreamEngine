@@ -31,10 +31,10 @@ namespace dream { namespace graphics {
 		r_Data.renderableIndexCount = 0;
 		r_Data.vertexArray = new VertexArray();
 		r_Data.buffer = new Buffer(RENDERER_BUFFER_SIZE);
-		r_Data.buffer->AddBufferElement("shader_TexCoord", ShaderDataType::Float, 2);
-		r_Data.buffer->AddBufferElement("shader_TexIndex", ShaderDataType::Float, 1);
-		r_Data.buffer->AddBufferElement("shader_Color", ShaderDataType::Float, 4);
 		r_Data.buffer->AddBufferElement("shader_Position", ShaderDataType::Float, 3);
+		r_Data.buffer->AddBufferElement("shader_TexCoord", ShaderDataType::Float, 2);
+		r_Data.buffer->AddBufferElement("shader_TextureID", ShaderDataType::Float, 1);
+		r_Data.buffer->AddBufferElement("shader_Color", ShaderDataType::Float, 4);
 		r_Data.buffer->CalculateStride();
 		
 		r_Data.vertexArray->AddBuffer(r_Data.buffer);
