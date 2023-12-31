@@ -1,5 +1,5 @@
 #pragma once
-#include "../renderer/Renderer2D.h"
+#include "../Renderer2D.h"
 
 namespace dream { namespace graphics {
 
@@ -12,6 +12,7 @@ namespace dream { namespace graphics {
 		public:
 			Layer(Renderer2D& renderer, const std::string& name);
 			virtual ~Layer() = default;
+			// virtual void Render();
 			virtual void AddRenderable(Renderable* renderable);
 			virtual void RemoveRenderable(Renderable* renderable);
 

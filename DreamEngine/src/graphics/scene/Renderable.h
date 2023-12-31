@@ -14,7 +14,6 @@ namespace dream { namespace graphics {
 
 		std::vector<glm::vec2> m_TextureCoordinate;
 		Texture2D* m_Texture;
-		float TexIndex;
 	public:
 		Renderable()
 		{
@@ -53,5 +52,6 @@ namespace dream { namespace graphics {
 		inline const glm::vec4& GetColor() const { return m_Color; }
 		inline const std::vector<glm::vec2>& GetUV() const { return m_TextureCoordinate; }
 		inline const unsigned int GetTID() const { return m_Texture == nullptr ? 0 : m_Texture->GetTID(); }
+		inline const Texture2D* GetTexture() const { return m_Texture; }
 	};
 }}

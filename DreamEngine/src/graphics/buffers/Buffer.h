@@ -12,17 +12,17 @@ namespace dream { namespace graphics {
 
 	struct BufferElement
 	{
-		std::string Name;
-		ShaderDataType Type;
-		uint32_t Count = 1;
-		unsigned int Size;
-		size_t Offset = 0;
-		bool Normalized;
+		std::string name;
+		ShaderDataType type;
+		uint32_t count = 1;
+		unsigned int size;
+		size_t offset = 0;
+		bool normalized;
 
 		BufferElement() = default;
 
 		BufferElement(const std::string& name, ShaderDataType type, unsigned int count, bool normalized = false)
-			: Name(name), Type(type), Count(count), Size(ShaderDataTypeSize(type)), Offset(0), Normalized(normalized)
+			: name(name), type(type), count(count), size(ShaderDataTypeSize(type)), offset(0), normalized(normalized)
 		{
 		}
 
@@ -30,9 +30,9 @@ namespace dream { namespace graphics {
 		{
 			switch (type)
 			{
-			case ShaderDataType::Float:    return 4 * Count;
-			case ShaderDataType::Int:      return 4 * Count;
-			case ShaderDataType::Bool:     return 1 * Count;
+			case ShaderDataType::Float:    return 4 * count;
+			case ShaderDataType::Int:      return 4 * count;
+			case ShaderDataType::Bool:     return 1 * count;
 			}
 
 			return 0;

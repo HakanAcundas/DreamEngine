@@ -17,4 +17,17 @@ namespace dream { namespace graphics {
 	{
 		m_Renderables.erase(std::remove(m_Renderables.begin(), m_Renderables.end(), renderable), m_Renderables.end());
 	}
+
+	//void Layer::Render()
+	//{
+	//	Renderer2D::GetSingleton()->Begin();
+	//	m_Shader->Enable();
+	//	OnUpdate();
+	//	for (Renderable* renderable : m_Renderables)
+	//	{
+	//		Renderer2D::GetSingleton()->DrawRenderable(renderable->GetPosition(), renderable->GetSize(), renderable->GetTexture(), renderable->GetColor());
+	//	}
+	//	Renderer2D::GetSingleton()->End();
+	//	Renderer2D::GetSingleton()->Flush();
+	//}
 }}

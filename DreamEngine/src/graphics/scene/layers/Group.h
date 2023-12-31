@@ -1,6 +1,6 @@
 #pragma once
-#include "../renderer/Renderer2D.h"
 #include "../Renderable.h"
+#include "../Renderer2D.h"
 
 namespace dream { namespace graphics {
 
@@ -14,7 +14,5 @@ namespace dream { namespace graphics {
 		Group(const glm::mat4& transform);
 		void AddRenderable(Renderable* renderable);
 		void RemoveRenderable(Renderable* renderable);
-		//void AddRender(Renderer2D* renderer) const override;
-		//~Group();
 	};
 }}

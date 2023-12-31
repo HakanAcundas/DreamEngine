@@ -42,12 +42,12 @@ namespace dream { namespace graphics {
 
 	void GameLayer::Render()
 	{
+		Renderer2D::GetSingleton()->Begin();
 		m_Shader->Enable();
 		OnUpdate();
-		Renderer2D::GetSingleton()->Begin();
 		for(Renderable* renderable : m_Renderables)
 		{
-			Renderer2D::GetSingleton()->DrawRenderable(renderable->GetPosition(), renderable->GetSize(), renderable->GetTID(), renderable->GetColor());
+			Renderer2D::GetSingleton()->DrawRenderable(renderable->GetPosition(), renderable->GetSize(), renderable->GetTexture(), renderable->GetColor());
 		}
 		Renderer2D::GetSingleton()->End();
 		Renderer2D::GetSingleton()->Flush();
