@@ -33,10 +33,10 @@ namespace dream { namespace graphics {
 		for (BufferElement* element : buffer->GetBufferElements())
 		{
 			glEnableVertexAttribArray(m_BufferIndex);
-			glVertexAttribPointer(m_BufferIndex, element->Count,
-				GL_FLOAT, element->Normalized ? GL_TRUE : GL_FALSE,
+			glVertexAttribPointer(m_BufferIndex, element->count,
+				GL_FLOAT, element->normalized ? GL_TRUE : GL_FALSE,
 				buffer->GetStride(),
-				(const void*)element->Offset);
+				(const void*)element->offset);
 			m_BufferIndex++;
 		}
 		m_Buffers.push_back(buffer);

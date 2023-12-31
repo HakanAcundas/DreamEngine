@@ -51,9 +51,9 @@ namespace dream { namespace graphics {
 		m_Stride = 0;
 		for (auto& element : m_BufferElements)
 		{
-			element->Offset = offset;
-			offset += element->Size;
-			m_Stride += element->Size;
+			element->offset = offset;
+			offset += element->size;
+			m_Stride += element->size;
 		}
 	}
 }}

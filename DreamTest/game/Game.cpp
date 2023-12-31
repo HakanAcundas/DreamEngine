@@ -49,7 +49,6 @@ namespace dream {
 		{
 			for (float x = -16.0f; x < 16.0f; x++)
 			{
-				testLayer.AddRenderable(new Renderable(glm::vec3(x, y, 1), glm::vec2(0.9f, 0.9f), glm::vec4(rand() % 1000 / 1000.0f, 0, 1, 1)));
 				testLayer.AddRenderable(new Renderable(glm::vec3(x, y, 1), glm::vec2(0.9f, 0.9f), textures[rand() % 5]));
 			}
 		}
@@ -67,25 +66,25 @@ namespace dream {
 			if (inputHandlerEngine.getIsKeyDown(GLFW_KEY_UP))
 			{
 				glm::vec3 position= camera.GetPosition();
-				position.y -= 0.005f;
+				position.y -= 0.01f;
 				camera.SetPosition(position);
 			}
 			if (inputHandlerEngine.getIsKeyDown(GLFW_KEY_DOWN))
 			{
 				glm::vec3 position = camera.GetPosition();
-				position.y += 0.005f;
+				position.y += 0.01f;
 				camera.SetPosition(position);
 			}
 			if (inputHandlerEngine.getIsKeyDown(GLFW_KEY_LEFT))
 			{
 				glm::vec3 position = camera.GetPosition();
-				position.x += 0.005f;
+				position.x += 0.01f;
 				camera.SetPosition(position);
 			}
 			if (inputHandlerEngine.getIsKeyDown(GLFW_KEY_RIGHT))
 			{
 				glm::vec3 position = camera.GetPosition();
-				position.x -= 0.005f;
+				position.x -= 0.01f;
 				camera.SetPosition(position);
 			}
 			

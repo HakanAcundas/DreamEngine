@@ -44,12 +44,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)dependencies\GLEW\include;$(SolutionDir)dependencies\GLFW\include;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\stb_image;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)dependencies\GLEW\lib\x64;$(SolutionDir)dependencies\GLFW\lib-vc2022;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)thirdparty\glew\include;$(SolutionDir)thirdparty\glfw\include;$(SolutionDir)thirdparty\glm;$(SolutionDir)thirdparty\stb_image;$(SolutionDir)thirdparty\freetype\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)thirdparty\glew\lib\x64;$(SolutionDir)thirdparty\glfw\lib-vc2022;$(SolutionDir)thirdparty\freetype\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)dependencies\GLEW\include;$(SolutionDir)dependencies\GLFW\include;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\stb_image;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)dependencies\GLEW\lib\x64;$(SolutionDir)dependencies\GLFW\lib-vc2022;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)thirdparty\glew\include;$(SolutionDir)thirdparty\glfw\include;$(SolutionDir)thirdparty\glm;$(SolutionDir)thirdparty\stb_image;$(SolutionDir)thirdparty\freetype\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)thirdparty\glew\lib\x64;$(SolutionDir)thirdparty\glfw\lib-vc2022;$(SolutionDir)thirdparty\freetype\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -85,27 +85,29 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\graphics\buffers\Buffer.cpp" />
-    <ClCompile Include="src\graphics\Camera.cpp" />
+    <ClCompile Include="src\graphics\scene\Camera.cpp" />
     <ClCompile Include="src\graphics\buffers\IndexBuffer.cpp" />
-    <ClCompile Include="src\graphics\layers\Group.cpp" />
-    <ClCompile Include="src\graphics\layers\Layer.cpp" />
-    <ClCompile Include="src\graphics\renderer\Renderer2D.cpp" />
-    <ClCompile Include="src\graphics\Shader.cpp" />
-    <ClCompile Include="src\graphics\Texture2D.cpp" />
+    <ClCompile Include="src\graphics\scene\layers\Group.cpp" />
+    <ClCompile Include="src\graphics\scene\layers\Layer.cpp" />
+    <ClCompile Include="src\graphics\scene\Renderer2D.cpp" />
+    <ClCompile Include="src\graphics\scene\Label.cpp" />
+    <ClCompile Include="src\graphics\scene\Shader.cpp" />
+    <ClCompile Include="src\graphics\scene\Texture2D.cpp" />
     <ClCompile Include="src\graphics\buffers\VertexArray.cpp" />
     <ClCompile Include="src\input\KeyInput.cpp" />
     <ClCompile Include="src\window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\buffers\Buffer.h" />
-    <ClInclude Include="src\graphics\Camera.h" />
+    <ClInclude Include="src\graphics\scene\Camera.h" />
     <ClInclude Include="src\graphics\buffers\IndexBuffer.h" />
-    <ClInclude Include="src\graphics\layers\Group.h" />
-    <ClInclude Include="src\graphics\layers\Layer.h" />
-    <ClInclude Include="src\graphics\Renderable.h" />
-    <ClInclude Include="src\graphics\renderer\Renderer2D.h" />
-    <ClInclude Include="src\graphics\Shader.h" />
-    <ClInclude Include="src\graphics\Texture2D.h" />
+    <ClInclude Include="src\graphics\scene\layers\Group.h" />
+    <ClInclude Include="src\graphics\scene\layers\Layer.h" />
+    <ClInclude Include="src\graphics\scene\Renderable.h" />
+    <ClInclude Include="src\graphics\scene\Renderer2D.h" />
+    <ClInclude Include="src\graphics\scene\Label.h" />
+    <ClInclude Include="src\graphics\scene\Shader.h" />
+    <ClInclude Include="src\graphics\scene\Texture2D.h" />
     <ClInclude Include="src\graphics\buffers\VertexArray.h" />
     <ClInclude Include="src\input\KeyInput.h" />
     <ClInclude Include="src\input\inputCodes\KeyCodes.h" />
