@@ -16,6 +16,7 @@
     <ProjectGuid>{640427cf-6045-49ad-90ab-bb3c32689178}</ProjectGuid>
     <RootNamespace>DreamTest</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>CoreTest</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
