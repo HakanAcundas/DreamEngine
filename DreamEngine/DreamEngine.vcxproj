@@ -16,6 +16,7 @@
     <ProjectGuid>{24c5b71e-14fe-47a8-ac0c-8ddb9ce98811}</ProjectGuid>
     <RootNamespace>DreamEngine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>CoreEngine</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">

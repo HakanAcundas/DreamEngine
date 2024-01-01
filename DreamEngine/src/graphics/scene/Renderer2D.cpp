@@ -31,6 +31,8 @@ namespace dream { namespace graphics {
 		r_Data.renderableIndexCount = 0;
 		r_Data.vertexArray = new VertexArray();
 		r_Data.buffer = new Buffer(RENDERER_BUFFER_SIZE);
+
+		// The order of the buffer-elements must be the same as the vertex-shader layout order
 		r_Data.buffer->AddBufferElement("shader_Position", ShaderDataType::Float, 3);
 		r_Data.buffer->AddBufferElement("shader_TexCoord", ShaderDataType::Float, 2);
 		r_Data.buffer->AddBufferElement("shader_TextureID", ShaderDataType::Float, 1);
