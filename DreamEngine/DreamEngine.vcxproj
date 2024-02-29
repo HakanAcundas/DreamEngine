@@ -47,10 +47,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(SolutionDir)thirdparty\glew\include;$(SolutionDir)thirdparty\glfw\include;$(SolutionDir)thirdparty\glm;$(SolutionDir)thirdparty\stb_image;$(SolutionDir)thirdparty\freetype\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)thirdparty\glew\lib\x64;$(SolutionDir)thirdparty\glfw\lib-vc2022;$(SolutionDir)thirdparty\freetype\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)bin</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)thirdparty\glew\include;$(SolutionDir)thirdparty\glfw\include;$(SolutionDir)thirdparty\glm;$(SolutionDir)thirdparty\stb_image;$(SolutionDir)thirdparty\freetype\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)thirdparty\glew\lib\x64;$(SolutionDir)thirdparty\glfw\lib-vc2022;$(SolutionDir)thirdparty\freetype\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)bin</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -85,33 +87,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\graphics\buffers\Buffer.cpp" />
-    <ClCompile Include="src\graphics\scene\Camera.cpp" />
-    <ClCompile Include="src\graphics\buffers\IndexBuffer.cpp" />
-    <ClCompile Include="src\graphics\scene\layers\Group.cpp" />
-    <ClCompile Include="src\graphics\scene\layers\Layer.cpp" />
-    <ClCompile Include="src\graphics\scene\Renderer2D.cpp" />
-    <ClCompile Include="src\graphics\scene\Label.cpp" />
-    <ClCompile Include="src\graphics\scene\Shader.cpp" />
-    <ClCompile Include="src\graphics\scene\Texture2D.cpp" />
-    <ClCompile Include="src\graphics\buffers\VertexArray.cpp" />
-    <ClCompile Include="src\input\KeyInput.cpp" />
-    <ClCompile Include="src\window\Window.cpp" />
+    <ClCompile Include="core\Application.cpp" />
+    <ClCompile Include="core\buffers\Buffer.cpp" />
+    <ClCompile Include="core\scene\Camera.cpp" />
+    <ClCompile Include="core\buffers\IndexBuffer.cpp" />
+    <ClCompile Include="core\scene\Group.cpp" />
+    <ClCompile Include="core\scene\Layer.cpp" />
+    <ClCompile Include="core\scene\Renderer2D.cpp" />
+    <ClCompile Include="core\scene\Label.cpp" />
+    <ClCompile Include="core\scene\Shader.cpp" />
+    <ClCompile Include="core\scene\Texture2D.cpp" />
+    <ClCompile Include="core\buffers\VertexArray.cpp" />
+    <ClCompile Include="core\input\Input.cpp" />
+    <ClCompile Include="core\input\Input.h" />
+    <ClCompile Include="core\window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\graphics\buffers\Buffer.h" />
-    <ClInclude Include="src\graphics\scene\Camera.h" />
-    <ClInclude Include="src\graphics\buffers\IndexBuffer.h" />
-    <ClInclude Include="src\graphics\scene\layers\Group.h" />
-    <ClInclude Include="src\graphics\scene\layers\Layer.h" />
-    <ClInclude Include="src\graphics\scene\Renderable.h" />
-    <ClInclude Include="src\graphics\scene\Renderer2D.h" />
-    <ClInclude Include="src\graphics\scene\Label.h" />
-    <ClInclude Include="src\graphics\scene\Shader.h" />
-    <ClInclude Include="src\graphics\scene\Texture2D.h" />
-    <ClInclude Include="src\graphics\buffers\VertexArray.h" />
-    <ClInclude Include="src\input\KeyInput.h" />
-    <ClInclude Include="src\input\inputCodes\KeyCodes.h" />
+    <ClInclude Include="core\Application.h" />
+    <ClInclude Include="core\buffers\Buffer.h" />
+    <ClInclude Include="core\scene\Camera.h" />
+    <ClInclude Include="core\buffers\IndexBuffer.h" />
+    <ClInclude Include="core\scene\Group.h" />
+    <ClInclude Include="core\scene\Layer.h" />
+    <ClInclude Include="core\scene\Renderable.h" />
+    <ClInclude Include="core\scene\Renderer2D.h" />
+    <ClInclude Include="core\scene\Label.h" />
+    <ClInclude Include="core\scene\Shader.h" />
+    <ClInclude Include="core\scene\Texture2D.h" />
+    <ClInclude Include="core\buffers\VertexArray.h" />
+    <ClInclude Include="core\input\KeyCodes.h" />
+    <ClInclude Include="core\input\MouseCodes.h" />
+    <ClInclude Include="core\window\Window.h" />
     <ClInclude Include="src\vendor\glm\detail\compute_common.hpp" />
     <ClInclude Include="src\vendor\glm\detail\compute_vector_relational.hpp" />
     <ClInclude Include="src\vendor\glm\detail\qualifier.hpp" />
@@ -685,8 +691,7 @@
     <ClInclude Include="src\vendor\glm\vec3.hpp" />
     <ClInclude Include="src\vendor\glm\vec4.hpp" />
     <ClInclude Include="src\vendor\glm\vector_relational.hpp" />
-    <ClInclude Include="src\window\Window.h" />
-    <ClInclude Include="src\utils\FileUtils.h" />
+    <ClInclude Include="core\utils\FileUtils.h" />
     <ClInclude Include="vendor\glm\detail\compute_common.hpp" />
     <ClInclude Include="vendor\glm\detail\compute_vector_relational.hpp" />
     <ClInclude Include="vendor\glm\detail\qualifier.hpp" />
@@ -953,8 +958,6 @@
     <ClInclude Include="vendor\glm\simd\vector_relational.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\shaders\fragment.shader" />
-    <None Include="src\shaders\vertex.shader" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
     <None Include="src\vendor\glm\detail\func_common_simd.inl" />
     <None Include="src\vendor\glm\detail\func_exponential.inl" />
