@@ -1,24 +1,27 @@
 #pragma once
-#include "graphics/scene/layers/Layer.h"
+#include "core/scene/Layer.h"
+#include "TestLevel.h"
 
-namespace dream {
-	namespace graphics {
+using namespace dream;
+using namespace graphics;
 
-		class GameLayer : public Layer
-		{
-		private:
-			Shader* m_Shader;
-			glm::mat4 m_ProjectionMatrix;
-			Camera* m_Camera;
-		public:
-			GameLayer(Shader* shader);
-			GameLayer(Shader* shader, Camera* camera);
-			~GameLayer();
+class GameLayer : public Layer
+{
+private:
+	Shader* m_Shader;
+	glm::mat4 m_ProjectionMatrix;
+	Camera* m_Camera;
+	TestLevel m_Level;
+public:
+	GameLayer(Shader* shader);
+	GameLayer(Shader* shader, Camera* camera);
 
-			void OnUpdate();
-			void Render();
-			void SetCamera(Camera* camera) { m_Camera = camera; }
-			Shader* GetShader() { return m_Shader; }
-		};
-	}
-}
+	// TODO Also support this initilize way.
+	GameLayer(std::string& vertexShader, std::string& fragmentShader, Camera* camera);
+	~GameLayer();
+
+	void OnUpdate() override;
+	void OnEvent(Event& e) override;
+	void SetCamera(Camera* camera) { m_Camera = camera; }
+	Shader* GetShader() { return m_Shader; }
+};

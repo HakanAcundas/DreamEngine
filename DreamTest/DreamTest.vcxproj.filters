@@ -15,18 +15,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="game\Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="game\GameLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\TestLevel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="game\Game.h">
+    <ClInclude Include="game\TestLevel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\GameLayer.h">
@@ -34,20 +34,24 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="images\test1.png">
+    <Image Include="assets\test1.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="images\test2.png">
+    <Image Include="assets\test2.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="images\test3.png">
+    <Image Include="assets\test3.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="images\test4.png">
+    <Image Include="assets\test4.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="images\test7.png">
+    <Image Include="assets\test7.png">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\fragment.shader" />
+    <None Include="shaders\vertex.shader" />
   </ItemGroup>
 </Project>

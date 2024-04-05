@@ -15,51 +15,51 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\window\window.cpp">
+    <ClCompile Include="core\window\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\input\keyInput.cpp">
+    <ClCompile Include="core\input\Input.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\scene\Shader.cpp">
+    <ClCompile Include="core\scene\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\scene\Camera.cpp">
+    <ClCompile Include="core\scene\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\scene\Texture2D.cpp">
+    <ClCompile Include="core\scene\Texture2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\buffers\Buffer.cpp">
+    <ClCompile Include="core\buffers\Buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\buffers\IndexBuffer.cpp">
+    <ClCompile Include="core\buffers\IndexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\scene\layers\Group.cpp">
+    <ClCompile Include="core\scene\Group.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\scene\layers\Layer.cpp">
+    <ClCompile Include="core\scene\Layer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\scene\Renderer2D.cpp">
+    <ClCompile Include="core\scene\Renderer2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\buffers\VertexArray.cpp">
+    <ClCompile Include="core\buffers\VertexArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\scene\Label.cpp">
+    <ClCompile Include="core\scene\Label.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="core\input\Input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\window\window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\input\inputCodes\keyCodes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\input\keyInput.h">
+    <ClInclude Include="core\input\KeyCodes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\vendor\glm\detail\_features.hpp">
@@ -2573,40 +2573,58 @@
     <ClInclude Include="vendor\glm\simd\vector_relational.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\utils\fileUtils.h">
+    <ClInclude Include="core\utils\FileUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\scene\Shader.h">
+    <ClInclude Include="core\scene\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\scene\Camera.h">
+    <ClInclude Include="core\scene\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\scene\Texture2D.h">
+    <ClInclude Include="core\scene\Texture2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\buffers\Buffer.h">
+    <ClInclude Include="core\buffers\Buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\buffers\IndexBuffer.h">
+    <ClInclude Include="core\buffers\IndexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\scene\layers\Group.h">
+    <ClInclude Include="core\scene\Group.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\scene\layers\Layer.h">
+    <ClInclude Include="core\scene\Layer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\scene\Renderable.h">
+    <ClInclude Include="core\scene\Renderable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\scene\Renderer2D.h">
+    <ClInclude Include="core\scene\Renderer2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\buffers\VertexArray.h">
+    <ClInclude Include="core\buffers\VertexArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\scene\Label.h">
+    <ClInclude Include="core\scene\Label.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\input\MouseCodes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\window\Window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\events\Event.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\events\KeyEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\events\MouseEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -3862,7 +3880,5 @@
     <None Include="vendor\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="src\shaders\fragment.shader" />
-    <None Include="src\shaders\vertex.shader" />
   </ItemGroup>
 </Project>

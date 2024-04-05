@@ -47,10 +47,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(SolutionDir)thirdparty\glew\include;$(SolutionDir)thirdparty\glfw\include;$(SolutionDir)thirdparty\glm;$(SolutionDir)thirdparty\stb_image;$(SolutionDir)thirdparty\freetype\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)thirdparty\glew\lib\x64;$(SolutionDir)thirdparty\glfw\lib-vc2022;$(SolutionDir)thirdparty\freetype\lib;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <OutDir>$(SolutionDir)bin</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)thirdparty\glew\include;$(SolutionDir)thirdparty\glfw\include;$(SolutionDir)thirdparty\glm;$(SolutionDir)thirdparty\stb_image;$(SolutionDir)thirdparty\freetype\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)thirdparty\glew\lib\x64;$(SolutionDir)thirdparty\glfw\lib-vc2022;$(SolutionDir)thirdparty\freetype\lib;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <OutDir>$(SolutionDir)bin</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -58,7 +62,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)DreamEngine\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DreamEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -74,7 +78,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)DreamEngine\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DreamEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -85,20 +89,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="game\Game.cpp" />
     <ClCompile Include="game\GameLayer.cpp" />
+    <ClCompile Include="game\TestLevel.cpp" />
     <ClCompile Include="game\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="game\Game.h" />
+    <ClInclude Include="game\TestLevel.h" />
     <ClInclude Include="game\GameLayer.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="images\test1.png" />
-    <Image Include="images\test2.png" />
-    <Image Include="images\test3.png" />
-    <Image Include="images\test4.png" />
-    <Image Include="images\test7.png" />
+    <Image Include="assets\test1.png" />
+    <Image Include="assets\test2.png" />
+    <Image Include="assets\test3.png" />
+    <Image Include="assets\test4.png" />
+    <Image Include="assets\test7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\fragment.shader" />
+    <None Include="shaders\vertex.shader" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DreamEngine\DreamEngine.vcxproj">
