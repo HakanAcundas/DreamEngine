@@ -11,7 +11,7 @@ namespace dream { namespace graphics {
 	private:
 		unsigned int m_ArrayID;
 		unsigned int m_BufferIndex = 0;
-		std::vector<Buffer*> m_Buffers;
+		std::vector<std::shared_ptr<Buffer>> m_Buffers;
 		IndexBuffer* m_IndexBuffer;
 		
 	public:
@@ -23,7 +23,7 @@ namespace dream { namespace graphics {
 		void AddBuffer(Buffer* buffer);
 		void SetIndexBuffer(IndexBuffer* indexBuffer);
 
-		const std::vector<Buffer*> GetBuffers() { return m_Buffers; }
+		const std::vector<std::shared_ptr<Buffer>> GetBuffers() { return m_Buffers; }
 		const IndexBuffer* GetIndexBuffers() { return m_IndexBuffer; }
 	};
 }}

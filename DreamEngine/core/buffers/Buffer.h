@@ -2,6 +2,7 @@
 #include<string>
 #include<vector>
 #include <GL/glew.h>
+#include <memory>
 
 namespace dream { namespace graphics {
 
@@ -58,7 +59,7 @@ namespace dream { namespace graphics {
 	private:
 		unsigned int m_BufferID;
 		unsigned int m_ComponentCount;
-		std::vector<BufferElement*> m_BufferElements;
+		std::vector<std::shared_ptr<BufferElement>> m_BufferElements;
 		uint32_t m_Stride = 0;
 
 	public:
@@ -74,7 +75,7 @@ namespace dream { namespace graphics {
 		void CalculateStride();
 
 		inline unsigned int const GetCount() { return m_ComponentCount; }
-		std::vector<BufferElement*> GetBufferElements() { return m_BufferElements; }
+		std::vector<std::shared_ptr<BufferElement>> GetBufferElements() { return m_BufferElements; }
 		unsigned int GetStride() const { return m_Stride; }
 	};
 }}

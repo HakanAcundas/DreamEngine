@@ -21,7 +21,7 @@ public:
 	~GameLayer();
 
 	void OnUpdate() override;
-	void OnEvent() override;
+	void OnEvent(Event& e) override;
 	void SetCamera(Camera* camera) { m_Camera = camera; }
 	Shader* GetShader() { return m_Shader; }
 };

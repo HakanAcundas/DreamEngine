@@ -36,7 +36,7 @@ namespace dream { namespace graphics {
 	void Buffer::AddBufferElement(std::string name, ShaderDataType type, uint8_t count, bool normalized)
 	{
 		BufferElement* element = new BufferElement(name, type, count, normalized);
-		m_BufferElements.push_back(element);
+		m_BufferElements.emplace_back(element);
 	}
 
 	void Buffer::SetData(const void* data, uint32_t size)

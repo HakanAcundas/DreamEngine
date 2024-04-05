@@ -105,6 +105,9 @@
   <ItemGroup>
     <ClInclude Include="core\Application.h" />
     <ClInclude Include="core\buffers\Buffer.h" />
+    <ClInclude Include="core\events\Event.h" />
+    <ClInclude Include="core\events\KeyEvent.h" />
+    <ClInclude Include="core\events\MouseEvent.h" />
     <ClInclude Include="core\scene\Camera.h" />
     <ClInclude Include="core\buffers\IndexBuffer.h" />
     <ClInclude Include="core\scene\Group.h" />

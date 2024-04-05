@@ -10,11 +10,16 @@ namespace dream { namespace graphics {
 
 	void Layer::AddRenderable(Renderable* renderable)
 	{
-		m_Renderables.push_back(renderable);
+		m_Renderables.emplace_back(renderable);
 	}
 
 	void Layer::RemoveRenderable(Renderable* renderable)
 	{
-		m_Renderables.erase(std::remove(m_Renderables.begin(), m_Renderables.end(), renderable), m_Renderables.end());
+		auto it = std::find_if(m_Renderables.begin(), m_Renderables.end(),
+			[renderable](const std::shared_ptr<Renderable>& ptr) {
+				return ptr.get() == renderable;
+			});
+		if (it != m_Renderables.end())
+			m_Renderables.erase(it);
 	}
 }}

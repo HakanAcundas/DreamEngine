@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
+#include "../events/MouseEvent.h"
 
 namespace dream {
 	class Camera
@@ -23,6 +24,7 @@ namespace dream {
 
 		void OnUpdate();
 		void OnKeyPressed();
+		void OnMouseMoved(const MouseMovedEvent& e);
 		void OnMouseScrolled();
 
 		// Getters and Setters

@@ -29,10 +29,10 @@ GameLayer::GameLayer(Shader* shader, Camera* camera)
 GameLayer::~GameLayer()
 {
 	delete m_Shader;
-	for (int i = 0; i < m_Renderables.size(); i++)
+	/*for (int i = 0; i < m_Renderables.size(); i++)
 	{
 		delete m_Renderables[i];
-	}
+	}*/
 }
 
 void GameLayer::OnUpdate()
@@ -52,7 +52,7 @@ void GameLayer::OnUpdate()
 	Renderer2D::GetSingleton()->Flush();
 }
 
-void GameLayer::OnEvent()
+void GameLayer::OnEvent(Event& e)
 {
-	//m_CameraController.OnEvent(e);
+	std::cout << "We have an Event!! || " << e.ToString() << "\n";
 }

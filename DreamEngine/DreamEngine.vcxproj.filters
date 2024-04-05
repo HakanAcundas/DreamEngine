@@ -2618,6 +2618,15 @@
     <ClInclude Include="core\window\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="core\events\Event.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\events\KeyEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\events\MouseEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\vendor\glm\detail\func_common.inl">

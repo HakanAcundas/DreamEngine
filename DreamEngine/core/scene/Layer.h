@@ -7,7 +7,7 @@ namespace dream { namespace graphics {
 		{
 		protected:
 			std::string m_LayerName;
-			std::vector<Renderable*> m_Renderables;
+			std::vector<std::shared_ptr<Renderable>> m_Renderables;
 		public:
 			Layer(const std::string& name);
 			virtual ~Layer() = default;
@@ -15,7 +15,7 @@ namespace dream { namespace graphics {
 			virtual void AddRenderable(Renderable* renderable);
 			virtual void RemoveRenderable(Renderable* renderable);
 			virtual void OnUpdate() {}
-			virtual void OnEvent() {}
+			virtual void OnEvent(Event& e) {}
 
 			const std::string& GetName() const { return m_LayerName; }
 

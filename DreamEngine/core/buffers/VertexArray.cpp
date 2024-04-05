@@ -9,9 +9,9 @@ namespace dream { namespace graphics {
 
 	VertexArray::~VertexArray()
 	{
-		for (int i = 0; i < m_Buffers.size(); i++)
+		for (auto it = m_Buffers.begin(); it != m_Buffers.end(); it++)
 		{
-			delete m_Buffers[i];
+			m_Buffers.erase(it);
 		}
 		glDeleteVertexArrays(1, &m_ArrayID);
 	}
@@ -30,7 +30,8 @@ namespace dream { namespace graphics {
 	{
 		Bind();
 		buffer->Bind();
-		for (BufferElement* element : buffer->GetBufferElements())
+		const auto& bufferElements = buffer->GetBufferElements();
+		for (auto element : bufferElements)
 		{
 			glEnableVertexAttribArray(m_BufferIndex);
 			glVertexAttribPointer(m_BufferIndex, element->count,
@@ -39,14 +40,13 @@ namespace dream { namespace graphics {
 				(const void*)element->offset);
 			m_BufferIndex++;
 		}
-		m_Buffers.push_back(buffer);
+		m_Buffers.emplace_back(buffer);
 	}
 
 	void VertexArray::SetIndexBuffer(IndexBuffer* indexBuffer)
 	{
 		glBindVertexArray(m_ArrayID);
 		indexBuffer->Bind();
-
 		m_IndexBuffer = indexBuffer;
 	}
 }}

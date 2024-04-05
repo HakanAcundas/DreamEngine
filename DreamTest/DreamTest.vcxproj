@@ -105,13 +105,13 @@
     <Image Include="assets\test7.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\fragment.shader" />
+    <None Include="shaders\vertex.shader" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\DreamEngine\DreamEngine.vcxproj">
       <Project>{24c5b71e-14fe-47a8-ac0c-8ddb9ce98811}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="shaders\fragment.shader" />
-    <None Include="shaders\vertex.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

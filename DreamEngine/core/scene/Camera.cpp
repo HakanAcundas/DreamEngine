@@ -43,6 +43,12 @@ namespace dream {
 		}
 	}
 
+	void Camera::OnMouseMoved(const MouseMovedEvent& e)
+	{
+		m_Position.x += e.GetX() / 10000;
+		m_Position.y += e.GetY() / 10000;
+	}
+
 	void Camera::OnMouseScrolled()
 	{
 		/*m_ZoomLevel -= e.GetYOffset() * 0.25f;
