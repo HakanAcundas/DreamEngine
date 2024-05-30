@@ -12,6 +12,7 @@ private:
 	glm::mat4 m_ProjectionMatrix;
 	Camera* m_Camera;
 	TestLevel m_Level;
+	glm::vec2 m_LightPos;
 public:
 	GameLayer(Shader* shader);
 	GameLayer(Shader* shader, Camera* camera);
@@ -22,6 +23,7 @@ public:
 
 	void OnUpdate() override;
 	void OnEvent(Event& e) override;
+	bool OnMouseMoved(MouseMovedEvent& e);
 	void SetCamera(Camera* camera) { m_Camera = camera; }
 	Shader* GetShader() { return m_Shader; }
 };

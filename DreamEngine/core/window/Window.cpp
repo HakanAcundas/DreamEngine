@@ -16,7 +16,7 @@ namespace dream {
 
 		if (!Init())
 			glfwTerminate();
-	}
+	}    
 
 	Window::~Window()
 	{

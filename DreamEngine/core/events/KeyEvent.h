@@ -15,7 +15,6 @@ namespace dream {
 				: m_KeyCode(keycode) {}
 
 			inline int GetKeyCode() const { return m_KeyCode; }
-			inline static int GetStaticType() { return (int)Event::Type::KEY_PRESSED | (int)Event::Type::KEY_RELEASED; }
 		};
 
 		class KeyPressedEvent : public KeyEvent
@@ -33,7 +32,8 @@ namespace dream {
 				ss << "KeyPressedEvent: " << m_KeyCode << " (" << m_Repeat << " repeats)";
 				return ss.str();
 			}
-			inline static Type GetStaticType() { return Event::Type::KEY_PRESSED; }
+			inline EventType GetEventType() const override { return Event::EventType::KEY_PRESSED; }
+			static EventType GetStaticType() { return Event::EventType::KEY_PRESSED; }
 		};
 
 		class KeyReleasedEvent : public KeyEvent
@@ -48,7 +48,8 @@ namespace dream {
 				ss << "KeyReleasedEvent: " << m_KeyCode;
 				return ss.str();
 			}
-			inline static Type GetStaticType() { return Event::Type::KEY_RELEASED; }
+			inline EventType GetEventType() const override { return Event::EventType::KEY_RELEASED; }
+			static EventType GetStaticType() { return Event::EventType::KEY_RELEASED; }
 		};
 
 	}

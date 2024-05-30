@@ -169,9 +169,4 @@ namespace dream { namespace graphics {
 		
 		r_Data.renderableIndexCount = 0;
 	}
-
-	//void Renderer2D::ShutDown()
-	//{
-	//	delete r_Data;
-	//}
 }}

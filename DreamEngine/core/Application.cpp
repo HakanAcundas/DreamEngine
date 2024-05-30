@@ -40,7 +40,7 @@ namespace dream
 		for (auto layer : m_Layers)
 		{
 			layer->OnEvent(e);
-			if (e.IsHandled())
+			if (e.handled)
 				break;
 		}
 	}
