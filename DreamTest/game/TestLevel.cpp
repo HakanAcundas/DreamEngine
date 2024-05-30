@@ -24,21 +24,15 @@ void TestLevel::Run()
 		new Texture2D("assets/Background/Gray.png"),
 		new Texture2D("assets/Background/Green.png"),
 		new Texture2D("assets/Background/Pink.png")
-
-		/*new Texture2D("assets/test1.png"),
-		new Texture2D("assets/test2.png"),
-		new Texture2D("assets/test3.png"),
-		new Texture2D("assets/test4.png"),
-		new Texture2D("assets/test7.png")*/
 	};
 
-	for (float y = -9.0f; y < 9.0f; y++)
+	for (float y = 0.0f; y < 9.0f; y+=0.5)
 	{
-		for (float x = -16.0f; x < 16.0f; x++)
+		for (float x = 0.0f; x < 16.0f; x+=0.5)
 		{
-			m_Renderables.push_back(new Renderable(glm::vec3(x, y, 1), glm::vec2(0.9f, 0.9f), textures[rand() % 5]));
+			m_Renderables.push_back(new Renderable(glm::vec3(x, y, 1), glm::vec2(0.4f, 0.4f), textures[rand() % 5]));
 		}
 	}
-	m_Renderables.push_back(new Renderable(glm::vec3(-10, -3, 1), glm::vec2(6.0f, 6.0f), textures[1]));
-	m_Renderables.push_back(new Renderable(glm::vec3(10, 3, 1), glm::vec2(6.0f, 6.0f), textures[2]));
+	m_Renderables.push_back(new Renderable(glm::vec3(-10, -3, 1), glm::vec2(2.0f, 2.0f), textures[1]));
+	m_Renderables.push_back(new Renderable(glm::vec3(10, 3, 1), glm::vec2(2.0f, 2.0f), textures[2]));
 }

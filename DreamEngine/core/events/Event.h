@@ -7,7 +7,7 @@ namespace dream {
 	class Event
 	{
 	public:
-		enum class Type
+		enum class EventType
 		{
 			KEY_PRESSED = 0,
 			KEY_RELEASED,
@@ -19,34 +19,59 @@ namespace dream {
 
 			WINDOW_RESIZE
 		};
-	protected:
-		bool m_Handled;
-		Type m_Type;
-	public:
-		inline Type GetType() const { return m_Type; }
-		inline bool IsHandled() const { return m_Handled; }
 
+		bool handled = false;
+	public:
+		virtual EventType GetEventType() const = 0;
 		virtual std::string ToString() const
 		{
 			return "Event: ";
 		}
 
-		static std::string TypeToString(Type type)
+		static std::string TypeToString(EventType type)
 		{
 			switch (type)
 			{
-			case Type::KEY_PRESSED:
+			case EventType::KEY_PRESSED:
 				return "KEY_PRESSED";
-			case Type::KEY_RELEASED:
+			case EventType::KEY_RELEASED:
 				return "KEY_RELEASED";
-			case Type::MOUSE_PRESSED:
+			case EventType::MOUSE_PRESSED:
 				return "MOUSE_PRESSED";
-			case Type::MOUSE_RELEASED:
+			case EventType::MOUSE_RELEASED:
 				return "MOUSE_RELEASED";
-			case Type::MOUSE_MOVED:
+			case EventType::MOUSE_MOVED:
 				return "MOUSE_MOVED";
 			}
 			return "INVALID";
 		}
 	};
+
+	class EventDispatcher
+	{
+	public:
+		EventDispatcher(Event& event)
+			: m_Event(event)
+		{
+		}
+
+		// F will be deduced by the compiler
+		template<typename T, typename F>
+		bool Dispatch(const F& func)
+		{
+			if (m_Event.GetEventType() == T::GetStaticType())
+			{
+				m_Event.handled = func(static_cast<T&>(m_Event));
+				return true;
+			}
+			return false;
+		}
+	private:
+		Event& m_Event;
+	};
+
+	inline std::ostream& operator<<(std::ostream& os, const Event& e)
+	{
+		return os << e.ToString();
+	}
 }

@@ -13,7 +13,8 @@ namespace dream {
 
 		inline float GetX() const { return m_MouseX; }
 		inline float GetY() const { return m_MouseY; }
-		inline static int GetStaticType() { return (int)Event::Type::MOUSE_MOVED; }
+		inline EventType GetEventType() const override { return Event::EventType::MOUSE_MOVED; }
+		static EventType GetStaticType() { return Event::EventType::MOUSE_MOVED; }
 
 		std::string ToString() const override
 		{
@@ -33,7 +34,8 @@ namespace dream {
 
 		float GetXOffset() const { return m_XOffset; }
 		float GetYOffset() const { return m_YOffset; }
-		inline static int GetStaticType() { return (int)Event::Type::MOUSE_SCROLLED; }
+		inline EventType GetEventType() const override { return Event::EventType::MOUSE_SCROLLED; }
+		static EventType GetStaticType() { return Event::EventType::MOUSE_SCROLLED; }
 
 		std::string ToString() const override
 		{
@@ -54,7 +56,6 @@ namespace dream {
 			: m_Button(button) {}
 	public:
 		inline const int GetButton() const { return m_Button; }
-		inline static int GetStaticType() { return (int)Event::Type::MOUSE_PRESSED | (int)Event::Type::MOUSE_RELEASED; }
 	};
 
 	class MousePressedEvent : public MouseButtonEvent
@@ -69,7 +70,8 @@ namespace dream {
 			ss << "MouseButtonPressedEvent: " << m_Button;
 			return ss.str();
 		}
-		inline static Type GetStaticType() { return Event::Type::MOUSE_PRESSED; }
+		inline EventType GetEventType() const override { return Event::EventType::MOUSE_PRESSED; }
+		static EventType GetStaticType() { return Event::EventType::MOUSE_PRESSED; }
 	};
 
 	class MouseReleasedEvent : public MouseButtonEvent
@@ -84,6 +86,7 @@ namespace dream {
 			ss << "MouseButtonReleasedEvent: " << m_Button;
 			return ss.str();
 		}
-		inline static Type GetStaticType() { return Event::Type::MOUSE_RELEASED; }
+		inline EventType GetEventType() const override { return Event::EventType::MOUSE_RELEASED; }
+		static EventType GetStaticType() { return Event::EventType::MOUSE_RELEASED; }
 	};
 }
