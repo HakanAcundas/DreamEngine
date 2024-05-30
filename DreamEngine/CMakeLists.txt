@@ -1,6 +1,3 @@
-# Project name
-project(DreamEngine)
-
 # Include directories
 include_directories(
     ${THIRD_PARTY_DIR}/glew/include

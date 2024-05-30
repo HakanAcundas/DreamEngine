@@ -1,6 +1,3 @@
-# Project name
-project(DreamTest)
-
 # Add DreamTest executable
 file(GLOB_RECURSE DREAM_TEST_SOURCES
     game/*.cpp
