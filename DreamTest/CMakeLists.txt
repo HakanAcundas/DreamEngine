@@ -2,6 +2,7 @@
 file(GLOB_RECURSE DREAM_TEST_SOURCES
     game/*.cpp
     game/*.h
+    shaders/*.shader
 )
 
 add_executable(DreamTest ${DREAM_TEST_SOURCES})
@@ -30,6 +31,19 @@ target_include_directories(DreamTest PRIVATE
     ${CMAKE_SOURCE_DIR}/DreamEngine/core/scene
     ${CMAKE_SOURCE_DIR}/DreamEngine/core/utils
     ${CMAKE_SOURCE_DIR}/DreamEngine/core/window
+)
+
+source_group("game" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/GameLayer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/GameLayer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/main.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/TestLevel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/TestLevel.h
+)
+
+source_group("shaders" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/vertex.shader
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/fragment.shader
 )
 
 # Link DreamEngine library to DreamTest
