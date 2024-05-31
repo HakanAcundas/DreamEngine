@@ -6,6 +6,9 @@ file(GLOB_RECURSE DREAM_TEST_SOURCES
 
 add_executable(DreamTest ${DREAM_TEST_SOURCES})
 
+# Add preprocessor definitions globally
+add_compile_definitions(GLEW_STATIC _CRT_SECURE_NO_WARNINGS)
+
 # # Specify output directories for DreamTest
 # set_target_properties(DreamTest PROPERTIES
 #     ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/DreamTest/lib
@@ -30,11 +33,9 @@ target_include_directories(DreamTest PRIVATE
 )
 
 # Link DreamEngine library to DreamTest
-target_link_libraries(DreamTest DreamEngine)
-
-target_link_libraries(DreamTest
+target_link_libraries(DreamTest 
+    DreamEngine
     ${THIRD_PARTY_DIR}/glew/lib/x64/glew32s.lib
     ${THIRD_PARTY_DIR}/glfw/lib-vc2022/glfw3.lib
     opengl32.lib
 )
-

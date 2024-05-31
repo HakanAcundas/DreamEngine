@@ -5,12 +5,6 @@ include_directories(
     ${THIRD_PARTY_DIR}/glm
     ${THIRD_PARTY_DIR}/stb_image
     ${THIRD_PARTY_DIR}/freetype/include
-    ${CMAKE_SOURCE_DIR}/DreamEngine/core
-    ${CMAKE_SOURCE_DIR}/DreamEngine/core/buffers
-    ${CMAKE_SOURCE_DIR}/DreamEngine/core/events
-    ${CMAKE_SOURCE_DIR}/DreamEngine/core/scene
-    ${CMAKE_SOURCE_DIR}/DreamEngine/core/utils
-    ${CMAKE_SOURCE_DIR}/DreamEngine/core/window
 )
 
 # Add DreamEngine library
@@ -18,6 +12,8 @@ file(GLOB_RECURSE DREAM_ENGINE_SOURCES
     core/buffers/*.cpp
     core/buffers/*.h
     core/events/*.h
+    core/input/*cpp
+    core/input/*h
     core/scene/*.cpp
     core/scene/*.h
     core/utils/*.h
@@ -28,6 +24,9 @@ file(GLOB_RECURSE DREAM_ENGINE_SOURCES
 )
 
 add_library(DreamEngine STATIC ${DREAM_ENGINE_SOURCES})
+
+# Add preprocessor definitions globally
+add_compile_definitions(GLEW_STATIC _CRT_SECURE_NO_WARNINGS)
 
 # # Specify output directories for DreamEngine
 # set_target_properties(DreamEngine PROPERTIES
@@ -41,4 +40,5 @@ target_link_libraries(DreamEngine
     ${THIRD_PARTY_DIR}/glew/lib/x64/glew32s.lib
     ${THIRD_PARTY_DIR}/glfw/lib-vc2022/glfw3.lib
     opengl32.lib
+    ${THIRD_PARTY_DIR}/freetype/lib/freetype.lib
 )
