@@ -29,12 +29,12 @@ file(GLOB_RECURSE DREAM_ENGINE_SOURCES
 
 add_library(DreamEngine STATIC ${DREAM_ENGINE_SOURCES})
 
-# Specify output directories for DreamEngine
-set_target_properties(DreamEngine PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/DreamEngine/lib
-    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/DreamEngine/lib
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/DreamEngine/bin
-)
+# # Specify output directories for DreamEngine
+# set_target_properties(DreamEngine PROPERTIES
+#     ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/DreamEngine/lib
+#     LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/DreamEngine/lib
+#     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/DreamEngine/bin
+# )
 
 # Link thirdparty libraries to DreamEngine
 target_link_libraries(DreamEngine

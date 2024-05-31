@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
-#include "core/window/Window.h"
-#include "core/scene/Renderable.h"
+#include "Window.h"
+#include "Renderable.h"
 
 using namespace dream;
 using namespace graphics;

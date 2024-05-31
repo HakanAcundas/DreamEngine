@@ -1,4 +1,4 @@
-#include "core/Application.h"
+#include "Application.h"
 #include "GameLayer.h"
 using namespace dream;
 

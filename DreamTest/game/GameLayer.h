@@ -1,5 +1,5 @@
 #pragma once
-#include "core/scene/Layer.h"
+#include "Layer.h"
 #include "TestLevel.h"
 
 using namespace dream;
