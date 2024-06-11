@@ -41,6 +41,7 @@ To get started with DreamEngine, follow these steps to compile the project:
    mkdir build
 
    # Generate the solution and project files using CMake:
+   cmake .
    cmake --build .
 
 ### Contributing
