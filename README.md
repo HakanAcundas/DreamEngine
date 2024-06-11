@@ -35,14 +35,19 @@ To get started with DreamEngine, follow these steps to compile the project:
 1. Clone the repository:
    ```sh
    git clone https://github.com/HakanAcundas/DreamEngine.git
+   ```
 
-   # Navigate to the DreamEngine folder and create a build directory:
+2. Navigate to the DreamEngine folder and create a build directory:
+   ```sh
    cd DreamEngine
    mkdir build
+   ```
 
-   # Generate the solution and project files using CMake:
+3. Generate the solution and project files using CMake:
+   ```sh
    cmake .
    cmake --build .
+   ```
 
 ### Contributing
 Contributions are welcome! Please feel free to submit a Pull Request or open an issue to discuss what you would like to improve.
