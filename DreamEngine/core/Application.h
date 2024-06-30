@@ -23,6 +23,7 @@ namespace dream
 
 		void Run();
 		void OnEvent(Event& e);
+		bool OnKeyPressed(KeyPressedEvent& e);
 		void PushLayer(graphics::Layer* layer);
 		void PopLayer(graphics::Layer* layer);
 
