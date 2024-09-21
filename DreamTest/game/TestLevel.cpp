@@ -26,13 +26,16 @@ void TestLevel::Run()
 		new Texture2D("assets/Background/Pink.png")
 	};
 
-	for (float y = 0.0f; y < 9.0f; y+=0.5)
+	Texture2D* atlasTexture = new Texture2D("assets/Main Characters/Virtual Guy/Double Jump (32x32).png");
+	Texture2D::SubTexture2D* mySubTex = Texture2D::CreateSubTexture2D(atlasTexture, glm::vec2(1, 0), glm::vec2(32,32));
+	Entity* m_2ndSprite = new Entity(glm::vec3(10, 3, 1), glm::vec2(2.0f, 2.0f), mySubTex);
+	m_Enemies.push_back(m_2ndSprite);
+	/*for (float y = 0.0f; y < 9.0f; y+=0.5)
 	{
 		for (float x = 0.0f; x < 16.0f; x+=0.5)
 		{
-			m_Renderables.push_back(new Renderable(glm::vec3(x, y, 1), glm::vec2(0.4f, 0.4f), textures[rand() % 5]));
+			m_Walls.push_back(new Entity(glm::vec3(x, y, 1), glm::vec2(0.4f, 0.4f), textures[rand() % 5]));
 		}
-	}
-	m_Renderables.push_back(new Renderable(glm::vec3(-10, -3, 1), glm::vec2(2.0f, 2.0f), textures[1]));
-	m_Renderables.push_back(new Renderable(glm::vec3(10, 3, 1), glm::vec2(2.0f, 2.0f), textures[2]));
+	}*/
+	m_Player = new Entity(glm::vec3(0, 0, 1), glm::vec2(1.0f, 1.0f), new Texture2D("assets/Main Characters/Virtual Guy/Jump.png"));
 }

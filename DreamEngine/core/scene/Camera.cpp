@@ -24,7 +24,7 @@ namespace dream {
 
 	void Camera::OnKeyPressed()
 	{
-		if (Input::GetSingleton()->IsKeyPressed(DR_KEY_A))
+		/*if (Input::GetSingleton()->IsKeyPressed(DR_KEY_A))
 		{
 			m_Position.x += 00.1f;
 		}
@@ -40,7 +40,7 @@ namespace dream {
 		else if (Input::GetSingleton()->IsKeyPressed(DR_KEY_S))
 		{
 			m_Position.y += 00.1f;
-		}
+		}*/
 	}
 
 	void Camera::OnMouseMoved(const MouseMovedEvent& e)

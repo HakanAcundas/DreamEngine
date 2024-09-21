@@ -30,10 +30,10 @@ GameLayer::GameLayer(Shader* shader, Camera* camera)
 GameLayer::~GameLayer()
 {
 	delete m_Shader;
-	/*for (int i = 0; i < m_Renderables.size(); i++)
+	for (int i = 0; i < m_Entities.size(); i++)
 	{
-		delete m_Renderables[i];
-	}*/
+		delete &m_Entities[i];
+	}
 }
 
 void GameLayer::OnUpdate()
@@ -45,10 +45,19 @@ void GameLayer::OnUpdate()
 	m_Camera->OnUpdate();
 	SetCamera(m_Camera);
 	m_Shader->Enable();
-	for(Renderable* renderable : m_Level.GetRenderables())
+	for(Entity* entity : m_Level.GetWalls())
 	{
-		Renderer2D::GetSingleton()->DrawRenderable(renderable->GetPosition(), renderable->GetSize(), renderable->GetTexture(), renderable->GetColor());
+		Renderer2D::GetSingleton()->DrawRenderable(entity->GetPosition(), entity->GetSize(), entity->GetTexture());
 	}
+
+	Renderer2D::GetSingleton()->DrawRenderable(m_Level.GetPlayer()->GetPosition(),
+		m_Level.GetPlayer()->GetSize(), m_Level.GetPlayer()->GetTexture());
+
+	for (Entity* entity : m_Level.GetEnemies())
+	{
+		Renderer2D::GetSingleton()->DrawRenderable(entity->GetPosition(), entity->GetSize(), entity->GetSubTexture2D());
+	}
+
 	Renderer2D::GetSingleton()->End();
 	Renderer2D::GetSingleton()->Flush();
 }
@@ -57,6 +66,7 @@ void GameLayer::OnEvent(Event& e)
 {
 	EventDispatcher dispatcher(e);
 	dispatcher.Dispatch<MouseMovedEvent>(std::bind(&GameLayer::OnMouseMoved, this, std::placeholders::_1));
+	dispatcher.Dispatch<KeyPressedEvent>(std::bind(&GameLayer::OnKeyPressed, this, std::placeholders::_1));
 }
 
 bool GameLayer::OnMouseMoved(MouseMovedEvent& e)
@@ -66,5 +76,17 @@ bool GameLayer::OnMouseMoved(MouseMovedEvent& e)
 		m_LightPos.x = (float)((double)e.GetX() * 16.0f/ 1280.0f);
 		m_LightPos.y = (float)(9.0f - (double)e.GetY() * 9.0f / 720.0f);
 	}
+	return false;
+}
+
+bool GameLayer::OnKeyPressed(KeyPressedEvent& e)
+{
+	glm::vec3 playerPos = m_Level.GetPlayer()->GetPosition();
+	switch (e.GetKeyCode())
+	{
+	case 87:
+		m_Level.GetPlayer()->SetPosition(playerPos.x + 0.02, playerPos.y, playerPos.z);
+	}
+
 	return false;
 }

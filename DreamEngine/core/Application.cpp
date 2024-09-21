@@ -43,6 +43,19 @@ namespace dream
 			if (e.handled)
 				break;
 		}
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<KeyPressedEvent>(std::bind(&Application::OnKeyPressed, this, std::placeholders::_1));
+	}
+
+	bool Application::OnKeyPressed(KeyPressedEvent& e)
+	{
+		switch (e.GetKeyCode())
+		{
+		case 256:
+			m_Running = false;
+		}
+
+		return false;
 	}
 
 	void Application::Run()
@@ -52,7 +65,6 @@ namespace dream
 			m_Window->Clear();
 			for (auto layer : m_Layers)
 				layer->OnUpdate();
-
 			m_Window->OnUpdate();
 		}
 	}

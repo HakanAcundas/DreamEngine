@@ -73,7 +73,7 @@ source_group("core/scene" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Layer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Layer.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Renderable.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Entity.h
 
     ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Renderer2D.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Renderer2D.h
@@ -83,6 +83,9 @@ source_group("core/scene" FILES
 
     ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Texture2D.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Texture2D.h
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/SubTexture.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/SubTexture.h
 )
 
 source_group("core/utils" FILES

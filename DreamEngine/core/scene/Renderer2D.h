@@ -5,7 +5,7 @@
 #include "../buffers/VertexArray.h"
 #include "../scene/Shader.h"
 #include "../scene/Camera.h"
-#include "../scene/Renderable.h"
+#include "../scene/Entity.h"
 #include FT_FREETYPE_H
 
 namespace dream { namespace graphics {
@@ -64,9 +64,12 @@ namespace dream { namespace graphics {
 		void Init();
 		void Begin();
 		void End();
+
 		void DrawRenderable(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
-		void DrawRenderable(const glm::vec2& position, const glm::vec2& size, const Texture2D* texture, const glm::vec4& color);
+		void DrawRenderable(const glm::vec2& position, const glm::vec2& size, const Texture2D* texture);
+		void DrawRenderable(const glm::vec2& position, const glm::vec2& size, const Texture2D::SubTexture2D* subTexture);
 		void DrawLabel(const std::string& text, float x, float y, const glm::vec4& color);
+
 		void Flush();
 		//void ShutDown();
 

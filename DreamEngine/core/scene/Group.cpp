@@ -7,13 +7,13 @@ namespace dream { namespace graphics {
 	{
 	}
 
-	void Group::AddRenderable(Renderable* renderable)
+	void Group::AddRenderable(Entity* entity)
 	{
-		m_Renderables.push_back(renderable);
+		m_Entities.push_back(entity);
 	}
 
-	void Group::RemoveRenderable(Renderable* renderable)
+	void Group::RemoveRenderable(Entity* entity)
 	{
-		m_Renderables.erase(std::remove(m_Renderables.begin(), m_Renderables.end(), renderable), m_Renderables.end());
+		m_Entities.erase(std::remove(m_Entities.begin(), m_Entities.end(), entity), m_Entities.end());
 	}
 }}

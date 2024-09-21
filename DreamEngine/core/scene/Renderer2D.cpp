@@ -109,7 +109,7 @@ namespace dream { namespace graphics {
 		return ts;
 	}
 
-	// TO DO convert this function into DrawQuad (its is already converted but make a base 
+	// TODO convert this function into DrawQuad (its is already converted but make a base 
 	// function to apply different variations of DrawQuad. Example DrawRotatedQuad etc...
 	void Renderer2D::DrawRenderable(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
 	{
@@ -128,7 +128,7 @@ namespace dream { namespace graphics {
 		r_Data.renderableIndexCount += 6;
 	}
 
-	void Renderer2D::DrawRenderable(const glm::vec2& position, const glm::vec2& size, const Texture2D* texture, const glm::vec4& color)
+	void Renderer2D::DrawRenderable(const glm::vec2& position, const glm::vec2& size, const Texture2D* texture)
 	{
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 1.0f))
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
@@ -139,12 +139,32 @@ namespace dream { namespace graphics {
 		for (int i = 0; i < 4; i++)
 		{
 			r_Data.renderableData->position = transform * r_Data.renderableVertexPositions[i];
-			r_Data.renderableData->color = color;
+			r_Data.renderableData->color = glm::vec4(0, 0, 0, 0);
 			r_Data.renderableData->textureCoord = r_Data.textureCoords[i];
 			r_Data.renderableData->textureID = ts;
 			r_Data.renderableData++;
 		}
 		
+		r_Data.renderableIndexCount += 6;
+	}
+
+	void Renderer2D::DrawRenderable(const glm::vec2& position, const glm::vec2& size, const Texture2D::SubTexture2D* subTexture)
+	{
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 1.0f))
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		float ts = 0;
+		if (subTexture->GetTexture() != NULL)
+			ts = SubmitTexture(subTexture->GetTexture());
+
+		for (int i = 0; i < 4; i++)
+		{
+			r_Data.renderableData->position = transform * r_Data.renderableVertexPositions[i];
+			r_Data.renderableData->color = glm::vec4(0, 0, 0, 0);
+			r_Data.renderableData->textureCoord = subTexture->GetTexCoords()[i];
+			r_Data.renderableData->textureID = ts;
+			r_Data.renderableData++;
+		}
+
 		r_Data.renderableIndexCount += 6;
 	}
 
