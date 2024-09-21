@@ -1,11 +1,18 @@
 # Include directories
 include_directories(
-    ${THIRD_PARTY_DIR}/glew/include
+    ${THIRD_PARTY_DIR}/glad/include
     ${THIRD_PARTY_DIR}/glfw/include
     ${THIRD_PARTY_DIR}/glm
     ${THIRD_PARTY_DIR}/stb_image
     ${THIRD_PARTY_DIR}/freetype/include
 )
+
+# Find OpenGL and Freetype
+find_package(OpenGL REQUIRED)
+find_package(Freetype REQUIRED)
+
+# Add GLAD as a library
+add_library(glad ${THIRD_PARTY_DIR}/glad/src/glad.c)
 
 # Add DreamEngine library
 file(GLOB_RECURSE DREAM_ENGINE_SOURCES
@@ -24,18 +31,9 @@ file(GLOB_RECURSE DREAM_ENGINE_SOURCES
 )
 
 add_library(DreamEngine STATIC ${DREAM_ENGINE_SOURCES})
+#add_compile_definitions(GLEW_STATIC _CRT_SECURE_NO_WARNINGS)
 
-# Add preprocessor definitions globally
-add_compile_definitions(GLEW_STATIC _CRT_SECURE_NO_WARNINGS)
-
-# # Specify output directories for DreamEngine
-# set_target_properties(DreamEngine PROPERTIES
-#     ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/DreamEngine/lib
-#     LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/DreamEngine/lib
-#     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/DreamEngine/bin
-# )
-
-# Group source files into folders
+# Grouping source files
 source_group("core/buffers" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/Buffer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/Buffer.h
@@ -102,11 +100,34 @@ source_group("core" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/core/Application.h
 )
 
-
 # Link thirdparty libraries to DreamEngine
-target_link_libraries(DreamEngine
-    ${THIRD_PARTY_DIR}/glew/lib/x64/glew32s.lib
-    ${THIRD_PARTY_DIR}/glfw/lib-vc2022/glfw3.lib
-    opengl32.lib
-    ${THIRD_PARTY_DIR}/freetype/lib/freetype.lib
-)
+if (WIN32)
+    message(STATUS "Configuring for Windows")
+    target_link_libraries(DreamEngine
+        ${THIRD_PARTY_DIR}/glew/lib/x64/glew32s.lib
+        ${THIRD_PARTY_DIR}/glfw/lib-vc2022/glfw3.lib
+        opengl32.lib
+        ${THIRD_PARTY_DIR}/freetype/lib/freetype.lib
+    )
+    add_library(DreamEngine STATIC ${DREAM_ENGINE_SOURCES})
+elseif (UNIX AND NOT APPLE)
+    message(STATUS "Configuring for Linux (Ubuntu)")
+
+    # Set output directory for DreamEngine static library
+    set_target_properties(DreamEngine PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+    # Linux-specific settings
+    # Link third-party libraries to DreamEngine
+    target_link_libraries(DreamEngine
+        glad
+        glfw
+        ${FREETYPE_LIBRARIES}
+        ${OPENGL_LIBRARIES}
+    )
+    set_target_properties(DreamEngine PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+else ()
+    message(FATAL_ERROR "Unsupported platform")
+endif ()
+
+# Ensure Freetype include directories are added
+target_include_directories(DreamEngine PRIVATE ${FREETYPE_INCLUDE_DIRS})

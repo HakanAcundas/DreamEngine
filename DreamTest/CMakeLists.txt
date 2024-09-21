@@ -1,25 +1,51 @@
-# Add DreamTest executable
+# Gather source files for DreamTest
 file(GLOB_RECURSE DREAM_TEST_SOURCES
     game/*.cpp
     game/*.h
     shaders/*.shader
 )
 
+# Add the DreamTest executable (common for both Windows and Linux)
 add_executable(DreamTest ${DREAM_TEST_SOURCES})
 
 # Add preprocessor definitions globally
-add_compile_definitions(GLEW_STATIC _CRT_SECURE_NO_WARNINGS)
+#add_compile_definitions(GLEW_STATIC _CRT_SECURE_NO_WARNINGS)
 
-# # Specify output directories for DreamTest
-# set_target_properties(DreamTest PROPERTIES
-#     ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/DreamTest/lib
-#     LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/DreamTest/lib
-#     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/DreamTest/bin
-# )
-message(STATUS "Include directories: ${THIRD_PARTY_DIR}/glew/include")
-# Include directories for DreamTest
+# Platform-specific configuration
+if (WIN32)
+    message(STATUS "Configuring for Windows")
+
+    # Link libraries for Windows
+    target_link_libraries(DreamTest 
+        DreamEngine
+        ${THIRD_PARTY_DIR}/glew/lib/x64/glew32s.lib
+        ${THIRD_PARTY_DIR}/glfw/lib-vc2022/glfw3.lib
+        opengl32.lib
+    )
+
+elseif (UNIX AND NOT APPLE)
+    message(STATUS "Configuring for Linux (Ubuntu)")
+
+    # Set output directory for DreamTest executable
+    set_target_properties(DreamTest PROPERTIES 
+        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
+    )
+
+    # Link libraries for Linux
+    target_link_libraries(DreamTest 
+        DreamEngine
+        glfw
+        ${OPENGL_LIBRARIES}
+        ${FREETYPE_LIBRARIES}
+    )
+
+else ()
+    message(FATAL_ERROR "Unsupported platform")
+endif()
+
+# Common include directories for both platforms
 target_include_directories(DreamTest PRIVATE
-    ${THIRD_PARTY_DIR}/glew/include
+    ${THIRD_PARTY_DIR}/glad/include
     ${THIRD_PARTY_DIR}/glfw/include
     ${THIRD_PARTY_DIR}/glm
     ${THIRD_PARTY_DIR}/stb_image
@@ -33,6 +59,7 @@ target_include_directories(DreamTest PRIVATE
     ${CMAKE_SOURCE_DIR}/DreamEngine/core/window
 )
 
+# Organize source files into groups
 source_group("game" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/game/GameLayer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/game/GameLayer.h
@@ -46,10 +73,10 @@ source_group("shaders" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/shaders/fragment.shader
 )
 
-# Link DreamEngine library to DreamTest
-target_link_libraries(DreamTest 
-    DreamEngine
-    ${THIRD_PARTY_DIR}/glew/lib/x64/glew32s.lib
-    ${THIRD_PARTY_DIR}/glfw/lib-vc2022/glfw3.lib
-    opengl32.lib
-)
+# Set CMake build type to Debug if not set
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug)
+endif()
+
+# Add debugging symbols for GCC/Clang
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")

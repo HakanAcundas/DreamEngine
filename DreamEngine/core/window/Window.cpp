@@ -107,10 +107,10 @@ namespace dream {
 		});
 
 
-		if (glewInit() != GLEW_OK)
+		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		{
-			std::cout << "Failed to Initialize GLEW!";
-			return false;
+			std::cerr << "Failed to initialize GLAD" << std::endl;
+			return -1;
 		}
 		std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
 
