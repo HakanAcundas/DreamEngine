@@ -6,7 +6,7 @@
 
 namespace dream { namespace graphics {
 
-	static enum class ShaderDataType
+	enum class ShaderDataType
 	{
 		None = 0, Float, Int, Bool
 	};
