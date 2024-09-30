@@ -1,7 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <GL/glew.h>
+#include <glad/glad.h>
 #include "../utils/FileUtils.h"
 
 namespace dream { namespace graphics {

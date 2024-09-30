@@ -6,8 +6,8 @@ int main(void)
 {
     Application dreamEngine;
     Shader* shader = new Shader(
-        "shaders/vertex.shader",
-        "shaders/fragment.shader");
+        "DreamTest/shaders/vertex.shader",
+        "DreamTest/shaders/fragment.shader");
 
     Camera camera(0.0f, 16.0f, 0.0f, 9.0f);
     camera.SetPosition(glm::vec3(4, 3, 0));

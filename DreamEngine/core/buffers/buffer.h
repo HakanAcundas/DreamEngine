@@ -1,12 +1,13 @@
 #pragma once
 #include<string>
 #include<vector>
-#include <GL/glew.h>
+//#include <GL/glew.h>
+#include <glad/glad.h>
 #include <memory>
 
 namespace dream { namespace graphics {
 
-	static enum class ShaderDataType
+	enum class ShaderDataType
 	{
 		None = 0, Float, Int, Bool
 	};
