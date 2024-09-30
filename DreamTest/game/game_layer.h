@@ -1,6 +1,6 @@
 #pragma once
-#include "Layer.h"
-#include "TestLevel.h"
+#include "layer.h"
+#include "test_level.h"
 
 using namespace dream;
 using namespace graphics;

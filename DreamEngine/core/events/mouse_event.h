@@ -1,5 +1,5 @@
 #pragma once
-#include "Event.h"
+#include "event.h"
 #include <glm/glm.hpp>
 #include <sstream>
 

@@ -1,5 +1,5 @@
-#include "Application.h"
-#include "GameLayer.h"
+#include "application.h"
+#include "game_layer.h"
 using namespace dream;
 
 int main(void)

@@ -4,7 +4,7 @@
 #include <glad/glad.h>
 #include <functional>
 #include <GLFW/glfw3.h>
-#include "../events/Event.h"
+#include "../events/event.h"
 
 namespace dream {
 	

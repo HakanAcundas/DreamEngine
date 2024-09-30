@@ -1,7 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
-#include "../events/MouseEvent.h"
-#include "../events/KeyEvent.h"
+#include "../events/mouse_event.h"
+#include "../events/key_event.h"
 
 namespace dream {
 	class Camera

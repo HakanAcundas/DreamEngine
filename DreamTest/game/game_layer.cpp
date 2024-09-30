@@ -1,5 +1,5 @@
-#include "GameLayer.h"
-#include "MouseEvent.h"
+#include "game_layer.h"
+#include "mouse_event.h"
 
 using namespace dream;
 using namespace graphics;

@@ -1,4 +1,4 @@
-#include "IndexBuffer.h"
+#include "index_buffer.h"
 
 namespace dream { namespace graphics {
 

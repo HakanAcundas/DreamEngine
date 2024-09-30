@@ -1,4 +1,4 @@
-#include "Group.h"
+#include "group.h"
 
 namespace dream { namespace graphics {
 

@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
-#include "window/Window.h"
-#include "scene/Layer.h"
-#include "scene/Renderer2D.h"
+#include "window/window.h"
+#include "scene/layer.h"
+#include "scene/renderer2D.h"
 
 namespace dream
 {

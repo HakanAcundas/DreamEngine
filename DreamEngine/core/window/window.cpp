@@ -1,7 +1,7 @@
-#include "Window.h"
-#include "../input/Input.h"
-#include "../events/MouseEvent.h"
-#include "../events/KeyEvent.h"
+#include "window.h"
+#include "../input/input.h"
+#include "../events/mouse_event.h"
+#include "../events/key_event.h"
 
 namespace dream {
 

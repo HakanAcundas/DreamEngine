@@ -1,6 +1,6 @@
 #pragma once
-#include "Entity.h"
-#include "Renderer2D.h"
+#include "entity.h"
+#include "renderer2D.h"
 
 namespace dream { namespace graphics {
 

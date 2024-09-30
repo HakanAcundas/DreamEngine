@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "Renderer2D.h"
+#include "renderer2D.h"
 #include <iostream>
 
 namespace dream { namespace graphics {

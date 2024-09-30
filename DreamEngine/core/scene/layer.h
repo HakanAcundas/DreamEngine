@@ -1,5 +1,5 @@
 #pragma once
-#include "Renderer2D.h"
+#include "renderer2D.h"
 
 namespace dream { namespace graphics {
 

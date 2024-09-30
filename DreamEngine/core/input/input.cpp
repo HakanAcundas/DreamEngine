@@ -1,5 +1,5 @@
-#include "../Application.h"
-#include "Input.h"
+#include "../application.h"
+#include "input.h"
 #include <GLFW/glfw3.h>
 
 namespace dream {

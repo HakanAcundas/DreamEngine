@@ -2,10 +2,10 @@
 #include <cstddef>
 #include <map>
 #include <ft2build.h>
-#include "../buffers/VertexArray.h"
-#include "../scene/Shader.h"
-#include "../scene/Camera.h"
-#include "../scene/Entity.h"
+#include "../buffers/vertex_array.h"
+#include "../scene/shader.h"
+#include "../scene/camera.h"
+#include "../scene/entity.h"
 #include FT_FREETYPE_H
 
 namespace dream { namespace graphics {

@@ -1,8 +1,8 @@
 #include <iostream>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "Camera.h"
-#include "../input/Input.h"
+#include "camera.h"
+#include "../input/input.h"
 
 namespace dream {
 

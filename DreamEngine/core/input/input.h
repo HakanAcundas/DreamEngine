@@ -1,6 +1,6 @@
 #include <glm/glm.hpp>
-#include "KeyCodes.h"
-#include "MouseCodes.h"
+#include "key_codes.h"
+#include "mouse_codes.h"
 
 namespace dream {
 
