@@ -61,11 +61,11 @@ target_include_directories(DreamTest PRIVATE
 
 # Organize source files into groups
 source_group("game" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/game/GameLayer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/game/GameLayer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/game_layer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/game_layer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/game/main.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/game/TestLevel.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/game/TestLevel.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/test_level.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/test_level.h
 )
 
 source_group("shaders" FILES

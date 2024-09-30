@@ -35,69 +35,66 @@ add_library(DreamEngine STATIC ${DREAM_ENGINE_SOURCES})
 
 # Grouping source files
 source_group("core/buffers" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/Buffer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/Buffer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/buffer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/buffer.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/IndexBuffer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/IndexBuffer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/index_buffer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/index_buffer.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/VertexArray.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/VertexArray.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/vertex_array.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/vertex_array.h
 )
 
 source_group("core/events" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/events/Event.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/events/KeyEvent.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/events/MouseEvent.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/events/event.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/events/key_event.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/events/mouse_event.h
 )
 
 source_group("core/input" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/input/Input.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/input/Input.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/input/KeyCodes.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/input/MouseCodes.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/input/input.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/input/input.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/input/key_codes.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/input/mouse_codes.h
 )
 
 source_group("core/scene" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Camera.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Camera.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/camera.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/camera.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Group.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Group.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/group.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/group.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Label.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Label.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/label.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/label.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Layer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Layer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/layer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/layer.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Entity.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/entity.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Renderer2D.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Renderer2D.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/renderer2D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/renderer2D.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Shader.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Shader.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/shader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/shader.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Texture2D.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/Texture2D.h
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/SubTexture.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/SubTexture.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/texture2D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/texture2D.h
 )
 
 source_group("core/utils" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/utils/FileUtils.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/utils/file_utils.h
 )
 
 source_group("core/window" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/window/Window.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/window/Window.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/window/window.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/window/window.h
 )
 
 source_group("core" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/Application.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/Application.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/application.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/application.h
 )
 
 # Link thirdparty libraries to DreamEngine
