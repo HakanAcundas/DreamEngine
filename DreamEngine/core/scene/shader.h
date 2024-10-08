@@ -9,37 +9,37 @@ namespace dream { namespace graphics {
 	class Shader
 	{
 	private:
-		unsigned int m_ShaderID;
-		const char* m_VertexPath;
-		const char* m_FragmentPath;
+		unsigned int m_shader_id;
+		const char *m_vertex_path;
+		const char *m_fragment_path;
 
-		unsigned int CreateProgram();
-		int GetUniformLocation(const char* name);
+		unsigned int create_program();
+		int get_uniform_location(const char *name);
 	public:
-		Shader(const char* vertexPath, const char* fragPath);
+		Shader(const char *vertex_path, const char *frag_path);
 		~Shader();
 
 #pragma region Uniform Setters
-		void SetUniform1f(const char* name, float value);
-		void SetUniform1fv(const char* name, float* value, int count);
-		void SetUniform1i(const char* name, int value);
-		void SetUniform1iv(const char* name, int* value, int count);
-		void SetUniform2f(const char* name, const glm::vec2& vector);
-		void SetUniform3f(const char* name, const glm::vec3& vector);
-		void SetUniform4f(const char* name, const glm::vec4& vector);
-		void SetUniformMat4(const char* name, const glm::mat4& matrix);
+		void set_uniform1f(const char *name, float value);
+		void set_uniform1fv(const char *name, float *value, int count);
+		void set_uniform1i(const char *name, int value);
+		void set_uniform1iv(const char *name, int *value, int count);
+		void set_uniform2f(const char *name, const glm::vec2 &vector);
+		void set_uniform3f(const char *name, const glm::vec3 &vector);
+		void set_uniform4f(const char *name, const glm::vec4 &vector);
+		void set_uniformMat4(const char* name, const glm::mat4 &matrix);
 #pragma endregion Uniform Setters
 
 #pragma region Uniform Getters
-		void GetUniform1f(const char* name, float* data);
-		void GetUniform1i(const char* name, int* data);
-		void GetUniform2f(const char* name, float data[2]);
-		void GetUniform3f(const char* name, float data[3]);
-		void GetUniform4f(const char* name, float data[4]);
-		void GetUniformMat4(const char* name, float data[16]);
+		void get_uniform1f(const char *name, float *data);
+		void get_uniform1i(const char *name, int *data);
+		void get_uniform2f(const char *name, float data[2]);
+		void get_uniform3f(const char *name, float data[3]);
+		void get_uniform4f(const char *name, float data[4]);
+		void get_uniformMat4(const char *name, float data[16]);
 #pragma endregion Uniform Getters
 
-		void Enable();
-		void Disable();
+		void enable();
+		void disable();
 	};
 }}

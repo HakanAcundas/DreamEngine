@@ -1,17 +1,21 @@
-# Gather source files for DreamTest
+# =====================================
+# Gather Source Files for DreamTest
+# =====================================
 file(GLOB_RECURSE DREAM_TEST_SOURCES
     game/*.cpp
     game/*.h
+    game/main.cpp
     shaders/*.shader
 )
 
-# Add the DreamTest executable (common for both Windows and Linux)
+# =====================================
+# Add DreamTest Executable
+# =====================================
 add_executable(DreamTest ${DREAM_TEST_SOURCES})
 
-# Add preprocessor definitions globally
-#add_compile_definitions(GLEW_STATIC _CRT_SECURE_NO_WARNINGS)
-
-# Platform-specific configuration
+# =====================================
+# Platform-Specific Configuration
+# =====================================
 if (WIN32)
     message(STATUS "Configuring for Windows")
 
@@ -43,7 +47,9 @@ else ()
     message(FATAL_ERROR "Unsupported platform")
 endif()
 
-# Common include directories for both platforms
+# =====================================
+# Include Directories (Common for All Platforms)
+# =====================================
 target_include_directories(DreamTest PRIVATE
     ${THIRD_PARTY_DIR}/glad/include
     ${THIRD_PARTY_DIR}/glfw/include
@@ -59,7 +65,9 @@ target_include_directories(DreamTest PRIVATE
     ${CMAKE_SOURCE_DIR}/DreamEngine/core/window
 )
 
-# Organize source files into groups
+# =====================================
+# Organize Source Files into Groups
+# =====================================
 source_group("game" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/game/game_layer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/game/game_layer.h
@@ -73,10 +81,13 @@ source_group("shaders" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/shaders/fragment.shader
 )
 
-# Set CMake build type to Debug if not set
+# =====================================
+# Set Default Build Type and Debug Flags
+# =====================================
+# Set build type to Debug if not already specified
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-# Add debugging symbols for GCC/Clang
+# Add debugging symbols for GCC/Clang in Debug mode
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")

@@ -4,50 +4,50 @@ namespace dream { namespace graphics {
 
 	VertexArray::VertexArray()
 	{
-		glGenVertexArrays(1, &m_ArrayID);
+		glGenVertexArrays(1, &m_arrayID);
 	}
 
 	VertexArray::~VertexArray()
 	{
-		for (auto it = m_Buffers.begin(); it != m_Buffers.end(); it++)
+		for (auto it = m_buffers.begin(); it != m_buffers.end(); it++)
 		{
-			m_Buffers.erase(it);
+			m_buffers.erase(it);
 		}
-		glDeleteVertexArrays(1, &m_ArrayID);
+		glDeleteVertexArrays(1, &m_arrayID);
 	}
 
-	void VertexArray::Bind() const
+	void VertexArray::bind() const
 	{
-		glBindVertexArray(m_ArrayID);
+		glBindVertexArray(m_arrayID);
 	}
 
-	void VertexArray::Unbind() const
+	void VertexArray::unbind() const
 	{
 		glBindVertexArray(0);
 	}
 
-	void VertexArray::AddBuffer(Buffer* buffer)
+	void VertexArray::add_buffer(Buffer *buffer)
 	{
-		Bind();
-		buffer->Bind();
-		const auto& bufferElements = buffer->GetBufferElements();
-		for (auto element : bufferElements)
+		bind();
+		buffer->bind();
+		const auto &buffer_elements = buffer->get_buffer_elements();
+		for (auto element : buffer_elements)
 		{
-			glEnableVertexAttribArray(m_BufferIndex);
-			glVertexAttribPointer(m_BufferIndex, element->count,
+			glEnableVertexAttribArray(m_buffer_index);
+			glVertexAttribPointer(m_buffer_index, element->count,
 				GL_FLOAT, element->normalized ? GL_TRUE : GL_FALSE,
-				buffer->GetStride(),
+				buffer->get_stride(),
 				(const void*)element->offset);
-			m_BufferIndex++;
+			m_buffer_index++;
 		}
-		m_Buffers.emplace_back(buffer);
+		m_buffers.emplace_back(buffer);
 	}
 
-	void VertexArray::SetIndexBuffer(IndexBuffer* indexBuffer)
+	void VertexArray::set_index_buffer(IndexBuffer *index_buffer)
 	{
-		glBindVertexArray(m_ArrayID);
-		indexBuffer->Bind();
-		m_IndexBuffer = indexBuffer;
+		glBindVertexArray(m_arrayID);
+		index_buffer->bind();
+		m_index_buffer = index_buffer;
 	}
 }}
  

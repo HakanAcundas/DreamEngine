@@ -6,10 +6,10 @@ namespace dream { namespace utils {
 	class FileUtils
 	{
 	public:
-		static std::string read_file(const char* filePath)
+		static std::string read_file(const char *file_path)
 		{
 			//Open the file
-			FILE* file = fopen(filePath, "rt");
+			FILE* file = fopen(file_path, "rt");
 
 			// Go to end of the file
 			fseek(file, 0, SEEK_END);

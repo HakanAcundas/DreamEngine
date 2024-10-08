@@ -8,16 +8,16 @@ namespace dream { namespace graphics {
 	class IndexBuffer
 	{
 	private:
-		unsigned int m_IndexBufferID;
-		unsigned int m_Count;
+		unsigned int m_index_bufferID;
+		unsigned int m_count;
 	public:
-		IndexBuffer(unsigned int* indices, int count);
-		IndexBuffer(unsigned short* indices, int count);
+		IndexBuffer(unsigned int *indices, int count);
+		IndexBuffer(unsigned short *indices, int count);
 		~IndexBuffer();
 
-		void Bind();
-		void Unbind();
+		void bind();
+		void unbind();
 
-		inline unsigned int GetCount() const { return m_Count; }
+		inline unsigned int get_count() const { return m_count; }
 	};
 }}

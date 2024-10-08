@@ -7,41 +7,42 @@ namespace dream {
 	class Camera
 	{
 	private:
-		glm::mat4 m_ProjectionMatrix;
-		glm::mat4 m_ViewMatrix;
-		glm::mat4 m_ViewProjectionMatrix;
-		glm::vec3 m_Position;
+		glm::mat4 m_projection_mat;
+		glm::mat4 m_view_mat;
+		glm::mat4 m_view_projection_mat;
+		glm::vec3 m_position;
 
-		float m_RotationAngle;
-		bool m_Rotation;
-		float m_CameraTranslationSpeed = 5.0f, m_CameraRotationSpeed = 180.0f;
-		float m_AspectRatio;
-		float m_ZoomLevel = 1.0f;
+		float m_rotation_angle;
+		bool m_rotation;
+		float m_camera_translation_speed = 5.0f, m_camera_rotation_speed = 180.0f;
+		float m_aspect_ratio;
+		float m_zoom_level = 1.0f;
 
-		void RecalculateViewMatrix();
+		void recalculate_view_mat();
 	public:
 		Camera() = default;
 		Camera(float left, float right, float bottom, float top);
 
-		void OnUpdate();
-		void OnKeyPressed();
-		void OnMouseMoved(const MouseMovedEvent& e);
-		void OnMouseScrolled();
+		void on_update();
+		void on_event(Event &e);
+		bool on_key_pressed(KeyPressedEvent &e);
+		bool on_mouse_moved(MouseMovedEvent &e);
+		bool on_mouse_scrolled(MouseScrolledEvent &e);
 
 		// Getters and Setters
-		void SetProjection(float left, float right, float bottom, float top);
+		void set_projection(float left, float right, float bottom, float top);
 
-		const glm::vec3& GetPosition() const { return m_Position; }
-		void SetPosition(const glm::vec3 position) { m_Position = position; }
+		const glm::vec3& get_position() const { return m_position; }
+		void set_position(const glm::vec3 position) { m_position = position; }
 
-		float GetRotationAngle() { return m_RotationAngle; }
-		void SetRotationAngle(float rotationAngle) { m_RotationAngle = rotationAngle; }
+		float get_rotation_angle() { return m_rotation_angle; }
+		void set_rotation_angle(float rotation_angle) { m_rotation_angle = rotation_angle; }
 
-		bool GetRotation() { return m_Rotation; }
-		void SetRotationAngle(bool rotation) { m_Rotation = rotation; }
+		bool get_rotation() { return m_rotation; }
+		void set_rotation(bool rotation) { m_rotation = rotation; }
 
-		glm::mat4 GetProjectionMatrix() { return m_ProjectionMatrix; }
-		glm::mat4 GetViewMatrix() { return m_ViewMatrix; }
-		glm::mat4 GetProjectionViewMatrix() { return m_ViewProjectionMatrix; }
+		glm::mat4 get_projection_mat() { return m_projection_mat; }
+		glm::mat4 get_view_mat() { return m_view_mat; }
+		glm::mat4 get_projection_view_mat() { return m_view_projection_mat; }
 	};
 }

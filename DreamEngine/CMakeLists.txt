@@ -11,9 +11,6 @@ include_directories(
 find_package(OpenGL REQUIRED)
 find_package(Freetype REQUIRED)
 
-# Add GLAD as a library
-add_library(glad ${THIRD_PARTY_DIR}/glad/src/glad.c)
-
 # Add DreamEngine library
 file(GLOB_RECURSE DREAM_ENGINE_SOURCES
     core/buffers/*.cpp
@@ -26,10 +23,12 @@ file(GLOB_RECURSE DREAM_ENGINE_SOURCES
     core/utils/*.h
     core/window/*.cpp
     core/window/*.h
-    core/Application.cpp
-    core/Application.h
+    core/application.cpp
+    core/application.h
 )
 
+# Add GLAD as a library
+add_library(glad ${THIRD_PARTY_DIR}/glad/src/glad.c)
 add_library(DreamEngine STATIC ${DREAM_ENGINE_SOURCES})
 #add_compile_definitions(GLEW_STATIC _CRT_SECURE_NO_WARNINGS)
 

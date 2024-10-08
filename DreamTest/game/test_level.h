@@ -9,19 +9,19 @@ using namespace graphics;
 class TestLevel
 {
 private:
-	std::vector<Entity*> m_Walls;
-	std::vector<Entity*> m_Enemies;
-	Entity* m_Player;
-	bool m_Running = true;
-	bool m_Minimized = false;
-	float m_LastFrameTime = 0.0f;
+	std::vector<Entity*> m_walls;
+	std::vector<Entity*> m_enemies;
+	Entity *m_player;
+	bool m_running = true;
+	bool m_minimized = false;
+	float m_last_frame_time = 0.0f;
 	float r = 0;
 public:
 	TestLevel();
 	~TestLevel();
 
-	void Run();
-	std::vector<Entity*> GetWalls() { return m_Walls; }
-	std::vector<Entity*> GetEnemies() { return m_Enemies; }
-	Entity* GetPlayer() { return m_Player; }
+	void run();
+	std::vector<Entity*> get_walls() { return m_walls; }
+	std::vector<Entity*> get_enemies() { return m_enemies; }
+	Entity* get_player() { return m_player; }
 };

@@ -23,12 +23,12 @@ namespace dream { namespace graphics {
 
 		BufferElement() = default;
 
-		BufferElement(const std::string& name, ShaderDataType type, unsigned int count, bool normalized = false)
-			: name(name), type(type), count(count), size(ShaderDataTypeSize(type)), offset(0), normalized(normalized)
+		BufferElement(const std::string &name, ShaderDataType type, unsigned int count, bool normalized = false)
+			: name(name), type(type), count(count), size(shader_data_type_size(type)), offset(0), normalized(normalized)
 		{
 		}
 
-		uint32_t ShaderDataTypeSize(ShaderDataType type)
+		uint32_t shader_data_type_size(ShaderDataType type)
 		{
 			switch (type)
 			{
@@ -40,7 +40,7 @@ namespace dream { namespace graphics {
 			return 0;
 		}
 
-		static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
+		static GLenum shader_data_type_to_opengl_base_type(ShaderDataType type)
 		{
 			switch (type)
 			{
@@ -58,25 +58,25 @@ namespace dream { namespace graphics {
 	class Buffer
 	{
 	private:
-		unsigned int m_BufferID;
-		unsigned int m_ComponentCount;
-		std::vector<std::shared_ptr<BufferElement>> m_BufferElements;
-		uint32_t m_Stride = 0;
+		unsigned int m_bufferID;
+		unsigned int m_component_count;
+		std::vector<std::shared_ptr<BufferElement>> m_buffer_elements;
+		uint32_t m_stride = 0;
 
 	public:
 		Buffer(unsigned int size);
-		Buffer(float* data, unsigned int size);
+		Buffer(float *data, unsigned int size);
 		~Buffer();
 
-		void Bind() const;
-		void Unbind() const;
+		void bind() const;
+		void unbind() const;
 
-		void AddBufferElement(std::string name, ShaderDataType type, uint8_t count = 1, bool normalized = false);
-		void SetData(const void* data, uint32_t size);
-		void CalculateStride();
+		void add_buffer_element(std::string name, ShaderDataType type, uint8_t count = 1, bool normalized = false);
+		void set_data(const void* data, uint32_t size);
+		void calculate_stride();
 
-		inline unsigned int const GetCount() { return m_ComponentCount; }
-		std::vector<std::shared_ptr<BufferElement>> GetBufferElements() { return m_BufferElements; }
-		unsigned int GetStride() const { return m_Stride; }
+		inline unsigned int const get_count() { return m_component_count; }
+		std::vector<std::shared_ptr<BufferElement>> get_buffer_elements() { return m_buffer_elements; }
+		unsigned int get_stride() const { return m_stride; }
 	};
 }}

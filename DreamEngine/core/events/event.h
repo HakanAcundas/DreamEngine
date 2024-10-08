@@ -3,13 +3,14 @@
 #include <functional>
 
 namespace dream {
+	
 
 	class Event
 	{
 	public:
 		enum class EventType
 		{
-			KEY_PRESSED = 0,
+			KEY_PRESSED = 1,
 			KEY_RELEASED,
 
 			MOUSE_PRESSED,
@@ -19,16 +20,15 @@ namespace dream {
 
 			WINDOW_RESIZE
 		};
-
 		bool handled = false;
 	public:
-		virtual EventType GetEventType() const = 0;
-		virtual std::string ToString() const
+		virtual EventType get_event_type() const = 0;
+		virtual std::string to_string() const
 		{
 			return "Event: ";
 		}
 
-		static std::string TypeToString(EventType type)
+		static std::string type_to_string(EventType type)
 		{
 			switch (type)
 			{
@@ -46,32 +46,4 @@ namespace dream {
 			return "INVALID";
 		}
 	};
-
-	class EventDispatcher
-	{
-	public:
-		EventDispatcher(Event& event)
-			: m_Event(event)
-		{
-		}
-
-		// F will be deduced by the compiler
-		template<typename T, typename F>
-		bool Dispatch(const F& func)
-		{
-			if (m_Event.GetEventType() == T::GetStaticType())
-			{
-				m_Event.handled = func(static_cast<T&>(m_Event));
-				return true;
-			}
-			return false;
-		}
-	private:
-		Event& m_Event;
-	};
-
-	inline std::ostream& operator<<(std::ostream& os, const Event& e)
-	{
-		return os << e.ToString();
-	}
 }

@@ -6,18 +6,18 @@ namespace dream { namespace graphics {
 		class Layer
 		{
 		protected:
-			std::string m_LayerName;
-			std::vector<std::shared_ptr<Entity>> m_Entities;
+			std::string m_layer_name;
+			std::vector<std::shared_ptr<Entity>> m_entities;
 		public:
-			Layer(const std::string& name);
+			Layer(const std::string &name);
 			virtual ~Layer() = default;
 
-			virtual void AddRenderable(Entity* entity);
-			virtual void RemoveRenderable(Entity* entity);
-			virtual void OnUpdate() {}
-			virtual void OnEvent(Event& e) {}
+			virtual void add_renderable(Entity *entity);
+			virtual void remove_renderable(Entity *entity);
+			virtual void on_update() = 0;
+			virtual void on_event(Event &e) = 0;
 
-			const std::string& GetName() const { return m_LayerName; }
+			const std::string& get_name() const { return m_layer_name; }
 
 		};
 }}
