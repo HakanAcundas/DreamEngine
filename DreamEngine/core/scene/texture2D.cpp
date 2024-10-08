@@ -1,11 +1,11 @@
-#include "Texture2D.h"
+#include "texture2D.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
 namespace dream { namespace graphics {
 
 	Texture2D::Texture2D(std::string path)
-		: m_Path(path)
+		: m_path(path)
 	{
 		int width, height, channels;
 		stbi_set_flip_vertically_on_load(1);
@@ -13,31 +13,31 @@ namespace dream { namespace graphics {
 
 		if (data)
 		{
-			m_Width = width;
-			m_Height = height;
+			m_width = width;
+			m_height = height;
 
-			GLenum internalFormat = 0, dataFormat = 0;
+			GLenum internal_format = 0, data_format = 0;
 			if (channels == 4)
 			{
-				internalFormat = GL_RGBA8;
-				dataFormat = GL_RGBA;
+				internal_format = GL_RGBA8;
+				data_format = GL_RGBA;
 			}
 			else if (channels == 3)
 			{
-				internalFormat = GL_RGB8;
-				dataFormat = GL_RGB;
+				internal_format = GL_RGB8;
+				data_format = GL_RGB;
 			}
 
-			glCreateTextures(GL_TEXTURE_2D, 1, &m_TID);
-			glTextureStorage2D(m_TID, 1, internalFormat, m_Width, m_Height);
+			glCreateTextures(GL_TEXTURE_2D, 1, &m_tid);
+			glTextureStorage2D(m_tid, 1, internal_format, m_width, m_height);
 
-			glTextureParameteri(m_TID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTextureParameteri(m_TID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTextureParameteri(m_tid, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTextureParameteri(m_tid, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-			glTextureParameteri(m_TID, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTextureParameteri(m_TID, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTextureParameteri(m_tid, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTextureParameteri(m_tid, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-			glTextureSubImage2D(m_TID, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, data);
+			glTextureSubImage2D(m_tid, 0, 0, 0, m_width, m_height, data_format, GL_UNSIGNED_BYTE, data);
 
 			stbi_image_free(data);
 		}
@@ -45,15 +45,16 @@ namespace dream { namespace graphics {
 
 	Texture2D::~Texture2D()
 	{
-		glDeleteTextures(1, &m_TID);
+		glDeleteTextures(1, &m_tid);
 	}
 
-	void Texture2D::Bind() const
+	void Texture2D::bind() const
 	{
-		glBindTextureUnit(GL_TEXTURE_2D, m_TID);
+		glBindTextureUnit(GL_TEXTURE_2D, m_tid);
+
 	}
 
-	void Texture2D::Unbind() const
+	void Texture2D::unbind() const
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}

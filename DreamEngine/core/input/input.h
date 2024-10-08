@@ -1,27 +1,27 @@
 #include <glm/glm.hpp>
-#include "KeyCodes.h"
-#include "MouseCodes.h"
+#include "key_codes.h"
+#include "mouse_codes.h"
 
 namespace dream {
 
 	class Input
 	{
 	private:
-		static Input* s_Input;
+		static Input *s_input;
 		Input();
 	public:
-		static Input* GetSingleton() { return s_Input; }
+		static Input* get_singleton() { return s_input; }
 
-		bool IsKeyPressed(int keyCode);
-		bool IsMouseButtonPressed(MouseCode button);
-		glm::vec2 GetMousePosition();
+		bool is_key_pressed(int keyCode);
+		bool is_mouse_button_pressed(MouseCode button);
+		glm::vec2 get_mouse_position();
 		glm::vec2 GetMouseOffset();
 
-		float GetMouseY();
-		float GetMouseX();
+		float get_mouse_y();
+		float get_mouse_x();
 
-		float GetXOffset();
-		float GetYOffset();
+		float get_offset_x();
+		float get_offset_y();
 	};
 }
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Event.h"
+#include "event.h"
 
 
 namespace dream {
@@ -8,32 +8,31 @@ namespace dream {
 		class KeyEvent : public Event
 		{
 		protected:
-			int m_KeyCode;
-			int m_Count;
+			int m_keycode;
+			int m_count;
 		public:
 			KeyEvent(int keycode)
-				: m_KeyCode(keycode) {}
+				: m_keycode(keycode) {}
 
-			inline int GetKeyCode() const { return m_KeyCode; }
+			inline int get_keycode() const { return m_keycode; }
 		};
 
 		class KeyPressedEvent : public KeyEvent
 		{
 		private:
-			int m_Repeat;
+			int m_repeat;
 		public:
 			KeyPressedEvent(int keycode, bool repeat)
-				: KeyEvent(keycode), m_Repeat(repeat) {}
+				: KeyEvent(keycode), m_repeat(repeat) {}
 
-			inline int GetRepeat() const { return m_Repeat; }
-			std::string ToString() const override
+			inline int get_repeat() const { return m_repeat; }
+			std::string to_string() const override
 			{
 				std::stringstream ss;
-				ss << "KeyPressedEvent: " << m_KeyCode << " (" << m_Repeat << " repeats)";
+				ss << "KeyPressedEvent: " << m_keycode << " (" << m_repeat << " repeats)";
 				return ss.str();
 			}
-			inline EventType GetEventType() const override { return Event::EventType::KEY_PRESSED; }
-			static EventType GetStaticType() { return Event::EventType::KEY_PRESSED; }
+			inline EventType get_event_type() const override { return Event::EventType::KEY_PRESSED; }
 		};
 
 		class KeyReleasedEvent : public KeyEvent
@@ -42,14 +41,13 @@ namespace dream {
 			KeyReleasedEvent(int keycode)
 				: KeyEvent(keycode) {}
 
-			std::string ToString() const override
+			std::string to_string() const override
 			{
 				std::stringstream ss;
-				ss << "KeyReleasedEvent: " << m_KeyCode;
+				ss << "KeyReleasedEvent: " << m_keycode;
 				return ss.str();
 			}
-			inline EventType GetEventType() const override { return Event::EventType::KEY_RELEASED; }
-			static EventType GetStaticType() { return Event::EventType::KEY_RELEASED; }
+			inline EventType get_event_type() const override { return Event::EventType::KEY_RELEASED; }
 		};
 
 	}

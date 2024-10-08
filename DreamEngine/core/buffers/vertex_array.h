@@ -2,29 +2,29 @@
 #include <vector>
 //#include <GL/glew.h>
 #include <glad/glad.h>
-#include "../buffers/Buffer.h"
-#include "../buffers/IndexBuffer.h"
+#include "../buffers/buffer.h"
+#include "../buffers/index_buffer.h"
 
 namespace dream { namespace graphics {
 
 	class VertexArray
 	{
 	private:
-		unsigned int m_ArrayID;
-		unsigned int m_BufferIndex = 0;
-		std::vector<std::shared_ptr<Buffer>> m_Buffers;
-		IndexBuffer* m_IndexBuffer;
+		unsigned int m_arrayID;
+		unsigned int m_buffer_index = 0;
+		std::vector<std::shared_ptr<Buffer>> m_buffers;
+		IndexBuffer* m_index_buffer;
 		
 	public:
 		VertexArray();
 		~VertexArray();
 
-		void Bind() const;
-		void Unbind() const;
-		void AddBuffer(Buffer* buffer);
-		void SetIndexBuffer(IndexBuffer* indexBuffer);
+		void bind() const;
+		void unbind() const;
+		void add_buffer(Buffer *buffer);
+		void set_index_buffer(IndexBuffer *index_buffer);
 
-		const std::vector<std::shared_ptr<Buffer>> GetBuffers() { return m_Buffers; }
-		const IndexBuffer* GetIndexBuffers() { return m_IndexBuffer; }
+		const std::vector<std::shared_ptr<Buffer>> GetBuffers() { return m_buffers; }
+		const IndexBuffer* GetIndexBuffers() { return m_index_buffer; }
 	};
 }}

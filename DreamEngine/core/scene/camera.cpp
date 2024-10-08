@@ -1,73 +1,74 @@
 #include <iostream>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "Camera.h"
-#include "../input/Input.h"
+#include "camera.h"
+#include "../input/input.h"
 
 namespace dream {
 
 	Camera::Camera(float left, float right, float bottom, float top)
 	{
-		m_ProjectionMatrix = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
-		m_ViewMatrix = glm::mat4(1.0f);
-		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+		m_projection_mat = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
+		m_view_mat = glm::mat4(1.0f);
+		m_view_projection_mat = m_projection_mat * m_view_mat;
 	}
 
-	void Camera::OnUpdate()
+	void Camera::on_update()
 	{
-		//const glm::vec2& mousePos = { Input::GetSingleton()->GetMouseX(), Input::GetSingleton()->GetMouseY()};
-		//std::cout << "X: " << mousePos.x << " | Y: " << mousePos.y << "\n";
-		OnKeyPressed();
-		OnMouseScrolled();
-		SetPosition(m_Position);
+		set_position(m_position);
 	}
 
-	void Camera::OnKeyPressed()
+	void Camera::on_event(Event &e)
 	{
-		/*if (Input::GetSingleton()->IsKeyPressed(DR_KEY_A))
+		switch (e.get_event_type())
 		{
-			m_Position.x += 00.1f;
+		case Event::EventType::KEY_PRESSED:
+			on_key_pressed(static_cast<KeyPressedEvent&>(e));
+		case Event::EventType::MOUSE_MOVED:
+			on_mouse_moved(static_cast<MouseMovedEvent&>(e));
+		case Event::EventType::MOUSE_SCROLLED:
+			on_mouse_scrolled(static_cast<MouseScrolledEvent&>(e));
 		}
-		else if (Input::GetSingleton()->IsKeyPressed(DR_KEY_D))
+	}
+
+	bool Camera::on_key_pressed(KeyPressedEvent &e)
+	{
+		switch (e.get_keycode())
 		{
-			m_Position.x -= 00.1f;
+		case DR_KEY_W:
+			m_position.y -= 0.01;
+		case DR_KEY_S:
+			m_position.y += 0.01;
+		case DR_KEY_A:
+			m_position.x -= 0.01;
+		case DR_KEY_D:
+			m_position.x += 0.01;
 		}
 
-		if (Input::GetSingleton()->IsKeyPressed(DR_KEY_W))
-		{
-			m_Position.y -= 00.1f;
-		}
-		else if (Input::GetSingleton()->IsKeyPressed(DR_KEY_S))
-		{
-			m_Position.y += 00.1f;
-		}*/
+		return true;
 	}
 
-	void Camera::OnMouseMoved(const MouseMovedEvent& e)
+	bool Camera::on_mouse_moved(MouseMovedEvent &e)
 	{
-		m_Position.x += e.GetX() / 10000;
-		m_Position.y += e.GetY() / 10000;
+		m_position.x += e.get_x() / 10000;
+		m_position.y += e.get_y() / 10000;
+
+		return true;
 	}
 
-	void Camera::OnMouseScrolled()
+	bool Camera::on_mouse_scrolled(MouseScrolledEvent &e)
 	{
-		/*m_ZoomLevel -= e.GetYOffset() * 0.25f;
-		m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
-		SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);*/
+		return true;
 	}
 
-	void Camera::SetProjection(float left, float right, float bottom, float top)
+	void Camera::set_projection(float left, float right, float bottom, float top)
 	{
-		m_ProjectionMatrix = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
-		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+		m_projection_mat = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
+		m_view_projection_mat = m_projection_mat * m_view_mat;
 	}
 
-	void Camera::RecalculateViewMatrix()
+	void Camera::recalculate_view_mat()
 	{
-		/*glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position) *
-			glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation), glm::vec3(0, 0, 1));
-
-		m_ViewMatrix = glm::inverse(transform);*/
-		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+		m_view_projection_mat = m_projection_mat * m_view_mat;
 	}
 }

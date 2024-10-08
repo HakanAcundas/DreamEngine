@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
-#include "window/Window.h"
-#include "scene/Layer.h"
-#include "scene/Renderer2D.h"
+#include "window/window.h"
+#include "scene/layer.h"
+#include "scene/renderer2D.h"
 
 namespace dream
 {
@@ -10,24 +10,24 @@ namespace dream
 	{
 	private:
 		// Singleton
-		static Application* s_Application;
+		static Application *s_application;
 
-		bool m_Running = true;
-		float m_LastFrame = 0.0f;
-		std::shared_ptr<Window> m_Window;
-		std::vector<std::shared_ptr<graphics::Layer>> m_Layers;
+		bool m_running = true;
+		float m_last_frame = 0.0f;
+		std::shared_ptr<Window> m_window;
+		std::vector<graphics::Layer*> m_layers;
 	
 	public:
 		Application();
 		~Application();
 
-		void Run();
-		void OnEvent(Event& e);
-		bool OnKeyPressed(KeyPressedEvent& e);
-		void PushLayer(graphics::Layer* layer);
-		void PopLayer(graphics::Layer* layer);
+		void run();
+		void on_event(Event &e);
+		bool on_key_pressed(KeyPressedEvent &e);
+		void push_layer(graphics::Layer *layer);
+		void pop_layer(graphics::Layer *layer);
 
-		inline Window& GetWindow() { return *m_Window; }
-		inline static Application& GetApplication() { return *s_Application; }
+		inline Window& get_window() { return *m_window; }
+		inline static Application& get_application() { return *s_application; }
 	};
 }

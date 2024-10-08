@@ -1,71 +1,74 @@
-#include "Application.h"
+#include "application.h"
 
 using namespace dream::graphics;
 namespace dream 
 {
-	Application* Application::s_Application = nullptr;
+	Application *Application::s_application = nullptr;
 
 	Application::Application()
 	{
-		s_Application = this;
-		m_Window = std::make_shared<Window>();
-		Renderer2D::GetSingleton()->Init();
-		m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
+		s_application = this;
+		m_window = std::make_shared<Window>();
+		Renderer2D::get_singleton()->init();
+		m_window->set_event_callback(std::bind(&Application::on_event, this, std::placeholders::_1));
 	}
 
 	Application::~Application()
 	{
 		// TODO
-		//Renderer2D::GetSingleton()->ShutDown();
+		//Renderer2D::get_singleton()->ShutDown();
 	}
 
-	void Application::PushLayer(Layer* layer)
+	void Application::push_layer(Layer *layer)
 	{
-		m_Layers.emplace_back(layer);
+		m_layers.emplace_back(layer);
 	}
 
-	void Application::PopLayer(Layer* layer)
+	void Application::pop_layer(Layer *layer)
 	{
-		auto it = std::find_if(m_Layers.begin(), m_Layers.end(), 
-			[layer](const std::shared_ptr<Layer>& ptr) {
-				return ptr.get() == layer;
-			});
-		if (it != m_Layers.end())
-			m_Layers.erase(it);
+		auto it = std::find(m_layers.begin(), m_layers.end(), layer);
+		if (it != m_layers.end())
+			m_layers.erase(it);
 	}
 
-	void Application::OnEvent(Event& e)
+	void Application::on_event(Event &e)
 	{
-		std::cout << "We have an Event!! || " << e.ToString() << "\n";
-		for (auto layer : m_Layers)
+		std::cout << "We have an Event!! || " << e.to_string() << "\n";
+		for (auto layer : m_layers)
 		{
-			layer->OnEvent(e);
+			layer->on_event(e);
 			if (e.handled)
 				break;
 		}
-		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<KeyPressedEvent>(std::bind(&Application::OnKeyPressed, this, std::placeholders::_1));
+
+		switch (e.get_event_type())
+		{
+		case Event::EventType::KEY_PRESSED:
+			on_key_pressed(static_cast<KeyPressedEvent&>(e));
+			break;
+		}
+
 	}
 
-	bool Application::OnKeyPressed(KeyPressedEvent& e)
+	bool Application::on_key_pressed(KeyPressedEvent &e)
 	{
-		switch (e.GetKeyCode())
+		switch (e.get_keycode())
 		{
 		case 256:
-			m_Running = false;
+			m_running = false;
 		}
 
 		return false;
 	}
 
-	void Application::Run()
+	void Application::run()
 	{
-		while (m_Running)
+		while (m_running)
 		{
-			m_Window->Clear();
-			for (auto layer : m_Layers)
-				layer->OnUpdate();
-			m_Window->OnUpdate();
+			m_window->clear();
+			for (auto layer : m_layers)
+				layer->on_update();
+			m_window->on_update();
 		}
 	}
 }
