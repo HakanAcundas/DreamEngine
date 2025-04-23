@@ -41,11 +41,12 @@ To get started with DreamEngine, follow these steps to compile the project:
    ```sh
    cd DreamEngine
    mkdir build
+   cd build
    ```
 
 3. Generate the solution and project files using CMake:
    ```sh
-   cmake .
+   cmake ..
    cmake --build .
    ```
 
