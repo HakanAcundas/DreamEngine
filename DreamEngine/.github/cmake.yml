@@ -1,0 +1,36 @@
+name: CMake
+
+on:
+  push:
+    branches: ["main, development"]
+  pull_request:
+    branches: ["main, development"]
+
+jobs:
+  build_windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Configure CMake
+        run: |
+          cmake -B "${{github.workspace}}/build"
+      
+      - name: Build DreamEngine
+        run: cmake --build "${{github.workspace}}/build" --config Debug
+
+  build_linux:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Configure CMake
+        run: |
+          cmake -B "${{github.workspace}}/build"
+      
+      - name: Build DreamEngine
+        run: cmake --build "${{github.workspace}}/build" --config Debug
