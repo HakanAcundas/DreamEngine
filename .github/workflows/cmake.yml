@@ -2,7 +2,7 @@ name: CMake
 
 on:
   push:
-    branches: ["main, development"]
+    branches: ["main, development", "haa/github-action-cmake"]
   pull_request:
     branches: ["main, development"]
 
