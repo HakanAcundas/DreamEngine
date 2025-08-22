@@ -1,17 +1,20 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.20)
 
 # Set the project name
-project(DreamEngine)
+project(DreamEngine
+    VERSION 0.0.0
+    DESCRIPTION "Simple 2D game engine."
+    LANGUAGES CXX
+)
 
 # Set the C++ standard
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_SUPPRESS_REGENERATION true)
-
-# Add thirdparty libraries
-set(THIRD_PARTY_DIR ${CMAKE_SOURCE_DIR}/thirdparty)
+option(DREAMENGINE_BUILD_TEST "Build test application." ON)
 
 # Add subdirectories
 add_subdirectory(DreamEngine)
-add_subdirectory(DreamTest)
+if (DREAMENGINE_BUILD_TEST)
+    add_subdirectory(DreamTest)
+endif()
