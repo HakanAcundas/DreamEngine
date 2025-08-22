@@ -1,129 +1,148 @@
-# Include directories
-include_directories(
-    ${THIRD_PARTY_DIR}/glad/include
-    ${THIRD_PARTY_DIR}/glfw/include
-    ${THIRD_PARTY_DIR}/glm
-    ${THIRD_PARTY_DIR}/stb_image
-    ${THIRD_PARTY_DIR}/freetype/include
-)
-
-# Find OpenGL and Freetype
-find_package(OpenGL REQUIRED)
-find_package(Freetype REQUIRED)
-
-# Add DreamEngine library
 file(GLOB_RECURSE DREAM_ENGINE_SOURCES
-    core/buffers/*.cpp
-    core/buffers/*.h
-    core/events/*.h
-    core/input/*cpp
-    core/input/*h
-    core/scene/*.cpp
-    core/scene/*.h
-    core/utils/*.h
-    core/window/*.cpp
-    core/window/*.h
-    core/application.cpp
-    core/application.h
+    buffers/*.cpp
+    buffers/*.h
+    events/*.h
+    input/*cpp
+    input/*h
+    scene/*.cpp
+    scene/*.h
+    utils/*.h
+    window/*.cpp
+    window/*.h
+    application.cpp
+    application.h
 )
-
-# Add GLAD as a library
-add_library(glad ${THIRD_PARTY_DIR}/glad/src/glad.c)
-add_library(DreamEngine STATIC ${DREAM_ENGINE_SOURCES})
-#add_compile_definitions(GLEW_STATIC _CRT_SECURE_NO_WARNINGS)
 
 # Grouping source files
-source_group("core/buffers" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/buffer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/buffer.h
+source_group("buffers" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/buffers/buffer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/buffers/buffer.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/index_buffer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/index_buffer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/buffers/index_buffer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/buffers/index_buffer.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/vertex_array.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/vertex_array.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/buffers/vertex_array.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/buffers/vertex_array.h
 )
 
-source_group("core/events" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/events/event.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/events/key_event.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/events/mouse_event.h
+source_group("events" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/events/event.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/events/key_event.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/events/mouse_event.h
 )
 
-source_group("core/input" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/input/input.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/input/input.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/input/key_codes.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/input/mouse_codes.h
+source_group("input" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/input/input.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/input/input.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/input/key_codes.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/input/mouse_codes.h
 )
 
-source_group("core/scene" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/camera.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/camera.h
+source_group("scene" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/camera.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/camera.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/group.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/group.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/group.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/group.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/label.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/label.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/label.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/label.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/layer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/layer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/layer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/layer.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/entity.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/entity.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/renderer2D.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/renderer2D.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/renderer2D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/renderer2D.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/shader.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/shader.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/shader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/shader.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/texture2D.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/texture2D.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/texture2D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/texture2D.h
 )
 
-source_group("core/utils" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/utils/file_utils.h
+source_group("utils" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/utils/file_utils.h
 )
 
-source_group("core/window" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/window/window.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/window/window.h
+source_group("window" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/window/window.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/window/window.h
 )
 
-source_group("core" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/application.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/application.h
+add_library(DreamEngine ${DREAM_ENGINE_SOURCES})
+add_library(DreamEngine::DreamEngine ALIAS DreamEngine)
+
+target_include_directories(DreamEngine
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/scene
+        ${CMAKE_CURRENT_SOURCE_DIR}/events
+        ${CMAKE_CURRENT_SOURCE_DIR}/input
+        ${CMAKE_CURRENT_SOURCE_DIR}/window
+        ${CMAKE_CURRENT_SOURCE_DIR}/utils
 )
 
-# Link thirdparty libraries to DreamEngine
-if (WIN32)
-    message(STATUS "Configuring for Windows")
-    target_link_libraries(DreamEngine
-        ${THIRD_PARTY_DIR}/glew/lib/x64/glew32s.lib
-        ${THIRD_PARTY_DIR}/glfw/lib-vc2022/glfw3.lib
-        opengl32.lib
-        ${THIRD_PARTY_DIR}/freetype/lib/freetype.lib
-    )
-    add_library(DreamEngine STATIC ${DREAM_ENGINE_SOURCES})
-elseif (UNIX AND NOT APPLE)
-    message(STATUS "Configuring for Linux (Ubuntu)")
+include(FetchContent)
 
-    # Set output directory for DreamEngine static library
-    set_target_properties(DreamEngine PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+FetchContent_Declare(
+    spdlog
+    GIT_REPOSITORY  https://github.com/gabime/spdlog.git
+    TAG             v1.15.3
+)
+FetchContent_MakeAvailable(spdlog)
 
-    # Linux-specific settings
-    # Link third-party libraries to DreamEngine
-    target_link_libraries(DreamEngine
-        glad
-        glfw
-        ${FREETYPE_LIBRARIES}
-        ${OPENGL_LIBRARIES}
-    )
-    set_target_properties(DreamEngine PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-else ()
-    message(FATAL_ERROR "Unsupported platform")
-endif ()
+FetchContent_Declare(
+    glm
+    GIT_REPOSITORY  https://github.com/g-truc/glm.git
+    TAG             1.0.1
+)
+FetchContent_MakeAvailable(glm)
 
-# Ensure Freetype include directories are added
-target_include_directories(DreamEngine PRIVATE ${FREETYPE_INCLUDE_DIRS})
+FetchContent_Declare(
+    glad
+    GIT_REPOSITORY  https://github.com/Dav1dde/glad.git
+    TAG             v2.0.8
+)
+FetchContent_MakeAvailable(glad)
+
+FetchContent_Declare(
+    glfw
+    GIT_REPOSITORY  https://github.com/glfw/glfw.git
+    TAG             3.3.10
+)
+FetchContent_MakeAvailable(glfw)
+
+FetchContent_Declare(
+    stb_image
+    URL             https://raw.githubusercontent.com/nothings/stb/master/stb_image.h
+    DOWNLOAD_NO_EXTRACT TRUE
+)
+FetchContent_MakeAvailable(stb_image)
+
+FetchContent_Declare(
+    freetype
+    GIT_REPOSITORY https://gitlab.freedesktop.org/freetype/freetype.git
+    GIT_TAG        VER-2-13-3
+    GIT_SHALLOW    FALSE
+    GIT_PROGRESS   TRUE
+)
+
+set(FT_DISABLE_ZLIB ON CACHE BOOL "" FORCE)
+set(FT_DISABLE_BZIP2 ON CACHE BOOL "" FORCE)
+set(FT_DISABLE_PNG ON CACHE BOOL "" FORCE)
+set(FT_DISABLE_HARFBUZZ ON CACHE BOOL "" FORCE)
+
+FetchContent_MakeAvailable(freetype)
+
+if (TARGET freetype AND NOT TARGET freetype::freetype)
+    add_library(freetype::freetype ALIAS freetype)
+endif()
+
+target_link_libraries(DreamEngine PUBLIC spdlog glm::glm glad glfw stb_image freetype)
+
+# Define an interface target for stb_image
+add_library(stb_image INTERFACE)
+target_include_directories(stb_image INTERFACE ${stb_image_SOURCE_DIR})
