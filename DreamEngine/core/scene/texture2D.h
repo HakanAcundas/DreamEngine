@@ -8,6 +8,13 @@ namespace dream { namespace graphics {
 	class Texture2D
 	{
 	public:
+		typedef struct {
+			unsigned int	c_texture_id;	// texture id storing character
+			glm::ivec2		c_size;			// size of char
+			glm::ivec2		c_bearing;		// distance from origin to top left of char
+			unsigned int	c_advance;		// distance from origin to next origin (1/64th pixels)
+		} Character;
+
 		class SubTexture2D
 		{
 		public:
@@ -33,6 +40,7 @@ namespace dream { namespace graphics {
 		unsigned int  m_tid;
 	public:
 		Texture2D(std::string path);
+		Texture2D(unsigned int texture_id) : m_tid(texture_id) {}
 		~Texture2D();
 
 		void set_data(void *data, unsigned int size);

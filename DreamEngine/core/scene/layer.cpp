@@ -8,18 +8,18 @@ namespace dream { namespace graphics {
 
 	}
 
-	void Layer::add_renderable(Entity *entity)
+	void Layer::add_scene_object(SceneObject *object)
 	{
-		m_entities.emplace_back(entity);
+		m_scene_objects.emplace_back(object);
 	}
 
-	void Layer::remove_renderable(Entity *entity)
+	void Layer::remove_scene_object(SceneObject *object)
 	{
-		auto it = std::find_if(m_entities.begin(), m_entities.end(),
-			[entity](const std::shared_ptr<Entity>& ptr) {
-				return ptr.get() == entity;
+		auto it = std::find_if(m_scene_objects.begin(), m_scene_objects.end(),
+			[object](const std::shared_ptr<SceneObject>& ptr) {
+				return ptr.get() == object;
 			});
-		if (it != m_entities.end())
-			m_entities.erase(it);
+		if (it != m_scene_objects.end())
+			m_scene_objects.erase(it);
 	}
 }}

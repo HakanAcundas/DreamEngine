@@ -1,27 +1,33 @@
+#pragma once
+#include <unordered_map>
+#include <algorithm>
 #include <glm/glm.hpp>
-#include "key_codes.h"
-#include "mouse_codes.h"
 
 namespace dream {
 
 	class Input
 	{
-	private:
-		static Input *s_input;
-		Input();
 	public:
-		static Input* get_singleton() { return s_input; }
+		static void on_key_event(int key, int action);
+		static void on_mouse_button_event(int button, int action);
+		static void on_scroll(double xOffset, double yOffset);
+		static void on_mouse_move(double xPos, double yPos);
 
-		bool is_key_pressed(int keyCode);
-		bool is_mouse_button_pressed(MouseCode button);
-		glm::vec2 get_mouse_position();
-		glm::vec2 GetMouseOffset();
+		static bool is_key_pressed(int key);
+		static bool is_mouse_button_pressed(int button);
+		static glm::vec2 get_mouse_position();
+		static glm::vec2 get_mouse_offset();
+		static glm::vec2 get_scroll_offset();
 
-		float get_mouse_y();
-		float get_mouse_x();
+		static void update();
 
-		float get_offset_x();
-		float get_offset_y();
+	private:
+		static std::unordered_map<int, bool> keyState;
+		static std::unordered_map<int, bool> mouseButtonState;
+		static glm::vec2 currentMousePos;
+		static glm::vec2 lastMousePos;
+		static glm::vec2 mouseOffset;
+		static glm::vec2 scrollOffset;
 	};
 }
 

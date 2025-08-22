@@ -4,38 +4,62 @@
 
 namespace dream {
 
-	Input *Input::s_input ;
+	std::unordered_map<int, bool> Input::keyState;
+	std::unordered_map<int, bool> Input::mouseButtonState;
+	glm::vec2 Input::currentMousePos(0.0f);
+	glm::vec2 Input::lastMousePos(0.0f);
+	glm::vec2 Input::mouseOffset(0.0f);
+	glm::vec2 Input::scrollOffset(0.0f);
 
-	bool Input::is_key_pressed(int keycode)
-	{
-		auto* window = static_cast<GLFWwindow*>(Application::get_application().get_window().get_glfw_window());
-		auto state = glfwGetKey(window, keycode);
-		return state == GLFW_PRESS;
+	void Input::on_key_event(int key, int action) {
+		if (action == GLFW_PRESS)
+			keyState[key] = true;
+		else if (action == GLFW_RELEASE)
+			keyState[key] = false;
 	}
 
-	bool Input::is_mouse_button_pressed(const MouseCode button)
-	{
-		auto* window = static_cast<GLFWwindow*>(Application::get_application().get_window().get_glfw_window());
-		auto state = glfwGetMouseButton(window, static_cast<int32_t>(button));
-		return state == GLFW_PRESS;
+	void Input::on_mouse_button_event(int button, int action) {
+		if (action == GLFW_PRESS)
+			mouseButtonState[button] = true;
+		else if (action == GLFW_RELEASE)
+			mouseButtonState[button] = false;
 	}
 
-	glm::vec2 Input::get_mouse_position()
-	{
-		auto* window = static_cast<GLFWwindow*>(Application::get_application().get_window().get_glfw_window());
-		double xpos, ypos;
-		glfwGetCursorPos(window, &xpos, &ypos);
-
-		return { (float)xpos, (float)ypos };
+	void Input::on_scroll(double xOffset, double yOffset) {
+		scrollOffset.x = static_cast<float>(xOffset);
+		scrollOffset.y = static_cast<float>(yOffset);
 	}
 
-	float Input::get_mouse_x()
-	{
-		return get_mouse_position().x;
+	void Input::on_mouse_move(double xPos, double yPos) {
+		currentMousePos.x = static_cast<float>(xPos);
+		currentMousePos.y = static_cast<float>(yPos);
 	}
 
-	float Input::get_mouse_y()
-	{
-		return get_mouse_position().y;
+	bool Input::is_key_pressed(int key) {
+		auto it = keyState.find(key);
+		return it != keyState.end() && it->second;
+	}
+
+	bool Input::is_mouse_button_pressed(int button) {
+		auto it = mouseButtonState.find(button);
+		return it != mouseButtonState.end() && it->second;
+	}
+
+	glm::vec2 Input::get_mouse_position() {
+		return currentMousePos;
+	}
+
+	glm::vec2 Input::get_mouse_offset() {
+		return mouseOffset;
+	}
+
+	glm::vec2 Input::get_scroll_offset() {
+		return scrollOffset;
+	}
+
+	void Input::update() {
+		mouseOffset = currentMousePos - lastMousePos;
+		lastMousePos = currentMousePos;
+		scrollOffset = glm::vec2(0.0f); // Reset
 	}
 }

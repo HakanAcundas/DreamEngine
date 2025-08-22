@@ -15,7 +15,6 @@ find_package(Freetype REQUIRED)
 file(GLOB_RECURSE DREAM_ENGINE_SOURCES
     core/buffers/*.cpp
     core/buffers/*.h
-    core/events/*.h
     core/input/*cpp
     core/input/*h
     core/scene/*.cpp
@@ -44,17 +43,9 @@ source_group("core/buffers" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/core/buffers/vertex_array.h
 )
 
-source_group("core/events" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/events/event.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/events/key_event.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/events/mouse_event.h
-)
-
 source_group("core/input" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/core/input/input.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/core/input/input.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/input/key_codes.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/input/mouse_codes.h
 )
 
 source_group("core/scene" FILES
@@ -70,7 +61,7 @@ source_group("core/scene" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/layer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/layer.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/entity.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/scene_object.h
 
     ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/renderer2D.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/core/scene/renderer2D.h

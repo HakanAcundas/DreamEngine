@@ -58,7 +58,6 @@ target_include_directories(DreamTest PRIVATE
     ${THIRD_PARTY_DIR}/freetype/include
     ${CMAKE_SOURCE_DIR}/DreamEngine/core
     ${CMAKE_SOURCE_DIR}/DreamEngine/core/buffers
-    ${CMAKE_SOURCE_DIR}/DreamEngine/core/events
     ${CMAKE_SOURCE_DIR}/DreamEngine/core/input
     ${CMAKE_SOURCE_DIR}/DreamEngine/core/scene
     ${CMAKE_SOURCE_DIR}/DreamEngine/core/utils
@@ -74,6 +73,10 @@ source_group("game" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/game/main.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/game/test_level.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/game/test_level.h
+)
+
+source_group("game/entities" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/entities/player.h
 )
 
 source_group("shaders" FILES

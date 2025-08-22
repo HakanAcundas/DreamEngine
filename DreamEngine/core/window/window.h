@@ -4,15 +4,12 @@
 #include <glad/glad.h>
 #include <functional>
 #include <GLFW/glfw3.h>
-#include "../events/event.h"
 
 namespace dream {
 	
 	class Window
 	{
 	public:
-		using EventCallbackFn = std::function<void(Event&)>;
-
 		Window(const char *title = "Dream Engine", int width = 1280, int height = 720, bool vsync = false);
 		~Window();
 		void clear() const;
@@ -25,7 +22,6 @@ namespace dream {
 		void set_vsync(bool mode);
 		bool is_closed() { return m_window_data.closed; }
 		GLFWwindow* get_glfw_window() const { return m_window; }
-		inline void set_event_callback(const EventCallbackFn& callback) { m_window_data.event_callback = callback; }
 
 	private:
 		GLFWwindow* m_window;
@@ -35,8 +31,6 @@ namespace dream {
 			const char *title;
 			int width, height;
 			bool vsync, closed = false;
-
-			EventCallbackFn event_callback;
 		};
 
 		WindowData m_window_data;

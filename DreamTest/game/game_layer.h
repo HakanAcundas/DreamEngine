@@ -22,9 +22,8 @@ public:
 	~GameLayer();
 
 	void on_update() override;
-	void on_event(Event &e) override;
-	bool on_key_pressed(KeyPressedEvent &e);
-	bool on_mouse_moved(MouseMovedEvent &e);
+	bool on_key_pressed();
+	bool on_mouse_moved();
 	void set_camera(Camera *camera) { m_camera = camera; }
 	Shader* get_shader() { return m_shader; }
 };

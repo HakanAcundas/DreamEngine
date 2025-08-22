@@ -1,7 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
-#include "../events/mouse_event.h"
-#include "../events/key_event.h"
+#include "../input/input_manager.h"
 
 namespace dream {
 	class Camera
@@ -24,10 +23,9 @@ namespace dream {
 		Camera(float left, float right, float bottom, float top);
 
 		void on_update();
-		void on_event(Event &e);
-		bool on_key_pressed(KeyPressedEvent &e);
-		bool on_mouse_moved(MouseMovedEvent &e);
-		bool on_mouse_scrolled(MouseScrolledEvent &e);
+		bool on_key_pressed();
+		bool on_mouse_moved();
+		bool on_mouse_scrolled();
 
 		// Getters and Setters
 		void set_projection(float left, float right, float bottom, float top);

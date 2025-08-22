@@ -16,12 +16,18 @@ uniform sampler2D textures[32];
 
 void main()
 {
-    float intensity = 1.0 / length(fs_in.position.xy - light_pos);
+    float intensity = clamp(1.0 / length(fs_in.position.xy - light_pos), 0.1, 1.0);
     vec4 textureColor = fs_in.color;
-    if (fs_in.tid > 0.0)
-    {
-        int textureID = int(fs_in.tid - 0.5);
+    int textureID = int(fs_in.tid - 0.5);
         textureColor = texture(textures[textureID], fs_in.uv);
+
+    if (fs_in.color.a == 0.0) // Use this condition to differentiate text and image
+    {
+        color = vec4(fs_in.color.rgb * textureColor.r, textureColor.r);
     }
-    color = textureColor * intensity;
+    else
+    {
+        // Use full color for images
+        color = textureColor * fs_in.color;
+    };
 }

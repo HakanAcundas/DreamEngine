@@ -9,14 +9,13 @@ namespace dream
 	{
 		s_application = this;
 		m_window = std::make_shared<Window>();
-		Renderer2D::get_singleton()->init();
-		m_window->set_event_callback(std::bind(&Application::on_event, this, std::placeholders::_1));
+		Renderer2D::get_instance()->init();
 	}
 
 	Application::~Application()
 	{
 		// TODO
-		//Renderer2D::get_singleton()->ShutDown();
+		//Renderer2D::get_instance()->ShutDown();
 	}
 
 	void Application::push_layer(Layer *layer)
@@ -31,32 +30,13 @@ namespace dream
 			m_layers.erase(it);
 	}
 
-	void Application::on_event(Event &e)
+	bool Application::on_key_pressed()
 	{
-		std::cout << "We have an Event!! || " << e.to_string() << "\n";
-		for (auto layer : m_layers)
-		{
-			layer->on_event(e);
-			if (e.handled)
-				break;
-		}
-
-		switch (e.get_event_type())
-		{
-		case Event::EventType::KEY_PRESSED:
-			on_key_pressed(static_cast<KeyPressedEvent&>(e));
-			break;
-		}
-
-	}
-
-	bool Application::on_key_pressed(KeyPressedEvent &e)
-	{
-		switch (e.get_keycode())
-		{
-		case 256:
-			m_running = false;
-		}
+		// switch (e.get_keycode())
+		// {
+		// case 256:
+		// 	m_running = false;
+		// }
 
 		return false;
 	}
@@ -66,6 +46,8 @@ namespace dream
 		while (m_running)
 		{
 			m_window->clear();
+			dream::Input::update();
+			dream::InputManager::get().update();
 			for (auto layer : m_layers)
 				layer->on_update();
 			m_window->on_update();
