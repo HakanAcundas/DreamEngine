@@ -1,4 +1,6 @@
-#include "scene_object.h"
+#pragma once
+
+#include <scene_object.h>
 
 using namespace dream;
 using namespace graphics;

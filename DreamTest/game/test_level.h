@@ -1,7 +1,9 @@
 #pragma once
+
 #include <vector>
 #include <window.h>
-#include <entity.h>
+#include <scene_object.h>
+#include "entities/player.h"
 
 using namespace dream;
 using namespace graphics;

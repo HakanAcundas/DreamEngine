@@ -24,12 +24,6 @@ source_group("buffers" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/buffers/vertex_array.h
 )
 
-source_group("events" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/events/event.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/events/key_event.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/events/mouse_event.h
-)
-
 source_group("input" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/input/input.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/input/input.h
@@ -50,8 +44,6 @@ source_group("scene" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/scene/layer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/scene/layer.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/entity.h
-
     ${CMAKE_CURRENT_SOURCE_DIR}/scene/renderer2D.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/scene/renderer2D.h
 
@@ -60,6 +52,13 @@ source_group("scene" FILES
 
     ${CMAKE_CURRENT_SOURCE_DIR}/scene/texture2D.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/scene/texture2D.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/texture_label.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/texture_label.h
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/font_maneger.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/font_maneger.h
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/scene_object.h
 )
 
 source_group("utils" FILES
