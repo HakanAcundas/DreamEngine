@@ -1,7 +1,9 @@
 #pragma once
+
 #include <vector>
 #include <window.h>
-#include <entity.h>
+#include <scene_object.h>
+#include "entities/player.h"
 
 using namespace dream;
 using namespace graphics;
@@ -9,9 +11,9 @@ using namespace graphics;
 class TestLevel
 {
 private:
-	std::vector<Entity*> m_walls;
-	std::vector<Entity*> m_enemies;
-	Entity *m_player;
+	std::vector<Player*> m_walls;
+	std::vector<Player*> m_enemies;
+	Player *m_player;
 	bool m_running = true;
 	bool m_minimized = false;
 	float m_last_frame_time = 0.0f;
@@ -21,7 +23,7 @@ public:
 	~TestLevel();
 
 	void run();
-	std::vector<Entity*> get_walls() { return m_walls; }
-	std::vector<Entity*> get_enemies() { return m_enemies; }
-	Entity* get_player() { return m_player; }
+	std::vector<Player*> get_walls() { return m_walls; }
+	std::vector<Player*> get_enemies() { return m_enemies; }
+	Player* get_player() { return m_player; }
 };

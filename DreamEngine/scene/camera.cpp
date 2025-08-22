@@ -2,6 +2,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "camera.h"
+#include <GLFW/glfw3.h>
 #include "../input/input.h"
 
 namespace dream {
@@ -11,52 +12,41 @@ namespace dream {
 		m_projection_mat = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
 		m_view_mat = glm::mat4(1.0f);
 		m_view_projection_mat = m_projection_mat * m_view_mat;
+    	dream::InputManager::get().bind_action(InputAction::MoveCameraUp, GLFW_KEY_UP);
+		dream::InputManager::get().bind_action(InputAction::MoveCameraDown, GLFW_KEY_DOWN);
+		dream::InputManager::get().bind_action(InputAction::MoveCameraLeft, GLFW_KEY_LEFT);
+		dream::InputManager::get().bind_action(InputAction::MoveCameraRight, GLFW_KEY_RIGHT);
 	}
 
 	void Camera::on_update()
 	{
 		set_position(m_position);
+		on_key_pressed();
 	}
 
-	void Camera::on_event(Event &e)
+	bool Camera::on_key_pressed()
 	{
-		switch (e.get_event_type())
-		{
-		case Event::EventType::KEY_PRESSED:
-			on_key_pressed(static_cast<KeyPressedEvent&>(e));
-		case Event::EventType::MOUSE_MOVED:
-			on_mouse_moved(static_cast<MouseMovedEvent&>(e));
-		case Event::EventType::MOUSE_SCROLLED:
-			on_mouse_scrolled(static_cast<MouseScrolledEvent&>(e));
-		}
-	}
-
-	bool Camera::on_key_pressed(KeyPressedEvent &e)
-	{
-		switch (e.get_keycode())
-		{
-		case DR_KEY_W:
-			m_position.y -= 0.01;
-		case DR_KEY_S:
-			m_position.y += 0.01;
-		case DR_KEY_A:
-			m_position.x -= 0.01;
-		case DR_KEY_D:
-			m_position.x += 0.01;
-		}
+		if (dream::InputManager::get().is_action_pressed(dream::InputAction::MoveCameraUp))
+			m_position.y -= 0.1;
+		if (dream::InputManager::get().is_action_pressed(dream::InputAction::MoveCameraDown))
+			m_position.y += 0.1;
+		if (dream::InputManager::get().is_action_pressed(dream::InputAction::MoveCameraLeft))
+			m_position.x += 0.1;
+		if (dream::InputManager::get().is_action_pressed(dream::InputAction::MoveCameraRight))
+			m_position.x -= 0.1;
 
 		return true;
 	}
 
-	bool Camera::on_mouse_moved(MouseMovedEvent &e)
+	bool Camera::on_mouse_moved()
 	{
-		m_position.x += e.get_x() / 10000;
-		m_position.y += e.get_y() / 10000;
+		// m_position.x += e.get_x() / 10000;
+		// m_position.y += e.get_y() / 10000;
 
 		return true;
 	}
 
-	bool Camera::on_mouse_scrolled(MouseScrolledEvent &e)
+	bool Camera::on_mouse_scrolled()
 	{
 		return true;
 	}

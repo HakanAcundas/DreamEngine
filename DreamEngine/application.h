@@ -22,8 +22,7 @@ namespace dream
 		~Application();
 
 		void run();
-		void on_event(Event &e);
-		bool on_key_pressed(KeyPressedEvent &e);
+		bool on_key_pressed();
 		void push_layer(graphics::Layer *layer);
 		void pop_layer(graphics::Layer *layer);
 

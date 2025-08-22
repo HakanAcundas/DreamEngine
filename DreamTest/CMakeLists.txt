@@ -1,6 +1,7 @@
 file(GLOB_RECURSE DREAM_TEST_SOURCES
     game/*.cpp
     game/*.h
+    game/entities/*.h
     game/main.cpp
     shaders/*.shader
 )

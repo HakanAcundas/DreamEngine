@@ -1,9 +1,9 @@
 #pragma once
-#include "entity.h"
+#include "scene_object.h"
 
 namespace dream { namespace graphics {
 
-	class Label : public Entity
+	class Label : public SceneObject
 	{
 	private:
 		std::string m_text;

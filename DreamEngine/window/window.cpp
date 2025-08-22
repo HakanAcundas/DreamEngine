@@ -1,7 +1,5 @@
 #include "window.h"
 #include "../input/input.h"
-#include "../events/mouse_event.h"
-#include "../events/key_event.h"
 
 namespace dream {
 
@@ -27,7 +25,7 @@ namespace dream {
 	{
 		if (!glfwInit())
 		{
-			std::cout << "Failed to Initialize GLFW!";
+			std::runtime_error("Failed to Initialize GLFW!");
 			return false;
 		}
 
@@ -35,7 +33,7 @@ namespace dream {
 
 		if (!m_window)
 		{
-			std::cout << "Failed to Initialize GLFW Window!";
+			std::runtime_error("Failed to Initialize GLFW Window!");
 			return false;
 		}
 		glfwSetWindowUserPointer(m_window, &m_window_data);
@@ -44,72 +42,28 @@ namespace dream {
 		glfwSetWindowSizeCallback(m_window, resize);
 		glfwSetKeyCallback(m_window, [](GLFWwindow *window, int key, int scancode, int action, int mods)
 		{
-			WindowData &data = *(WindowData*)glfwGetWindowUserPointer(window);
-
-			switch (action)
-			{
-				case GLFW_PRESS:
-				{
-					KeyPressedEvent event(key, 0);
-					data.event_callback(event);
-					break;
-				}
-				case GLFW_RELEASE:
-				{
-					KeyReleasedEvent event(key);
-					data.event_callback(event);
-					break;
-				}
-				case GLFW_REPEAT:
-				{
-					KeyPressedEvent event(key, 1);
-					data.event_callback(event);
-					break;
-				}
-			}
+			dream::Input::on_key_event(key, action);
 		});
 
 		glfwSetMouseButtonCallback(m_window, [](GLFWwindow *window, int button, int action, int mods)
 		{
-			WindowData &data = *(WindowData*)glfwGetWindowUserPointer(window);
-
-			switch (action)
-			{
-				case GLFW_PRESS:
-				{
-					MousePressedEvent event(button);
-					data.event_callback(event);
-					break;
-				}
-				case GLFW_RELEASE:
-				{
-					MouseReleasedEvent event(button);
-					data.event_callback(event);
-					break;
-				}
-			}
+			dream::Input::on_mouse_button_event(button, action);
 		});
 
 		glfwSetScrollCallback(m_window, [](GLFWwindow *window, double xOffset, double yOffset)
 		{
-			WindowData &data = *(WindowData*)glfwGetWindowUserPointer(window);
-
-			MouseScrolledEvent event((float)xOffset, (float)yOffset);
-			data.event_callback(event);
+			dream::Input::on_scroll(xOffset, yOffset);
 		});
 
 		glfwSetCursorPosCallback(m_window, [](GLFWwindow *window, double xPos, double yPos)
 		{
-			WindowData &data = *(WindowData*)glfwGetWindowUserPointer(window);
-
-			MouseMovedEvent event((float)xPos, (float)yPos);
-			data.event_callback(event);
+			dream::Input::on_mouse_move(xPos, yPos);
 		});
 
 
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		{
-			std::cerr << "Failed to initialize GLAD" << std::endl;
+			std::runtime_error("Failed to initialize GLAD");
 			return -1;
 		}
 		std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
