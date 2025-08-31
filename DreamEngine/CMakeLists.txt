@@ -76,6 +76,7 @@ add_library(DreamEngine::DreamEngine ALIAS DreamEngine)
 target_include_directories(DreamEngine
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/log
         ${CMAKE_CURRENT_SOURCE_DIR}/scene
         ${CMAKE_CURRENT_SOURCE_DIR}/events
         ${CMAKE_CURRENT_SOURCE_DIR}/input
@@ -88,14 +89,14 @@ include(FetchContent)
 FetchContent_Declare(
     spdlog
     GIT_REPOSITORY  https://github.com/gabime/spdlog.git
-    TAG             v1.15.3
+    GIT_TAG         v1.15.3
 )
 FetchContent_MakeAvailable(spdlog)
 
 FetchContent_Declare(
     glm
     GIT_REPOSITORY  https://github.com/g-truc/glm.git
-    TAG             1.0.1
+    GIT_TAG         1.0.1
 )
 FetchContent_MakeAvailable(glm)
 
@@ -109,7 +110,7 @@ FetchContent_MakeAvailable(glad)
 FetchContent_Declare(
     glfw
     GIT_REPOSITORY  https://github.com/glfw/glfw.git
-    TAG             3.3.10
+    GIT_TAG         3.3.10
 )
 FetchContent_MakeAvailable(glfw)
 
@@ -139,8 +140,8 @@ if (TARGET freetype AND NOT TARGET freetype::freetype)
     add_library(freetype::freetype ALIAS freetype)
 endif()
 
-target_link_libraries(DreamEngine PUBLIC spdlog glm::glm glad glfw stb_image freetype)
-
 # Define an interface target for stb_image
 add_library(stb_image INTERFACE)
 target_include_directories(stb_image INTERFACE ${stb_image_SOURCE_DIR})
+
+target_link_libraries(DreamEngine PUBLIC spdlog::spdlog glm::glm glad glfw stb_image freetype)
