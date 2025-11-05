@@ -48,7 +48,7 @@ void GameLayer::on_update()
 	m_shader->enable();
 
 	m_level.get_player()->draw();
-	Renderer2D::get_instance()->draw_label("Hello World", glm::vec2(4.0f, 2.0f), "../DreamTest/assets/Fonts/Arial.ttf", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	Renderer2D::get_instance()->draw_label("Hello World", glm::vec2(2.0f, 1.0f), 0.025f, "../DreamTest/assets/Fonts/Arial.ttf", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
 	Renderer2D::get_instance()->end();
 	Renderer2D::get_instance()->flush();

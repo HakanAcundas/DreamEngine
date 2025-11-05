@@ -166,11 +166,10 @@ namespace dream { namespace graphics {
 		r_data.index_count += 6;
 	}
 
-	void Renderer2D::draw_label(const std::string& text, const glm::vec2& position, const std::string& font_path, const glm::vec4& color) {
+	void Renderer2D::draw_label(const std::string& text, const glm::vec2& position, const float scale, const std::string& font_path, const glm::vec4& color) {
 		TextureLabel* font = FontManager::get_font(font_path);
-
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position, 1.0f)) *
-                      glm::scale(glm::mat4(1.0f), glm::vec3(0.1f, 0.1f, 1.0f)); // Scale down
+                      glm::scale(glm::mat4(1.0f), glm::vec3(scale, scale, 1.0f)); // Scale down
 
 		for (const char& c : text) {
 			const TextureLabel::Character& ch = font->get_characters().at(c);

@@ -63,7 +63,7 @@ namespace dream { namespace graphics {
 		void draw_quad(const glm::vec2 &position, const glm::vec2 &size, const Texture2D *texture );
 		void draw_quad(const glm::vec2 &position, const glm::vec2 &size, const Texture2D::SubTexture2D *sub_texture);
 
-		void draw_label(const std::string& text, const glm::vec2& position, const std::string& font_path, const glm::vec4& color);
+		void draw_label(const std::string& text, const glm::vec2& position, const float scale, const std::string& font_path, const glm::vec4& color);
 		
 		void flush();
 		//void shut_down();

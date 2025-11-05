@@ -1,14 +1,19 @@
 #include <application.h>
 #include "game_layer.h"
+#include <iostream>
+#include <filesystem>
+
 using namespace dream;
 
 int main(void)
 {
+    std::cout << "Current working directory: "
+              << std::filesystem::current_path() << std::endl;
+
     Application dream_engine;
     Shader *shader = new Shader(
         "../DreamTest/shaders/vertex.shader",
         "../DreamTest/shaders/fragment.shader");
-
     Camera camera(0.0f, 16.0f, 0.0f, 9.0f);
     camera.set_position(glm::vec3(4, 3, 0));
 

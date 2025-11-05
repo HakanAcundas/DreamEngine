@@ -101,13 +101,6 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(glm)
 
 FetchContent_Declare(
-    glad
-    GIT_REPOSITORY  https://github.com/Dav1dde/glad.git
-    TAG             v2.0.8
-)
-FetchContent_MakeAvailable(glad)
-
-FetchContent_Declare(
     glfw
     GIT_REPOSITORY  https://github.com/glfw/glfw.git
     GIT_TAG         3.3.10
@@ -144,4 +137,7 @@ endif()
 add_library(stb_image INTERFACE)
 target_include_directories(stb_image INTERFACE ${stb_image_SOURCE_DIR})
 
-target_link_libraries(DreamEngine PUBLIC spdlog::spdlog glm::glm glad glfw stb_image freetype)
+add_library(glad thirdparty/glad/src/glad.c)
+target_include_directories(glad PUBLIC thirdparty/glad/include)
+
+target_link_libraries(DreamEngine PUBLIC spdlog::spdlog glm::glm glfw glad stb_image freetype)
