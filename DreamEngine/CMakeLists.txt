@@ -63,6 +63,7 @@ source_group("scene" FILES
 
 source_group("utils" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/utils/file_utils.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/utils/metric_utils.h
 )
 
 source_group("window" FILES
