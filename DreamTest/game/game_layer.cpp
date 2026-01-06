@@ -49,10 +49,9 @@ void GameLayer::on_update()
 	on_mouse_moved();
 	m_shader->enable();
 
-	m_level.get_player()->draw();
 	unsigned int fps = get_FPS();
-	Renderer2D::get_instance()->draw_label(std::to_string(fps), glm::vec2(0.0f, 4.0f), 0.010f, "../DreamTest/assets/Fonts/Arial.ttf", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-	Renderer2D::get_instance()->draw_label("Hello World!", glm::vec2(6.0f, 4.0f), 0.025f, "../DreamTest/assets/Fonts/Arial.ttf", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	Renderer2D::get_instance()->draw_label(std::to_string(fps), glm::vec2(0.0f, 4.0f), 0.010f, "assets/Fonts/Arial.ttf", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	Renderer2D::get_instance()->draw_label("Hello World!", glm::vec2(6.0f, 4.0f), 0.025f, "assets/Fonts/Arial.ttf", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	Renderer2D::get_instance()->end();
 	Renderer2D::get_instance()->flush();
 }
