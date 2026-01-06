@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.12)
 project(DreamEngine
     VERSION 0.1.0
     DESCRIPTION "Simple 2D game engine."
-    LANGUAGES CXX
+    LANGUAGES CXX C
 )
 
 # Set the C++ standard
