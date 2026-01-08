@@ -8,10 +8,10 @@ namespace dream {
 
 	Window::Window(const char *title, int width, int height, bool vsync)
 	{
-		this->m_window_data.title = title;
-		this->m_window_data.width = width;
-		this->m_window_data.height = height;
-		this->m_window_data.vsync = vsync;
+		this->title = title;
+		this->width = width;
+		this->height = height;
+		this->vsync = vsync;
 
 		if (!init())
 			glfwTerminate();
@@ -30,14 +30,14 @@ namespace dream {
 			return false;
 		}
 
-		m_window = glfwCreateWindow(m_window_data.width, m_window_data.height, m_window_data.title, NULL, NULL);
+		m_window = glfwCreateWindow(width, height, title, NULL, NULL);
 
 		if (!m_window)
 		{
 			std::runtime_error("Failed to Initialize GLFW Window!");
 			return false;
 		}
-		glfwSetWindowUserPointer(m_window, &m_window_data);
+		glfwSetWindowUserPointer(m_window, this);
 		set_vsync(true);
 		glfwMakeContextCurrent(m_window);
 		glfwSetWindowSizeCallback(m_window, resize);
@@ -56,9 +56,10 @@ namespace dream {
 
 		glfwSetCursorPosCallback(m_window, [](GLFWwindow *window, double xPos, double yPos)
 		{
+				Window* win = static_cast<Window*>(glfwGetWindowUserPointer(window));
+
 				MouseMovedEvent event(xPos, yPos);
-				EventDispatcher ed;
-				ed.post(event);
+				win->m_event_callback(event);
 		});
 
 

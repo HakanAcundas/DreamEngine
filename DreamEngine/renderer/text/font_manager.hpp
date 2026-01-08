@@ -15,5 +15,4 @@ namespace dream { namespace graphics {
         static TextureLabel* get_font(const std::string& font_path);
         static void cleanup();
     };
-
 }}

@@ -16,6 +16,7 @@ namespace dream { namespace graphics {
 		unsigned int create_program();
 		int get_uniform_location(const char *name);
 	public:
+		Shader() = default;
 		Shader(const char *vertex_path, const char *frag_path);
 		~Shader();
 

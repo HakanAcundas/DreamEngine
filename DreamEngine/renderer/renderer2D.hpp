@@ -2,11 +2,10 @@
 #include <cstddef>
 #include <map>
 #include "../buffers/vertex_array.hpp"
-#include "../scene/shader.hpp"
-#include "../scene/camera.hpp"
-#include "../scene/texture2D.hpp"
-#include "../scene/texture_label.hpp"
-#include "../scene/font_manager.hpp"
+#include "resources/shader.hpp"
+#include "resources/texture2D.hpp"
+#include "text/texture_label.hpp"
+#include "text/font_manager.hpp"
 
 namespace dream { namespace graphics {
 
@@ -67,6 +66,5 @@ namespace dream { namespace graphics {
 		
 		void flush();
 		//void shut_down();
-
 	};
 }}

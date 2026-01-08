@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include "scene_object.hpp"
 
 namespace dream { namespace graphics {

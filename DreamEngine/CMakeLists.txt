@@ -3,6 +3,14 @@ file(GLOB_RECURSE DREAM_ENGINE_SOURCES
     buffers/*.cpp
     events/*.hpp
     events/*.cpp
+    camera/*hpp
+    camera/*cpp
+    renderer/*hpp
+    renderer/*cpp
+    renderer/resources/*.hpp
+    renderer/resources/*.cpp
+    renderer/text/*.hpp
+    renderer/text/*.cpp
     scene/*.hpp
     scene/*.cpp
     utils/*.hpp
@@ -30,29 +38,39 @@ source_group("buffers" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/buffers/vertex_array.cpp
 )
 
-source_group("scene" FILES
+source_group("renderer" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/renderer2D.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/renderer2D.cpp
+)
+
+
+source_group("renderer\\resources" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/resources/shader.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/resources/shader.cpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/texture2D.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/texture2D.cpp
+)
+
+source_group("renderer\\text" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/text/font_manager.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/text/font_manager.cpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/text/label.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/text/label.cpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/text/texture_label.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/text/texture_label.cpp
+)
+
+source_group("camera" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/scene/camera.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/scene/camera.cpp
+)
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/label.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/label.cpp
-
+source_group("scene" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/scene/layer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/scene/layer.cpp
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/renderer2D.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/renderer2D.cpp
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/shader.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/shader.cpp
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/texture2D.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/texture2D.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/texture_label.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/texture_label.cpp
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/font_maneger.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/font_maneger.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/scene/scene_object.hpp
 )
@@ -74,8 +92,12 @@ target_include_directories(DreamEngine
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/log
-        ${CMAKE_CURRENT_SOURCE_DIR}/scene
         ${CMAKE_CURRENT_SOURCE_DIR}/events
+        ${CMAKE_CURRENT_SOURCE_DIR}/renderer
+        ${CMAKE_CURRENT_SOURCE_DIR}/renderer/resources
+        ${CMAKE_CURRENT_SOURCE_DIR}/renderer/text
+        ${CMAKE_CURRENT_SOURCE_DIR}/camera
+        ${CMAKE_CURRENT_SOURCE_DIR}/scene
         ${CMAKE_CURRENT_SOURCE_DIR}/window
         ${CMAKE_CURRENT_SOURCE_DIR}/utils
 )

@@ -8,16 +8,18 @@ namespace dream
 	Application::Application()
 	{
 		s_application = this;
-		m_window = std::make_shared<Window>();
-		m_camera = std::make_shared<Camera>(0.0f, 16.0f, 0.0f, 9.0f);
-		m_camera->set_position(glm::vec3(4, 3, 0));
+		m_window = std::make_unique<Window>();
+		m_window->set_event_callback([this](Event& e)
+		{
+			this->on_event(e);
+		});
+
 		Renderer2D::get_instance()->init();
 	}
 
 	Application::~Application()
 	{
-		// TODO
-		//Renderer2D::get_instance()->ShutDown();
+
 	}
 
 	void Application::push_layer(Layer *layer)
@@ -32,14 +34,13 @@ namespace dream
 			m_layers.erase(it);
 	}
 
+	void Application::on_event(Event& event)
+	{
+		m_dispatcher.post(event);
+	}
+
 	bool Application::on_key_pressed()
 	{
-		// switch (e.get_keycode())
-		// {
-		// case 256:
-		// 	m_running = false;
-		// }
-
 		return false;
 	}
 

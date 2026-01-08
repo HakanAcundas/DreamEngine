@@ -1,5 +1,5 @@
 #pragma once
-#include "renderer2D.hpp"
+#include <memory>
 #include "scene_object.hpp"
 
 namespace dream { namespace graphics {
