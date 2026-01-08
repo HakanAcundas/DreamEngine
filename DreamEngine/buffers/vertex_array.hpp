@@ -2,8 +2,8 @@
 #include <vector>
 //#include <GL/glew.h>
 #include <glad/glad.h>
-#include "../buffers/buffer.h"
-#include "../buffers/index_buffer.h"
+#include "../buffers/buffer.hpp"
+#include "../buffers/index_buffer.hpp"
 
 namespace dream { namespace graphics {
 

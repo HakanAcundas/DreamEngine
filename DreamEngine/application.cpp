@@ -1,4 +1,4 @@
-#include "application.h"
+#include "application.hpp"
 
 using namespace dream::graphics;
 namespace dream 
@@ -9,6 +9,8 @@ namespace dream
 	{
 		s_application = this;
 		m_window = std::make_shared<Window>();
+		m_camera = std::make_shared<Camera>(0.0f, 16.0f, 0.0f, 9.0f);
+		m_camera->set_position(glm::vec3(4, 3, 0));
 		Renderer2D::get_instance()->init();
 	}
 
@@ -46,8 +48,6 @@ namespace dream
 		while (m_running)
 		{
 			m_window->clear();
-			dream::Input::update();
-			dream::InputManager::get().update();
 			for (auto layer : m_layers)
 				layer->on_update();
 			m_window->on_update();

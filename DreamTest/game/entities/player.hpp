@@ -1,6 +1,6 @@
 #pragma once
 
-#include <scene_object.h>
+#include <scene_object.hpp>
 
 using namespace dream;
 using namespace graphics;

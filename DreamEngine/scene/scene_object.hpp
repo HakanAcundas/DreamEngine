@@ -1,7 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <vector>
-#include "renderer2D.h"
+#include "renderer2D.hpp"
 
 
 namespace dream { namespace graphics {

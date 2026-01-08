@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
-#include "window/window.h"
-#include "scene/layer.h"
-#include "scene/renderer2D.h"
+#include "window/window.hpp"
+#include "scene/layer.hpp"
+#include "scene/renderer2D.hpp"
 
 namespace dream
 {
@@ -15,6 +15,7 @@ namespace dream
 		bool m_running = true;
 		float m_last_frame = 0.0f;
 		std::shared_ptr<Window> m_window;
+		std::shared_ptr<Camera> m_camera;
 		std::vector<graphics::Layer*> m_layers;
 	
 	public:

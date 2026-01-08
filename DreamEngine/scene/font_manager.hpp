@@ -2,7 +2,7 @@
 
 #include <unordered_map>
 #include <string>
-#include "texture_label.h"
+#include "texture_label.hpp"
 
 namespace dream { namespace graphics {
 

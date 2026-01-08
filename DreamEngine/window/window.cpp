@@ -1,5 +1,6 @@
-#include "window.h"
-#include "../input/input.h"
+#include "window.hpp"
+#include "../events/event.hpp"
+#include "../events/event_dispatcher.hpp"
 
 namespace dream {
 
@@ -42,22 +43,22 @@ namespace dream {
 		glfwSetWindowSizeCallback(m_window, resize);
 		glfwSetKeyCallback(m_window, [](GLFWwindow *window, int key, int scancode, int action, int mods)
 		{
-			dream::Input::on_key_event(key, action);
+
 		});
 
 		glfwSetMouseButtonCallback(m_window, [](GLFWwindow *window, int button, int action, int mods)
 		{
-			dream::Input::on_mouse_button_event(button, action);
 		});
 
 		glfwSetScrollCallback(m_window, [](GLFWwindow *window, double xOffset, double yOffset)
 		{
-			dream::Input::on_scroll(xOffset, yOffset);
 		});
 
 		glfwSetCursorPosCallback(m_window, [](GLFWwindow *window, double xPos, double yPos)
 		{
-			dream::Input::on_mouse_move(xPos, yPos);
+				MouseMovedEvent event(xPos, yPos);
+				EventDispatcher ed;
+				ed.post(event);
 		});
 
 

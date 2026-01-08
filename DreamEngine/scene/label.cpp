@@ -1,4 +1,4 @@
-#include "label.h"
+#include "label.hpp"
 
 namespace dream { namespace graphics {
 

@@ -1,12 +1,12 @@
 #pragma once
 #include <cstddef>
 #include <map>
-#include "../buffers/vertex_array.h"
-#include "../scene/shader.h"
-#include "../scene/camera.h"
-#include "../scene/texture2D.h"
-#include "../scene/texture_label.h"
-#include "../scene/font_manager.h"
+#include "../buffers/vertex_array.hpp"
+#include "../scene/shader.hpp"
+#include "../scene/camera.hpp"
+#include "../scene/texture2D.hpp"
+#include "../scene/texture_label.hpp"
+#include "../scene/font_manager.hpp"
 
 namespace dream { namespace graphics {
 

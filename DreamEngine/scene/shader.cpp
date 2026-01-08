@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "shader.h"
+#include "shader.hpp"
 
 using namespace dream;
 using namespace utils;

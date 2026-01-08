@@ -2,7 +2,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glad/glad.h>
-#include "../utils/file_utils.h"
+#include "../utils/file_utils.hpp"
 
 namespace dream { namespace graphics {
 

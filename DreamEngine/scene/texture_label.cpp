@@ -1,4 +1,4 @@
-#include "texture_label.h"
+#include "texture_label.hpp"
 #include <glad/glad.h>
 #include <iostream>
 
