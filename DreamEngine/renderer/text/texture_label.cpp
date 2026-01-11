@@ -37,6 +37,11 @@ void TextureLabel::load_font(const std::string& font_path) {
             continue;
         }
 
+        glEnable(GL_BLEND);
+        glDisable(GL_DEPTH_TEST);
+        glDisable(GL_CULL_FACE);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
         unsigned int texture;
         glGenTextures(1, &texture);
         glBindTexture(GL_TEXTURE_2D, texture);
@@ -44,18 +49,19 @@ void TextureLabel::load_font(const std::string& font_path) {
             GL_TEXTURE_2D,
             0,
             GL_RED, // Internal format for grayscale
-            m_face->glyph->bitmap.width,
-            m_face->glyph->bitmap.rows,
+            (GLsizei)m_face->glyph->bitmap.width,
+            (GLsizei)m_face->glyph->bitmap.rows,
             0,
             GL_RED, // Format for grayscale
             GL_UNSIGNED_BYTE,
             m_face->glyph->bitmap.buffer
         );
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
         Character character = {
             texture,

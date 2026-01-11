@@ -15,9 +15,9 @@ GameLayer::GameLayer(Shader& shader, Camera& camera)
 	m_shader.set_uniform2f("light_pos", glm::vec2(0.0f, 0.0f));
 	GLint texIDs[] =
 	{
-		0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+		0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
 	};
-	m_shader.set_uniform1iv("textures", texIDs, 19);
+	m_shader.set_uniform1iv("textures", texIDs, 12);
 	m_shader.disable();
 }
 
@@ -41,10 +41,10 @@ void GameLayer::on_update()
 	set_camera(m_camera);
 	on_mouse_moved();
 	m_shader.enable();
-
 	unsigned int fps = get_FPS();
-	Renderer2D::get_instance()->draw_label(std::to_string(fps), glm::vec2(0.0f, 4.0f), 0.010f, "../DreamTest/assets/Fonts/Arial.ttf", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-	Renderer2D::get_instance()->draw_label("Hello World!", glm::vec2(6.0f, 4.0f), 0.025f, "../DreamTest/assets/Fonts/Arial.ttf", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	Renderer2D::get_instance()->draw_label(std::to_string(fps), glm::vec2(0.0f, 8.5f), 0.010f, "assets/Fonts/Arial.ttf", glm::vec4(1.0f, 1.0f, 1.0f, 0.0f));
+	Renderer2D::get_instance()->draw_label("Hello World!", glm::vec2(4.5f, 8.0f), 0.025f, "assets/Fonts/Arial.ttf", glm::vec4(1.0f, 1.0f, 0.5f, 0.0f));
+	
 	Renderer2D::get_instance()->end();
 	Renderer2D::get_instance()->flush();
 }

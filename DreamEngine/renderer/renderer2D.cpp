@@ -17,8 +17,6 @@ namespace dream { namespace graphics {
 			return;
 		}
 
-		glEnable(GL_BLEND);
-    	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		r_data.texture_coords[0] = { 0.0f, 0.0f };
 		r_data.texture_coords[1] = { 1.0f, 0.0f };
 		r_data.texture_coords[2] = { 1.0f, 1.0f };

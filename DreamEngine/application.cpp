@@ -46,7 +46,7 @@ namespace dream
 
 	void Application::run()
 	{
-		while (m_running)
+		while (!glfwWindowShouldClose(m_window->get_glfw_window()))
 		{
 			m_window->clear();
 			for (auto layer : m_layers)

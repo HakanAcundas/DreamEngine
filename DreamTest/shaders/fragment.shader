@@ -1,33 +1,34 @@
 #version 450 core
 
-layout(location = 0) out vec4 color;
+layout(location = 0) out
+vec4 outColor;
 
 uniform vec2 light_pos;
+uniform sampler2D textures[32];
 
 in DATA
 {
-    vec4 position;
-    vec2 uv;
-    float tid;
-    vec4 color;
-} fs_in;
-
-uniform sampler2D textures[32];
+vec4 position;
+vec2 uv;
+float tid;
+vec4 color; // For text: text color | For image: tint color
+}
+fs_in;
 
 void main()
 {
-    float intensity = clamp(1.0 / length(fs_in.position.xy - light_pos), 0.1, 1.0);
-    vec4 textureColor = fs_in.color;
     int textureID = int(fs_in.tid - 0.5);
-        textureColor = texture(textures[textureID], fs_in.uv);
+    vec4 sampled = texture(textures[textureID], fs_in.uv);
 
-    if (fs_in.color.a == 0.0) // Use this condition to differentiate text and image
+    // TEXT PATH (GL_RED glyph texture)
+    if (fs_in.color.a == 0.0)
     {
-        color = vec4(fs_in.color.rgb * textureColor.r, textureColor.r);
+        float alpha = sampled.r; // glyph mask
+        outColor = vec4(fs_in.color.rgb, alpha);
     }
+    // IMAGE PATH (RGBA texture)
     else
     {
-        // Use full color for images
-        color = textureColor * fs_in.color;
-    };
+        outColor = sampled * fs_in.color;
+    }
 }
