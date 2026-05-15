@@ -52,9 +52,15 @@ source_group("ecs" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/ecs/system.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ecs/system_manager.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ecs/ecs_manager.hpp
+)
 
+source_group("ecs/components" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/ecs/components/transfrom.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/systems
+)
+
+source_group("ecs/systems" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/systems/physics_system.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/systems/physics_system.cpp
 )
 
 source_group("renderer" FILES

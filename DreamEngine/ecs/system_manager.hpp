@@ -15,7 +15,7 @@ public:
 		const char* type_name = typeid(T).name();
 		assert(m_systems.find(type_name) == m_systems.end() && "Registering system more than onece.");
 
-		SystemPtr system = std::make_shared<T>();
+		std::shared_ptr<T> system = std::make_shared<T>();
 		m_systems.insert({ type_name, system });
 	
 		return system;

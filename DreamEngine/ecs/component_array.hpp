@@ -12,7 +12,7 @@ public:
 };
 
 template<typename T>
-class ComponentArray : IComponentArray
+class ComponentArray : public IComponentArray
 {
 public:
 	void insert_data(Entity entity, T component)

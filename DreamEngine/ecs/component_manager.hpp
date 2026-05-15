@@ -14,7 +14,7 @@ public:
 	void register_component()
 	{
 		const char* type_name = typeid(T).name();
-		assert(m_component_types.find(type_name) != m_component_types.end() && "Registering component type more than once.");
+		assert(m_component_types.find(type_name) == m_component_types.end() && "Registering component type more than once.");
 
 		m_component_types.insert({ type_name, m_next_component_type });
 		++m_next_component_type;

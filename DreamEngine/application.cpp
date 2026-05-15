@@ -14,7 +14,10 @@ namespace dream
 			this->on_event(e);
 		});
 
-		ecsm.init();
+		m_ecsm = ECSManager();
+		m_dispatcher = EventDispatcher();
+		
+		m_ecsm.init();
 		Renderer2D::get_instance()->init();
 	}
 

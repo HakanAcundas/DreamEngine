@@ -33,5 +33,7 @@ namespace dream {
 		glm::mat4 m_view_mat;
 		glm::mat4 m_view_projection_mat;
 		glm::vec3 m_position;
+
+		float left, right, bottom, top;
 	};
 }
