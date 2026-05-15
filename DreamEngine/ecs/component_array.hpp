@@ -38,7 +38,7 @@ public:
 		// Update map to point to moved spot
 		Entity entity_of_last_element = m_index_to_entity_map[index_of_last_element];
 		m_entity_to_index_map[entity_of_last_element] = index_of_removed_entity;
-		m_index_to_entity_map[index_of_removed_entity] = entityOfLastElement;
+		m_index_to_entity_map[index_of_removed_entity] = entity_of_last_element;
 
 		m_entity_to_index_map.erase(entity);
 		m_index_to_entity_map.erase(index_of_last_element);
@@ -56,7 +56,7 @@ public:
 
 	void entity_destroyed(Entity entity)
 	{
-		if (mEntityToIndexMap.find(entity) != mEntityToIndexMap.end())
+		if (m_entity_to_index_map.find(entity) != m_entity_to_index_map.end())
 		{
 			// Remove the entity's component if it existed
 			remove_data(entity);

@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "window/window.hpp"
+#include "ecs/ecs_manager.hpp"
 #include "renderer/renderer2D.hpp"
 #include "renderer/resources/shader.hpp"
 #include "scene/layer.hpp"
@@ -35,6 +36,7 @@ namespace dream
 		// Singleton
 		static Application *s_application;
 
+		ECSManager ecsm;
 		bool m_running = true;
 		float m_last_frame = 0.0f;
 		std::unique_ptr<Window> m_window;

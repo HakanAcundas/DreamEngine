@@ -14,6 +14,7 @@ namespace dream
 			this->on_event(e);
 		});
 
+		ecsm.init();
 		Renderer2D::get_instance()->init();
 	}
 

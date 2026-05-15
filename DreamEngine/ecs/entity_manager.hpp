@@ -2,8 +2,8 @@
 
 #include <array>
 #include <queue>
-#include "entity.hpp"
 #include "signature.hpp"
+#include "entity.hpp"
 
 class EntityManager
 {

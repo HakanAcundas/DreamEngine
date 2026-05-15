@@ -11,6 +11,10 @@ file(GLOB_RECURSE DREAM_ENGINE_SOURCES
     renderer/resources/*.cpp
     renderer/text/*.hpp
     renderer/text/*.cpp
+    ecs/*.hpp
+    ecs/*.cpp
+    ecs/components/*.hpp
+    ecs/systems/*.hpp
     scene/*.hpp
     scene/*.cpp
     utils/*.hpp
@@ -36,6 +40,21 @@ source_group("buffers" FILES
 
     ${CMAKE_CURRENT_SOURCE_DIR}/buffers/vertex_array.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/buffers/vertex_array.cpp
+)
+
+source_group("ecs" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/signature.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/entity.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/entity_manager.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/entity_manager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/component_array.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/component_manager.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/system.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/system_manager.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/ecs_manager.hpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/components/transfrom.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/systems
 )
 
 source_group("renderer" FILES

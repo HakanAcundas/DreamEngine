@@ -2,6 +2,6 @@
 
 #include <cstdint>
 
-using Entity = uint32_t;
+using Entity = std::uint32_t;
 
-const uint32_t MAX_ENTITIES = 5000;
+const Entity MAX_ENTITIES = 5000;

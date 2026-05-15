@@ -10,6 +10,7 @@ project(DreamEngine
 # Set the C++ standard
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_TLS_VERIFY FALSE)
 
 option(DREAMENGINE_BUILD_TEST "Build test application." ON)
 

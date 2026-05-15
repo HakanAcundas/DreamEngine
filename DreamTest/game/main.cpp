@@ -7,6 +7,7 @@ using namespace dream;
 int main(void)
 {
     Application dream_engine;
+
     Shader shader(
         "../DreamTest/shaders/vertex.shader",
         "../DreamTest/shaders/fragment.shader");
