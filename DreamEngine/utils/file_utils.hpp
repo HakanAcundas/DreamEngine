@@ -1,4 +1,5 @@
 #pragma once
+
 #include <string>
 
 namespace dream { namespace utils {
@@ -9,7 +10,8 @@ namespace dream { namespace utils {
 		static std::string read_file(const char *file_path)
 		{
 			//Open the file
-			FILE* file = fopen(file_path, "rt");
+			FILE* file;
+			fopen_s(&file, file_path, "rt");
 
 			// Go to end of the file
 			fseek(file, 0, SEEK_END);

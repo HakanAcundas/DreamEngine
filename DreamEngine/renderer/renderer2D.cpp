@@ -172,10 +172,10 @@ namespace dream { namespace graphics {
 		for (const char& c : text) {
 			const TextureLabel::Character& ch = font->get_characters().at(c);
 
-			float xpos = ch.c_bearing.x;
-			float ypos = ch.c_size.y - ch.c_bearing.y;
-			float width = ch.c_size.x;
-			float height = ch.c_size.y;
+			int xpos = ch.c_bearing.x;
+			int ypos = ch.c_size.y - ch.c_bearing.y;
+			int width = ch.c_size.x;
+			int height = ch.c_size.y;
 
 			// Apply transform to each character position
 			glm::vec4 top_left = transform * glm::vec4(xpos, ypos, 0.0f, 1.0f);
