@@ -15,6 +15,8 @@ file(GLOB_RECURSE DREAM_ENGINE_SOURCES
     ecs/*.cpp
     ecs/components/*.hpp
     ecs/systems/*.hpp
+    physics/*.hpp
+    physics/*.cpp
     scene/*.hpp
     scene/*.cpp
     utils/*.hpp
@@ -58,16 +60,15 @@ source_group("ecs/components" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/ecs/components/transfrom.hpp
 )
 
-source_group("ecs/systems" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/systems/physics_system.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/systems/physics_system.cpp
+source_group("physics" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/physics/physics_engine2D.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/physics/physics_engine2D.cpp
 )
 
 source_group("renderer" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/renderer/renderer2D.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/renderer/renderer2D.cpp
 )
-
 
 source_group("renderer\\resources" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/renderer/resources/shader.hpp

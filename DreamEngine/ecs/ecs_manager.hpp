@@ -14,7 +14,7 @@ public:
 	{
 		m_component_manager = std::make_unique<ComponentManager>();
 		m_entity_manager = std::make_unique<EntityManager>();
-		m_system_manager = std::make_unique<SystemManager>();
+		//m_system_manager = std::make_unique<SystemManager>();
 	}
 
 	Entity create_entity()
@@ -26,7 +26,7 @@ public:
 	{
 		m_entity_manager->destroy_entity(entity);
 		m_component_manager->entity_destroyed(entity);
-		m_system_manager->entity_destroyed(entity);
+		//m_system_manager->entity_destroyed(entity);
 	}
 
 	template<typename T>
@@ -43,7 +43,7 @@ public:
 		signature.set(m_component_manager->get_component_type<T>(), true);
 		m_entity_manager->set_signature(entity, signature);
 
-		m_system_manager->entity_signature_changed(entity, signature);
+		//m_system_manager->entity_signature_changed(entity, signature);
 	}
 
 	template<typename T>
@@ -58,20 +58,20 @@ public:
 		return m_component_manager->get_entity_component<T>(entity);
 	}
 
-	template<typename T>
-	std::shared_ptr<T> register_system()
-	{
-		return m_system_manager->register_system<T>();
-	}
+	//template<typename T>
+	//std::shared_ptr<T> register_system()
+	//{
+	//	//return m_system_manager->register_system<T>();
+	//}
 
-	template<typename T>
-	void set_system_signature(Signature signature)
-	{
-		m_system_manager->set_signature<T>(signature);
-	}
+	//template<typename T>
+	//void set_system_signature(Signature signature)
+	//{
+	//	//m_system_manager->set_signature<T>(signature);
+	//}
 
 private:
 	std::shared_ptr<EntityManager> m_entity_manager;
 	std::shared_ptr<ComponentManager> m_component_manager;
-	std::shared_ptr<SystemManager> m_system_manager;
+	//std::shared_ptr<SystemManager> m_system_manager;
 };

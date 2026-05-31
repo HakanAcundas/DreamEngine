@@ -5,6 +5,7 @@
 #include "ecs/ecs_manager.hpp"
 #include "renderer/renderer2D.hpp"
 #include "renderer/resources/shader.hpp"
+#include "physics/physics_engine2D.hpp"
 #include "scene/layer.hpp"
 #include "events/event.hpp"
 #include "events/event_dispatcher.hpp"
@@ -34,6 +35,7 @@ namespace dream
 		inline Shader& get_shader() { return m_shader; }
 		inline Camera& get_camera() { return m_camera; }
 		inline ECSManager& get_ecs_manager() { return m_ecsm; }
+		inline PhysicsEngine2D& get_physic_engine() { return m_physics_engine; }
 		inline EventDispatcher& get_event_dispatcher() { return m_dispatcher; }
 
 	private:
@@ -46,6 +48,8 @@ namespace dream
 		Shader m_shader;
 		Camera m_camera;
 		ECSManager m_ecsm;
+		PhysicsEngine2D m_physics_engine;
+		
 		EventDispatcher m_dispatcher;
 		std::vector<graphics::Layer*> m_layers;
 	};

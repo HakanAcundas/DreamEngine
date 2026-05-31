@@ -6,7 +6,7 @@
 
 using namespace dream;
 
-class BulletHell
+class BulletHellGame
 {
 public:
     void run();

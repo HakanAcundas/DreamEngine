@@ -1,6 +1,6 @@
-#include "bullet_hell.hpp"
+#include "bullet_hell_game.hpp"
 
-void BulletHell::run()
+void BulletHellGame::run()
 {
     Shader shader(
         "../DreamTest/shaders/vertex.shader",
@@ -12,8 +12,9 @@ void BulletHell::run()
 
     ECSManager ecsm = m_dream_engine.get_ecs_manager();
     EventDispatcher& ed = m_dream_engine.get_event_dispatcher();
+    PhysicsEngine2D& ps = m_dream_engine.get_physic_engine();
 
-    m_game_layer = new GameLayer(shader, camera, ecsm, ed);
+    m_game_layer = new GameLayer(shader, camera, ecsm, ed, ps);
     m_dream_engine.push_layer(m_game_layer);
     m_dream_engine.run();
 }

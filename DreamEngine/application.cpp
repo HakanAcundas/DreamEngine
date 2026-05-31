@@ -18,6 +18,7 @@ namespace dream
 		m_dispatcher = EventDispatcher();
 		
 		m_ecsm.init();
+		m_physics_engine = PhysicsEngine2D(m_ecsm);
 		Renderer2D::get_instance()->init();
 	}
 

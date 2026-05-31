@@ -215,7 +215,6 @@ namespace dream { namespace graphics {
 		}
 	}
 
-
 	void Renderer2D::flush()
 	{
 		for (int i = 0; i < r_data.texture_slots.size(); i++)
