@@ -1,61 +1,56 @@
-#include "texture2D.hpp"
+#include "texture2d.hpp"
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-namespace dream { namespace graphics {
+Texture2D::Texture2D(const std::string& path)
+{
+	stbi_set_flip_vertically_on_load(true);  // OpenGL UV origin is bottom-left
 
-	Texture2D::Texture2D(std::string path)
-		: m_path(path)
-	{
-		int width, height, channels;
-		stbi_set_flip_vertically_on_load(1);
-		stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
+	int w, h, channels;
+	uint8_t* data = stbi_load(path.c_str(), &w, &h, &channels, 4); // force RGBA
+	if (!data) return;
 
-		if (data)
-		{
-			m_width = width;
-			m_height = height;
+	m_width = w;
+	m_height = h;
+	create(data, GL_RGBA);
+	stbi_image_free(data);
+}
 
-			GLenum internal_format = 0, data_format = 0;
-			if (channels == 4)
-			{
-				internal_format = GL_RGBA8;
-				data_format = GL_RGBA;
-			}
-			else if (channels == 3)
-			{
-				internal_format = GL_RGB8;
-				data_format = GL_RGB;
-			}
-
-			glCreateTextures(GL_TEXTURE_2D, 1, &m_tid);
-			glTextureStorage2D(m_tid, 1, internal_format, m_width, m_height);
-
-			glTextureParameteri(m_tid, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTextureParameteri(m_tid, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-			glTextureParameteri(m_tid, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTextureParameteri(m_tid, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-			glTextureSubImage2D(m_tid, 0, 0, 0, m_width, m_height, data_format, GL_UNSIGNED_BYTE, data);
-
-			stbi_image_free(data);
-		}
-	}
-
-	Texture2D::~Texture2D()
-	{
+Texture2D::~Texture2D()
+{
+	if (m_tid)
 		glDeleteTextures(1, &m_tid);
-	}
+}
 
-	void Texture2D::bind() const
-	{
-		glBindTextureUnit(GL_TEXTURE_2D, m_tid);
+void Texture2D::create(const uint8_t* pixels, GLenum format)
+{
+	glGenTextures(1, &m_tid);
+	glBindTexture(GL_TEXTURE_2D, m_tid);
 
-	}
+	// Pixel-art games: no blurring when scaling
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-	void Texture2D::unbind() const
-	{
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-}}
+	// Don't repeat texture at edges
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_width, m_height, 0, format, GL_UNSIGNED_BYTE, pixels);
+}
+
+void Texture2D::upload_sub_region(int x, int y, int w, int h, const uint8_t* pixels) const
+{
+	glBindTexture(GL_TEXTURE_2D, m_tid);
+	glTexSubImage2D(GL_TEXTURE_2D, 0, x, y, w, h, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+}
+
+void Texture2D::bind(unsigned int slot = 0)
+{
+	glActiveTexture(GL_TEXTURE0 + slot);
+	glBindTexture(GL_TEXTURE_2D, m_tid);
+}
+
+void Texture2D::unbind()
+{
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
