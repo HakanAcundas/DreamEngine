@@ -21,7 +21,7 @@ GameLayer::GameLayer(Shader& shader, Camera& camera, ECManager& ecm, EventDispat
 	{
 		0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
 	};
-	m_shader.set_multiple_uniform_iv(texIDs, "textures");
+	m_shader.set_uniform1iv("textures", texIDs, 12);
 	m_shader.disable();
 
 	m_event_dispatcher.listen(EventType::MouseMovedEvent, std::bind(&Camera::on_event, m_camera, std::placeholders::_1));
