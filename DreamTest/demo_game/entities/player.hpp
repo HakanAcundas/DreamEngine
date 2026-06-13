@@ -1,6 +1,7 @@
 #pragma once
 
 #include <scene_object.hpp>
+#include <renderer/renderer2D.hpp>
 
 using namespace dream;
 using namespace graphics;

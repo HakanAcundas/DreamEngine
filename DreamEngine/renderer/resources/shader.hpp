@@ -8,13 +8,6 @@ namespace dream { namespace graphics {
 
 	class Shader
 	{
-	private:
-		unsigned int m_shader_id;
-		const char *m_vertex_path;
-		const char *m_fragment_path;
-
-		unsigned int create_program();
-		int get_uniform_location(const char *name);
 	public:
 		Shader() = default;
 		Shader(const char *vertex_path, const char *frag_path);
@@ -40,7 +33,16 @@ namespace dream { namespace graphics {
 		void get_uniformMat4(const char *name, float data[16]);
 #pragma endregion Uniform Getters
 
+		void set_multiple_uniform_iv(int texture_ids[], std::string uniform_name);
 		void enable();
 		void disable();
+
+	private:
+		unsigned int m_shader_id;
+		const char* m_vertex_path;
+		const char* m_fragment_path;
+
+		unsigned int create_program();
+		int get_uniform_location(const char* name);
 	};
 }}

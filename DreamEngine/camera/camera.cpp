@@ -8,6 +8,7 @@
 namespace dream {
 
 	Camera::Camera(float left, float right, float bottom, float top)
+		: left(left), right(right), bottom(bottom), top(top)
 	{
 		m_projection_mat = glm::ortho(left, right, bottom, top);
 		m_view_mat = glm::translate(glm::mat4(1.0f), -m_position);
@@ -43,7 +44,7 @@ namespace dream {
 
 	void Camera::on_mouse_moved(MouseMovedEvent& event)
 	{
-		DREAM_LOG_TAG_ERROR("CAMERA", "on_mouse_moved");
+		DREAM_LOG_TAG_INFO("CAMERA", "on_mouse_moved");
 	}
 
 	void Camera::on_mouse_scrolled()

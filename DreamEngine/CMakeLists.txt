@@ -11,6 +11,12 @@ file(GLOB_RECURSE DREAM_ENGINE_SOURCES
     renderer/resources/*.cpp
     renderer/text/*.hpp
     renderer/text/*.cpp
+    ec/*.hpp
+    ec/*.cpp
+    ec/components/*.hpp
+    ec/systems/*.hpp
+    physics/*.hpp
+    physics/*.cpp
     scene/*.hpp
     scene/*.cpp
     utils/*.hpp
@@ -38,11 +44,31 @@ source_group("buffers" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/buffers/vertex_array.cpp
 )
 
+source_group("ecs" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/signature.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/entity.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/entity_manager.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/entity_manager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/component_array.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/component_manager.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/system.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/system_manager.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/ecs_manager.hpp
+)
+
+source_group("ecs/components" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/components/transfrom.hpp
+)
+
+source_group("physics" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/physics/physics_engine2D.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/physics/physics_engine2D.cpp
+)
+
 source_group("renderer" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/renderer/renderer2D.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/renderer/renderer2D.cpp
 )
-
 
 source_group("renderer\\resources" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/renderer/resources/shader.hpp
@@ -93,6 +119,8 @@ target_include_directories(DreamEngine
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/log
         ${CMAKE_CURRENT_SOURCE_DIR}/events
+        ${CMAKE_CURRENT_SOURCE_DIR}/ec
+        ${CMAKE_CURRENT_SOURCE_DIR}/ec/components
         ${CMAKE_CURRENT_SOURCE_DIR}/renderer
         ${CMAKE_CURRENT_SOURCE_DIR}/renderer/resources
         ${CMAKE_CURRENT_SOURCE_DIR}/renderer/text
