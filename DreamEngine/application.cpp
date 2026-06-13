@@ -1,4 +1,4 @@
-#include "application.h"
+#include "application.hpp"
 
 using namespace dream::graphics;
 namespace dream 
@@ -8,14 +8,23 @@ namespace dream
 	Application::Application()
 	{
 		s_application = this;
-		m_window = std::make_shared<Window>();
+		m_window = std::make_unique<Window>();
+		m_window->set_event_callback([this](Event& e)
+		{
+			this->on_event(e);
+		});
+
+		m_ecm = ECManager();
+		m_dispatcher = EventDispatcher();
+		
+		m_ecm.init();
+		m_physics_engine = PhysicsEngine2D(m_ecm);
 		Renderer2D::get_instance()->init();
 	}
 
 	Application::~Application()
 	{
-		// TODO
-		//Renderer2D::get_instance()->ShutDown();
+		delete s_application;
 	}
 
 	void Application::push_layer(Layer *layer)
@@ -30,24 +39,21 @@ namespace dream
 			m_layers.erase(it);
 	}
 
+	void Application::on_event(Event& event)
+	{
+		m_dispatcher.post(event);
+	}
+
 	bool Application::on_key_pressed()
 	{
-		// switch (e.get_keycode())
-		// {
-		// case 256:
-		// 	m_running = false;
-		// }
-
 		return false;
 	}
 
 	void Application::run()
 	{
-		while (m_running)
+		while (!glfwWindowShouldClose(m_window->get_glfw_window()))
 		{
 			m_window->clear();
-			dream::Input::update();
-			dream::InputManager::get().update();
 			for (auto layer : m_layers)
 				layer->on_update();
 			m_window->on_update();

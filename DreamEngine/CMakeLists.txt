@@ -1,74 +1,114 @@
 file(GLOB_RECURSE DREAM_ENGINE_SOURCES
+    buffers/*.hpp
     buffers/*.cpp
-    buffers/*.h
-    input/*cpp
-    input/*h
+    events/*.hpp
+    events/*.cpp
+    camera/*hpp
+    camera/*cpp
+    renderer/*hpp
+    renderer/*cpp
+    renderer/resources/*.hpp
+    renderer/resources/*.cpp
+    renderer/text/*.hpp
+    renderer/text/*.cpp
+    ec/*.hpp
+    ec/*.cpp
+    ec/components/*.hpp
+    ec/systems/*.hpp
+    physics/*.hpp
+    physics/*.cpp
+    scene/*.hpp
     scene/*.cpp
-    scene/*.h
-    utils/*.h
+    utils/*.hpp
+    window/*.hpp
     window/*.cpp
-    window/*.h
+    application.hpp
     application.cpp
-    application.h
+)
+
+source_group("event" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/events/event.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/events/event_dispatcher.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/events/event_dispatcher.cpp
 )
 
 # Grouping source files
 source_group("buffers" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/buffers/buffer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/buffers/buffer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/buffers/buffer.h
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/buffers/index_buffer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/buffers/index_buffer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/buffers/index_buffer.h
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/buffers/vertex_array.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/buffers/vertex_array.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/buffers/vertex_array.h
 )
 
-source_group("input" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/input/input.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/input/input.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/input/key_codes.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/input/mouse_codes.h
+source_group("ecs" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/signature.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/entity.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/entity_manager.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/entity_manager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/component_array.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/component_manager.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/system.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/system_manager.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/ecs_manager.hpp
+)
+
+source_group("ecs/components" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/components/transfrom.hpp
+)
+
+source_group("physics" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/physics/physics_engine2D.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/physics/physics_engine2D.cpp
+)
+
+source_group("renderer" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/renderer2D.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/renderer2D.cpp
+)
+
+source_group("renderer\\resources" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/resources/shader.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/resources/shader.cpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/texture2D.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/texture2D.cpp
+)
+
+source_group("renderer\\text" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/text/font_manager.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/text/font_manager.cpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/text/label.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/text/label.cpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/text/texture_label.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/text/texture_label.cpp
+)
+
+source_group("camera" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/camera.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/camera.cpp
 )
 
 source_group("scene" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/camera.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/camera.h
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/group.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/group.h
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/label.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/label.h
-
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/layer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/scene/layer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/layer.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/renderer2D.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/renderer2D.h
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/shader.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/shader.h
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/texture2D.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/texture2D.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/texture_label.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/texture_label.h
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/font_maneger.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/font_maneger.h
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/scene/scene_object.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene/scene_object.hpp
 )
 
 source_group("utils" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/utils/file_utils.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/utils/metric_utils.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/utils/file_utils.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/utils/metric_utils.hpp
 )
 
 source_group("window" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/window/window.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/window/window.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/window/window.h
 )
 
 add_library(DreamEngine ${DREAM_ENGINE_SOURCES})
@@ -78,9 +118,14 @@ target_include_directories(DreamEngine
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/log
-        ${CMAKE_CURRENT_SOURCE_DIR}/scene
         ${CMAKE_CURRENT_SOURCE_DIR}/events
-        ${CMAKE_CURRENT_SOURCE_DIR}/input
+        ${CMAKE_CURRENT_SOURCE_DIR}/ec
+        ${CMAKE_CURRENT_SOURCE_DIR}/ec/components
+        ${CMAKE_CURRENT_SOURCE_DIR}/renderer
+        ${CMAKE_CURRENT_SOURCE_DIR}/renderer/resources
+        ${CMAKE_CURRENT_SOURCE_DIR}/renderer/text
+        ${CMAKE_CURRENT_SOURCE_DIR}/camera
+        ${CMAKE_CURRENT_SOURCE_DIR}/scene
         ${CMAKE_CURRENT_SOURCE_DIR}/window
         ${CMAKE_CURRENT_SOURCE_DIR}/utils
 )
