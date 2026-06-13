@@ -9,12 +9,14 @@ namespace dream { namespace graphics {
 	class SceneObject
 	{
 	private:
-		bool m_visible = false;
 
+		// TODO: Get rid of these 2 position and size varible since we want to use Transform component.
 		glm::vec3 m_position;
 		glm::vec2 m_size;
-		glm::vec4 m_color;
 
+		// TODO: Put these 5 variables into Texture2D component.
+		bool m_visible = false;
+		glm::vec4 m_color;
 		std::vector<glm::vec2> m_texture_coordinate;
 		Texture2D *m_texture;
 		Texture2D::SubTexture2D *m_sub_texture;

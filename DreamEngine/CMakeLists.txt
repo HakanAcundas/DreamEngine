@@ -11,10 +11,10 @@ file(GLOB_RECURSE DREAM_ENGINE_SOURCES
     renderer/resources/*.cpp
     renderer/text/*.hpp
     renderer/text/*.cpp
-    ecs/*.hpp
-    ecs/*.cpp
-    ecs/components/*.hpp
-    ecs/systems/*.hpp
+    ec/*.hpp
+    ec/*.cpp
+    ec/components/*.hpp
+    ec/systems/*.hpp
     physics/*.hpp
     physics/*.cpp
     scene/*.hpp
@@ -45,19 +45,19 @@ source_group("buffers" FILES
 )
 
 source_group("ecs" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/signature.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/entity.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/entity_manager.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/entity_manager.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/component_array.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/component_manager.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/system.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/system_manager.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/ecs_manager.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/signature.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/entity.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/entity_manager.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/entity_manager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/component_array.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/component_manager.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/system.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/system_manager.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/ecs_manager.hpp
 )
 
 source_group("ecs/components" FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/ecs/components/transfrom.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/components/transfrom.hpp
 )
 
 source_group("physics" FILES
@@ -119,6 +119,8 @@ target_include_directories(DreamEngine
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/log
         ${CMAKE_CURRENT_SOURCE_DIR}/events
+        ${CMAKE_CURRENT_SOURCE_DIR}/ec
+        ${CMAKE_CURRENT_SOURCE_DIR}/ec/components
         ${CMAKE_CURRENT_SOURCE_DIR}/renderer
         ${CMAKE_CURRENT_SOURCE_DIR}/renderer/resources
         ${CMAKE_CURRENT_SOURCE_DIR}/renderer/text

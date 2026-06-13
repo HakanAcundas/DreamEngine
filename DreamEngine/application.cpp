@@ -14,17 +14,17 @@ namespace dream
 			this->on_event(e);
 		});
 
-		m_ecsm = ECSManager();
+		m_ecm = ECManager();
 		m_dispatcher = EventDispatcher();
 		
-		m_ecsm.init();
-		m_physics_engine = PhysicsEngine2D(m_ecsm);
+		m_ecm.init();
+		m_physics_engine = PhysicsEngine2D(m_ecm);
 		Renderer2D::get_instance()->init();
 	}
 
 	Application::~Application()
 	{
-
+		delete s_application;
 	}
 
 	void Application::push_layer(Layer *layer)

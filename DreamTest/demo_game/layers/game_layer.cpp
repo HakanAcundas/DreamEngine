@@ -4,14 +4,14 @@
 #include "renderer2D.hpp"
 #include "game_layer.hpp"
 #include "metric_utils.hpp"
-#include <ecs/components/transform.hpp>
-#include <ecs/components/rigid_body.hpp>
+#include <ec/components/transform.hpp>
+#include <ec/components/rigid_body.hpp>
 
 using namespace dream;
 using namespace graphics;
 
-GameLayer::GameLayer(Shader& shader, Camera& camera, ECSManager& ecsm, EventDispatcher& event_dispatcher, PhysicsEngine2D& physics_engine2D)
-	: Layer("GameLayer"), m_shader(shader), m_camera(camera), m_ecsm(ecsm), m_event_dispatcher(event_dispatcher), m_physics_engine2D(physics_engine2D)
+GameLayer::GameLayer(Shader& shader, Camera& camera, ECManager& ecm, EventDispatcher& event_dispatcher, PhysicsEngine2D& physics_engine2D)
+	: Layer("GameLayer"), m_shader(shader), m_camera(camera), m_ecm(ecm), m_event_dispatcher(event_dispatcher), m_physics_engine2D(physics_engine2D)
 {
 	m_shader.enable();
 	m_shader.set_uniformMat4("pr_matrix", camera.get_projection_mat());
@@ -21,13 +21,13 @@ GameLayer::GameLayer(Shader& shader, Camera& camera, ECSManager& ecsm, EventDisp
 	{
 		0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
 	};
-	m_shader.set_uniform1iv("textures", texIDs, 12);
+	m_shader.set_multiple_uniform_iv(texIDs, "textures");
 	m_shader.disable();
 
 	m_event_dispatcher.listen(EventType::MouseMovedEvent, std::bind(&Camera::on_event, m_camera, std::placeholders::_1));
 
-	ecsm.register_component<Transform>();
-	ecsm.register_component<RigidBody>();
+	ecm.register_component<Transform>();
+	ecm.register_component<RigidBody>();
 
 	std::default_random_engine generator;
 	std::uniform_real_distribution<float> randPosition(-100.0f, 100.0f);
@@ -38,13 +38,13 @@ GameLayer::GameLayer(Shader& shader, Camera& camera, ECSManager& ecsm, EventDisp
 	float scale = randScale(generator);
 	const float dt = 0.1f;
 
-	player = ecsm.create_entity();
-	ecsm.add_component(player, Transform{
+	player = ecm.create_entity();
+	ecm.add_component(player, Transform{
 			.position = glm::vec3(randPosition(generator), randPosition(generator), randPosition(generator)),
 			.rotation = glm::vec3(randRotation(generator), randRotation(generator), randRotation(generator)),
 			.scale = glm::vec3(scale, scale, scale)
 		});
-	ecsm.add_component(player, RigidBody{
+	ecm.add_component(player, RigidBody{
 			.velocity = glm::vec2(0),
 			.mass = 1.0f,
 		});
@@ -52,7 +52,6 @@ GameLayer::GameLayer(Shader& shader, Camera& camera, ECSManager& ecsm, EventDisp
 	glm::vec2 gravity = glm::vec2(0.0f, 1.0f);
 	m_physics_engine2D.apply_force(gravity, player);
 }
-
 
 GameLayer::~GameLayer()
 {
@@ -78,7 +77,7 @@ void GameLayer::on_update()
 	Renderer2D::get_instance()->draw_label("Hello World!", glm::vec2(4.5f, 8.0f), 0.025f, "assets/Fonts/Arial.ttf", glm::vec4(1.0f, 1.0f, 0.5f, 0.0f));
 	
 	m_physics_engine2D.update(player);
-	Transform t = m_ecsm.get_component<Transform>(player);
+	Transform t = m_ecm.get_component<Transform>(player);
 	DREAM_LOG_TAG_INFO("GAME LAYER", "Player Position: x[{}], y[{}], z[{}]", t.position.x, t.position.y, t.position.z);
 
 	Renderer2D::get_instance()->end();

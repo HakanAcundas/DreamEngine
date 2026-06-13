@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "window/window.hpp"
-#include "ecs/ecs_manager.hpp"
+#include "ec/ec_manager.hpp"
 #include "renderer/renderer2D.hpp"
 #include "renderer/resources/shader.hpp"
 #include "physics/physics_engine2D.hpp"
@@ -34,7 +34,7 @@ namespace dream
 		inline static Application& get_application() { return *s_application; }
 		inline Shader& get_shader() { return m_shader; }
 		inline Camera& get_camera() { return m_camera; }
-		inline ECSManager& get_ecs_manager() { return m_ecsm; }
+		inline ECManager& get_ecs_manager() { return m_ecm; }
 		inline PhysicsEngine2D& get_physic_engine() { return m_physics_engine; }
 		inline EventDispatcher& get_event_dispatcher() { return m_dispatcher; }
 
@@ -47,7 +47,7 @@ namespace dream
 		std::unique_ptr<Window> m_window;
 		Shader m_shader;
 		Camera m_camera;
-		ECSManager m_ecsm;
+		ECManager m_ecm;
 		PhysicsEngine2D m_physics_engine;
 		
 		EventDispatcher m_dispatcher;

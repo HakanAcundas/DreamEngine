@@ -5,7 +5,7 @@
 #include <layer.hpp>
 #include <event_dispatcher.hpp>
 #include <physics/physics_engine2D.hpp>
-#include <ecs/ecs_manager.hpp>
+#include <ec/ec_manager.hpp>
 
 using namespace dream;
 using namespace graphics;
@@ -14,7 +14,7 @@ class GameLayer : public Layer
 {
 public:
 	GameLayer() = default;
-	GameLayer(Shader& shader, Camera& camera, ECSManager& ecm, EventDispatcher& event_dispatcher, PhysicsEngine2D& physics_engine2D);
+	GameLayer(Shader& shader, Camera& camera, ECManager& ecm, EventDispatcher& event_dispatcher, PhysicsEngine2D& physics_engine2D);
 	~GameLayer();
 
 	void on_update() override;
@@ -28,7 +28,7 @@ public:
 private:
 	Shader& m_shader;
 	Camera& m_camera;
-	ECSManager& m_ecsm;
+	ECManager& m_ecm;
 	EventDispatcher& m_event_dispatcher;
 	PhysicsEngine2D& m_physics_engine2D;
 

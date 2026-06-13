@@ -10,11 +10,11 @@ void BulletHellGame::run()
     m_dream_engine.set_camera(camera);
     m_dream_engine.set_shader(shader);
 
-    ECSManager ecsm = m_dream_engine.get_ecs_manager();
+    ECManager ecm = m_dream_engine.get_ecs_manager();
     EventDispatcher& ed = m_dream_engine.get_event_dispatcher();
     PhysicsEngine2D& ps = m_dream_engine.get_physic_engine();
 
-    m_game_layer = new GameLayer(shader, camera, ecsm, ed, ps);
+    m_game_layer = new GameLayer(shader, camera, ecm, ed, ps);
     m_dream_engine.push_layer(m_game_layer);
     m_dream_engine.run();
 }

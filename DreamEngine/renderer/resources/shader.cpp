@@ -89,6 +89,8 @@ namespace dream { namespace graphics {
 		return program;
 	}
 
+
+
 	void Shader::enable()
 	{
 		glUseProgram(m_shader_id);
@@ -102,6 +104,11 @@ namespace dream { namespace graphics {
 	int Shader::get_uniform_location(const char *name)
 	{
 		return glGetUniformLocation(m_shader_id, name);
+	}
+
+	void Shader::set_multiple_uniform_iv(int uniforms[], std::string uniform_name)
+	{
+		set_uniform1iv("textures", uniforms, sizeof(uniforms) / sizeof(int));
 	}
 
 #pragma region Uniform Setters
