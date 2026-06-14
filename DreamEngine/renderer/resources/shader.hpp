@@ -1,8 +1,8 @@
 #pragma once
+
+#include <string>
+#include <unordered_map>
 #include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <glad/glad.h>
-#include "../utils/file_utils.hpp"
 
 namespace dream { namespace graphics {
 
@@ -10,7 +10,7 @@ namespace dream { namespace graphics {
 	{
 	public:
 		Shader() = default;
-		Shader(const char *vertex_path, const char *frag_path);
+		Shader(const std::string& vertex_path, const std::string& frag_path);
 		~Shader();
 
 #pragma region Uniform Setters
@@ -33,16 +33,15 @@ namespace dream { namespace graphics {
 		void get_uniformMat4(const char *name, float data[16]);
 #pragma endregion Uniform Getters
 
-		void set_multiple_uniform_iv(int texture_ids[], std::string uniform_name);
 		void enable();
 		void disable();
 
 	private:
-		unsigned int m_shader_id;
-		const char* m_vertex_path;
-		const char* m_fragment_path;
-
-		unsigned int create_program();
-		int get_uniform_location(const char* name);
+		unsigned int compile(const char* vert_src, const char* frag_src);
+		unsigned int compile_stage(const char* src, unsigned int type);
+		int get_uniform_location(const std::string& name);
+	
+		unsigned int m_shader_id = 0;
+		std::unordered_map<std::string, int> m_uniform_cache;
 	};
 }}

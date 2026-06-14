@@ -1,95 +1,63 @@
 #include <iostream>
 #include <vector>
+#include <glm/gtc/type_ptr.hpp>
+#include <glad/glad.h>
 #include "shader.hpp"
-
-using namespace dream;
-using namespace utils;
+#include "../utils/file_utils.hpp"
 
 namespace dream { namespace graphics {
 
-	Shader::Shader(const char* vertexPath, const char* fragPath)
+	Shader::Shader(const std::string& vertex_path, const std::string& frag_path)
 	{
-		this->m_vertex_path = vertexPath;
-		this->m_fragment_path = fragPath;
-		m_shader_id = create_program();
+		std::string vert_src = utils::FileUtils::read_file(vertex_path);
+		std::string frag_src = utils::FileUtils::read_file(frag_path);
+		compile(vert_src.c_str(), frag_src.c_str());
 	}
 
 	Shader::~Shader()
 	{
-		glDeleteProgram(m_shader_id);
+		if (m_shader_id)
+			glDeleteProgram(m_shader_id);
 	}
 
-	unsigned int Shader::create_program()
+	unsigned int Shader::compile(const char* vert_src, const char* frag_src)
 	{
-		// Vertex Shader
-		unsigned int vertex = glCreateShader(GL_VERTEX_SHADER);
-		std::string v_source_string = FileUtils::read_file(m_vertex_path);
-		const char* v_shader_source = v_source_string.c_str();
+		unsigned int vert = compile_stage(vert_src, GL_VERTEX_SHADER);
+		unsigned int frag = compile_stage(frag_src, GL_FRAGMENT_SHADER);
 
-		glShaderSource(vertex, 1, &v_shader_source, NULL);
-		glCompileShader(vertex);
+		m_shader_id = glCreateProgram();
+		glAttachShader(m_shader_id, vert);
+		glAttachShader(m_shader_id, frag);
+		glLinkProgram(m_shader_id);
 
-		int result;
-		glGetShaderiv(vertex, GL_COMPILE_STATUS, &result);
-		if (result == GL_FALSE)
+		int ok;
+		glGetProgramiv(m_shader_id, GL_LINK_STATUS, &ok);
+		if (!ok)
 		{
-			int lenght;
-			glGetShaderiv(vertex, GL_INFO_LOG_LENGTH, &lenght);
-			std::vector<char> error(lenght);
-			glGetShaderInfoLog(vertex, lenght, &lenght, &error[0]);
-			std::cout << "Failed to compile Vertex Shader: " << std::endl << &error[0] << std::endl;
-			glDeleteShader(vertex);
+			char log[512]; glGetProgramInfoLog(m_shader_id, 512, nullptr, log);
+			std::cerr << "[Shader] Link error: " << log << '\n';
 		}
 
-		// Fragment Shader
-		unsigned int fragment = glCreateShader(GL_FRAGMENT_SHADER);
-		std::string f_source_string = FileUtils::read_file(m_fragment_path);
-		const char* f_shader_source = f_source_string.c_str();
-
-		glShaderSource(fragment, 1, &f_shader_source, NULL);
-		glCompileShader(fragment);
-		
-		glGetShaderiv(fragment, GL_COMPILE_STATUS, &result);
-		if (result == GL_FALSE)
-		{
-			int lenght;
-			glGetShaderiv(fragment, GL_INFO_LOG_LENGTH, &lenght);
-			std::vector<char> error(lenght);
-			glGetShaderInfoLog(fragment, lenght, &lenght, &error[0]);
-			std::cout << "Failed to compile Fragment Shader: " << std::endl << &error[0] << std::endl;
-			glDeleteShader(fragment);
-		}
-
-		// Shader Program
-		unsigned int program = glCreateProgram();
-		glAttachShader(program, vertex);
-		glAttachShader(program, fragment);
-
-		glLinkProgram(program);
-		glValidateProgram(program);
-
-		int is_linked;
-		glGetProgramiv(program, GL_LINK_STATUS, &is_linked);
-		if (is_linked == GL_FALSE)
-		{
-			int lenght;
-			glGetProgramiv(program, GL_INFO_LOG_LENGTH, &lenght);
-
-			std::vector<char> error(lenght);
-			glGetProgramInfoLog(program, lenght, &lenght, &error[0]);
-			std::cout << "Shader linking failed: " << std::endl << &error[0] << std::endl;
-
-			glDeleteProgram(program);
-			glDeleteShader(vertex);
-			glDeleteShader(fragment);
-		}
-
-		glDeleteShader(vertex);
-		glDeleteShader(fragment);
-		return program;
+		glDeleteShader(vert);
+		glDeleteShader(frag);
 	}
 
+	unsigned int Shader::compile_stage(const char* src, unsigned int type)
+	{
+		unsigned int s = glCreateShader(type);
+		glShaderSource(s, 1, &src, nullptr);
+		glCompileShader(s);
 
+		int ok;
+		glGetShaderiv(s, GL_COMPILE_STATUS, &ok);
+		if (!ok)
+		{
+			char log[512]; glGetShaderInfoLog(s, 512, nullptr, log);
+			std::cerr << "[Shader] Compile error: " << log << '\n';
+		}
+		
+		return s;
+	}
 
 	void Shader::enable()
 	{
@@ -101,14 +69,9 @@ namespace dream { namespace graphics {
 		glUseProgram(0);
 	}
 
-	int Shader::get_uniform_location(const char *name)
+	int Shader::get_uniform_location(const std::string& name)
 	{
-		return glGetUniformLocation(m_shader_id, name);
-	}
-
-	void Shader::set_multiple_uniform_iv(int uniforms[], std::string uniform_name)
-	{
-		set_uniform1iv("textures", uniforms, sizeof(uniforms) / sizeof(int));
+		return glGetUniformLocation(m_shader_id, name.c_str());
 	}
 
 #pragma region Uniform Setters
