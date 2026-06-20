@@ -18,11 +18,16 @@ namespace dream { namespace graphics {
 		void enable();
 		void disable();
 
-#pragma region Uniform Setters
-#pragma endregion Uniform Setters
-
-#pragma region Uniform Getters;
-#pragma endregion Uniform Getters
+#pragma region Uniform set functions
+		void set_int(const std::string& name, int v);
+		void set_float(const std::string& name, float v);
+		void set_vec2(const std::string& name, const glm::vec2& v);
+		void set_vec4(const std::string& name, const glm::vec4& v);
+		void set_mat4(const std::string& name, const glm::mat4& v);
+		// Upload the texture slot array once at startup:
+		// u_textures[0] = 0, u_textures[1] = 1, ... u_textures[31] = 31
+		void set_int_array(const std::string& name, const int* values, int count);
+#pragma endregion Uniform set functions
 
 	private:
 		unsigned int compile(const char* vert_src, const char* frag_src);
@@ -30,6 +35,6 @@ namespace dream { namespace graphics {
 		int get_uniform_location(const std::string& name);
 	
 		unsigned int m_shader_id = 0;
-		std::unordered_map<std::string, unsigned int> m_uniform_cache;
+		std::unordered_map<std::string, int> m_uniform_cache;
 	};
 }}

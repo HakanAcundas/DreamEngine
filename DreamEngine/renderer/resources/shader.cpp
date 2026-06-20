@@ -82,15 +82,44 @@ namespace dream { namespace graphics {
 
 	int Shader::get_uniform_location(const std::string& name)
 	{
-		return glGetUniformLocation(m_shader_id, name.c_str());
+		auto it = m_uniform_cache.find(name);
+		if (it != m_uniform_cache.end())
+			return it->second;
+
+		int location = glGetUniformLocation(m_shader_id, name.c_str());
+		m_uniform_cache[name] = location;
+		return location;
 	}
 
-#pragma region Uniform Setters
+#pragma region Uniform set functions
+	void Shader::set_int(const std::string& name, int v)
+	{
+		glUniform1i(get_uniform_location(name), v);
+	}
 
-#pragma endregion Uniform Setters
+	void Shader::set_float(const std::string& name, float v)
+	{
+		glUniform1f(get_uniform_location(name), v);
+	}
 
-#pragma region Uniform Getters
+	void Shader::set_vec2(const std::string& name, const glm::vec2& v)
+	{
+		glUniform2fv(get_uniform_location(name), 1, glm::value_ptr(v));
+	}
 
-#pragma endregion Uniform Getters
+	void Shader::set_vec4(const std::string& name, const glm::vec4& v)
+	{
+		glUniform4fv(get_uniform_location(name), 1, glm::value_ptr(v));
+	}
 
+	void Shader::set_mat4(const std::string& name, const glm::mat4& v)
+	{
+		glUniformMatrix4fv(get_uniform_location(name), 1, GL_FALSE, glm::value_ptr(v));
+	}
+
+	void Shader::set_int_array(const std::string& name, const int* values, int count)
+	{
+		glUniform1iv(get_uniform_location(name), count, values);
+	}
+#pragma endregion Uniform set functions
 }}
