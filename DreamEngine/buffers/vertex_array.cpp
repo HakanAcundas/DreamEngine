@@ -1,53 +1,36 @@
 #include "vertex_array.hpp"
 
-namespace dream { namespace graphics {
+namespace dream { namespace buffer {
 
-	VertexArray::VertexArray()
-	{
-		glGenVertexArrays(1, &m_arrayID);
-	}
-
-	VertexArray::~VertexArray()
-	{
-		for (auto it = m_buffers.begin(); it != m_buffers.end(); it++)
+		VertexArray::VertexArray()
 		{
-			m_buffers.erase(it);
+			glGenVertexArrays(1, &m_vao);
 		}
-		glDeleteVertexArrays(1, &m_arrayID);
-	}
 
-	void VertexArray::bind() const
-	{
-		glBindVertexArray(m_arrayID);
-	}
-
-	void VertexArray::unbind() const
-	{
-		glBindVertexArray(0);
-	}
-
-	void VertexArray::add_buffer(Buffer *buffer)
-	{
-		bind();
-		buffer->bind();
-		const auto &buffer_elements = buffer->get_buffer_elements();
-		for (auto element : buffer_elements)
+		VertexArray::~VertexArray()
 		{
-			glEnableVertexAttribArray(m_buffer_index);
-			glVertexAttribPointer(m_buffer_index, element->count,
-				GL_FLOAT, element->normalized ? GL_TRUE : GL_FALSE,
-				buffer->get_stride(),
-				(const void*)element->offset);
-			m_buffer_index++;
+			if (m_vao)
+				glDeleteVertexArrays(1, &m_vao);
 		}
-		m_buffers.emplace_back(buffer);
-	}
 
-	void VertexArray::set_index_buffer(IndexBuffer *index_buffer)
-	{
-		glBindVertexArray(m_arrayID);
-		index_buffer->bind();
-		m_index_buffer = index_buffer;
-	}
+		void VertexArray::set_sprite_layout()
+		{
+			constexpr size_t stride = 36; // sizeof(Vertex)
+
+			// position
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, stride, (const void*)0);
+
+			// color
+			glEnableVertexAttribArray(1);
+			glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, stride, (const void*)0);
+
+			// uv
+			glEnableVertexAttribArray(2);
+			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, (const void*)0);
+
+			// texture index
+			glEnableVertexAttribArray(3);
+			glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, stride, (const void*)0);
+		}
 }}
- 

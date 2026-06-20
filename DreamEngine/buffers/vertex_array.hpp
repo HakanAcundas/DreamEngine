@@ -1,30 +1,17 @@
-#pragma once
-#include <vector>
-//#include <GL/glew.h>
+﻿#pragma once
+
 #include <glad/glad.h>
-#include "../buffers/buffer.hpp"
-#include "../buffers/index_buffer.hpp"
 
-namespace dream { namespace graphics {
-
+namespace dream { namespace buffer {
 	class VertexArray
 	{
-	private:
-		unsigned int m_arrayID;
-		unsigned int m_buffer_index = 0;
-		std::vector<std::shared_ptr<Buffer>> m_buffers;
-		IndexBuffer* m_index_buffer;
-		
 	public:
 		VertexArray();
 		~VertexArray();
 
-		void bind() const;
-		void unbind() const;
-		void add_buffer(Buffer *buffer);
-		void set_index_buffer(IndexBuffer *index_buffer);
+		void set_sprite_layout();
 
-		const std::vector<std::shared_ptr<Buffer>> GetBuffers() { return m_buffers; }
-		const IndexBuffer* GetIndexBuffers() { return m_index_buffer; }
+	private:
+		unsigned int m_vao;
 	};
 }}

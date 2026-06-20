@@ -51,9 +51,7 @@ source_group("ecs" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/ec/entity_manager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ec/component_array.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ec/component_manager.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ec/system.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ec/system_manager.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ec/ecs_manager.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ec/ec_manager.hpp
 )
 
 source_group("ecs/components" FILES
@@ -74,8 +72,8 @@ source_group("renderer\\resources" FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/renderer/resources/shader.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/renderer/resources/shader.cpp
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/texture2D.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/texture2D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/resources/texture2d.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer/resources/texture2d.cpp
 )
 
 source_group("renderer\\text" FILES
@@ -102,6 +100,7 @@ source_group("scene" FILES
 )
 
 source_group("utils" FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/utils/log.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/utils/file_utils.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/utils/metric_utils.hpp
 )
@@ -117,7 +116,6 @@ add_library(DreamEngine::DreamEngine ALIAS DreamEngine)
 target_include_directories(DreamEngine
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
-        ${CMAKE_CURRENT_SOURCE_DIR}/log
         ${CMAKE_CURRENT_SOURCE_DIR}/events
         ${CMAKE_CURRENT_SOURCE_DIR}/ec
         ${CMAKE_CURRENT_SOURCE_DIR}/ec/components

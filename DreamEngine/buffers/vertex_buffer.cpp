@@ -8,7 +8,7 @@ namespace dream { namespace buffer {
 		glBufferData(GL_ARRAY_BUFFER, size_bytes, nullptr, GL_DYNAMIC_DRAW);
 	}
 
-	VertexBuffer::VertexBuffer(void& data, size_t size_bytes)
+	VertexBuffer::VertexBuffer(void* data, size_t size_bytes)
 	{
 		glGenBuffers(1, &m_vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
@@ -21,12 +21,12 @@ namespace dream { namespace buffer {
 			glDeleteBuffers(1, &m_vbo);
 	}
 
-	VertexBuffer::bind()
+	void VertexBuffer::bind()
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
 	}
 
-	VertexBuffer::unbind()
+	void VertexBuffer::unbind()
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}

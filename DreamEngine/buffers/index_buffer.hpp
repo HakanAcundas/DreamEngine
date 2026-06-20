@@ -1,23 +1,22 @@
 #pragma once
-#include <cstdint>
-//#include <GL/glew.h>
+
 #include <glad/glad.h>
 
-namespace dream { namespace graphics {
-
+namespace dream { namespace buffer {
 	class IndexBuffer
 	{
-	private:
-		unsigned int m_index_bufferID;
-		unsigned int m_count;
 	public:
-		IndexBuffer(unsigned int *indices, int count);
-		IndexBuffer(unsigned short *indices, int count);
+		IndexBuffer() = default;
+
+		// Generate indices for `max_quads` quads upfront
+		IndexBuffer(unsigned int max_quads);
 		~IndexBuffer();
 
 		void bind();
 		void unbind();
 
-		inline unsigned int get_count() const { return m_count; }
+	private:
+		unsigned int   m_ibo = 0;
+		unsigned int   m_count = 0;
 	};
 }}

@@ -3,6 +3,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glad/glad.h>
 #include "shader.hpp"
+#include "../utils/log.hpp"
 #include "../utils/file_utils.hpp"
 
 namespace dream { namespace graphics {
@@ -20,6 +21,23 @@ namespace dream { namespace graphics {
 			glDeleteProgram(m_shader_id);
 	}
 
+	unsigned int Shader::compile_stage(const char* src, unsigned int type)
+	{
+		unsigned int s = glCreateShader(type);
+		glShaderSource(s, 1, &src, nullptr);
+		glCompileShader(s);
+
+		int ok;
+		glGetShaderiv(s, GL_COMPILE_STATUS, &ok);
+		if (!ok)
+		{
+			char log[512]; glGetShaderInfoLog(s, 512, nullptr, log);
+			DREAM_LOG_TAG_ERROR("[SHADER]", " Compiler error: {}", log);
+		}
+
+		return s;
+	}
+
 	unsigned int Shader::compile(const char* vert_src, const char* frag_src)
 	{
 		unsigned int vert = compile_stage(vert_src, GL_VERTEX_SHADER);
@@ -35,28 +53,21 @@ namespace dream { namespace graphics {
 		if (!ok)
 		{
 			char log[512]; glGetProgramInfoLog(m_shader_id, 512, nullptr, log);
-			std::cerr << "[Shader] Link error: " << log << '\n';
+			DREAM_LOG_TAG_ERROR("[SHADER]", " Link error: {}", log);
 		}
 
 		glDeleteShader(vert);
 		glDeleteShader(frag);
 	}
 
-	unsigned int Shader::compile_stage(const char* src, unsigned int type)
+	void Shader::bind()
 	{
-		unsigned int s = glCreateShader(type);
-		glShaderSource(s, 1, &src, nullptr);
-		glCompileShader(s);
+		glUseProgram(m_shader_id);
+	}
 
-		int ok;
-		glGetShaderiv(s, GL_COMPILE_STATUS, &ok);
-		if (!ok)
-		{
-			char log[512]; glGetShaderInfoLog(s, 512, nullptr, log);
-			std::cerr << "[Shader] Compile error: " << log << '\n';
-		}
-		
-		return s;
+	void Shader::unbind()
+	{
+		glUseProgram(0);
 	}
 
 	void Shader::enable()
@@ -75,76 +86,11 @@ namespace dream { namespace graphics {
 	}
 
 #pragma region Uniform Setters
-	void Shader::set_uniform1f(const char *name, float value)
-	{
-		glUniform1f(get_uniform_location(name), value);
-	}
 
-	void Shader::set_uniform1fv(const char *name, float *value, int count)
-	{
-		glUniform1fv(get_uniform_location(name), count, value);
-	}
-
-	void Shader::set_uniform1i(const char *name, int value)
-	{
-		glUniform1i(get_uniform_location(name), value);
-	}
-
-	void Shader::set_uniform1iv(const char *name, int *value, int count)
-	{
-		glUniform1iv(get_uniform_location(name), count, value);
-	}
-
-	void Shader::set_uniform2f(const char *name, const glm::vec2 &vector)
-	{
-		glUniform2f(get_uniform_location(name), vector.x, vector.y);
-	}
-
-	void Shader::set_uniform3f(const char *name, const glm::vec3 &vector)
-	{
-		glUniform3f(get_uniform_location(name), vector.x, vector.y, vector.z);
-	}
-
-	void Shader::set_uniform4f(const char *name, const glm::vec4 &vector)
-	{
-		glUniform4f(get_uniform_location(name), vector.x, vector.y, vector.z, vector.w);
-	}
-
-	void Shader::set_uniformMat4(const char *name, const glm::mat4 &matrix)
-	{
-		glUniformMatrix4fv(get_uniform_location(name), 1, GL_FALSE, glm::value_ptr(matrix));
-	}
 #pragma endregion Uniform Setters
 
 #pragma region Uniform Getters
-	void Shader::get_uniform1f(const char *name, float* data)
-	{
-		glGetnUniformfv(m_shader_id, get_uniform_location(name), 4, data);
-	}
 
-	void Shader::get_uniform1i(const char *name, int* data)
-	{
-		//glGetUniformfv(m_ShaderID, get_uniform_location(name), data);
-	}
-
-	void Shader::get_uniform2f(const char *name, float data[2])
-	{
-		glGetnUniformfv(m_shader_id, get_uniform_location(name), 8, data);
-	}
-
-	void Shader::get_uniform3f(const char *name, float data[3])
-	{
-		glGetnUniformfv(m_shader_id, get_uniform_location(name), 12, data);
-	}
-
-	void Shader::get_uniform4f(const char *name, float data[4])
-	{
-		glGetnUniformfv(m_shader_id, get_uniform_location(name), 16, data);
-	}
-	
-	void Shader::get_uniformMat4(const char *name, float data[16])
-	{
-		glGetnUniformfv(m_shader_id, get_uniform_location(name), 64, data);
-	}
 #pragma endregion Uniform Getters
+
 }}

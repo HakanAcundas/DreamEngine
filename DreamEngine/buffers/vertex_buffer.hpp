@@ -7,13 +7,10 @@ namespace dream { namespace buffer {
 	{
 	public:
 		VertexBuffer() = default;
-
 		// Dynamic Buffer
-		VertexBuffer(size_t size size_bytes);
-
+		VertexBuffer(size_t size_bytes);
 		// Static Buffer
 		VertexBuffer(void* data, size_t size_bytes);
-
 		~VertexBuffer();
 
 		void bind();
