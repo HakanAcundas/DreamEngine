@@ -5,7 +5,6 @@
 #include <sstream>
 
 namespace dream { namespace utils {
-
   class FileUtils
   {
   public:

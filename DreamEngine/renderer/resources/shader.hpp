@@ -30,7 +30,7 @@ namespace dream { namespace graphics {
 #pragma endregion Uniform set functions
 
 	private:
-		unsigned int compile(const char* vert_src, const char* frag_src);
+		void compile(const char* vert_src, const char* frag_src);
 		unsigned int compile_stage(const char* src, unsigned int type);
 		int get_uniform_location(const std::string& name);
 	

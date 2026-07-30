@@ -1,234 +1,176 @@
-#include <algorithm>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include "renderer2D.hpp"
-#include <iostream>
+﻿#include "renderer2D.hpp"
+#include "../utils/file_utils.hpp"
 
 namespace dream { namespace graphics {
+  Renderer2D::Renderer2D()
+  {
+    m_vertex_staging.resize(MAX_VERTICES);
 
-	static RendererData r_data;
-	Renderer2D *Renderer2D::singleton = nullptr;
+    m_vao = VertexArray();
+    m_vao.bind();
+    m_vbo = VertexBuffer(MAX_VERTICES * sizeof(Vertex));
+    m_vbo.bind();
+    m_ibo = IndexBuffer(MAX_QUADS);
+    m_ibo.bind();
+    m_vao.set_sprite_layout();
+    m_vao.unbind();
 
-	void Renderer2D::init()
-	{
-		if (FT_Init_FreeType(&r_data.ft))
-		{
-			std::cout << "ERROR::FREETYPE: Could not initialize FreeType Library" << std::endl;
-			return;
-		}
+    std::string vert_src = utils::FileUtils::read_file("shader/vertex.shader");
+    std::string frag_src = utils::FileUtils::read_file("shader/vertex.shader");
+    m_shader = Shader(vert_src, frag_src);
+    m_shader.bind();
 
-		r_data.texture_coords[0] = { 0.0f, 0.0f };
-		r_data.texture_coords[1] = { 1.0f, 0.0f };
-		r_data.texture_coords[2] = { 1.0f, 1.0f };
-		r_data.texture_coords[3] = { 0.0f, 1.0f };
+    int samplers[MAX_TEXTURES];
+    for (int i = 0; i < (int)MAX_TEXTURES; ++i)
+      samplers[i] = i;
 
-		r_data.vertex_positions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
-		r_data.vertex_positions[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
-		r_data.vertex_positions[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
-		r_data.vertex_positions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
+    m_shader.set_int_array("u_textures", samplers, MAX_TEXTURES);
+    m_shader.unbind();
 
-		r_data.index_count = 0;
-		r_data.vertex_array = new VertexArray();
-		r_data.buffer = new Buffer(RENDERER_BUFFER_SIZE);
+    // Slot 0 is always a white pixel.
+    uint8_t white[4] = { 255, 255, 255, 255 };
+    m_white_texture = Texture2D(1, 1, white);
 
-		// The order of the buffer-elements must be the same as the vertex-shader layout order
-		r_data.buffer->add_buffer_element("position", ShaderDataType::Float, 3);
-		r_data.buffer->add_buffer_element("texcoord", ShaderDataType::Float, 2);
-		r_data.buffer->add_buffer_element("texture_id", ShaderDataType::Float, 1);
-		r_data.buffer->add_buffer_element("color", ShaderDataType::Float, 4);
-		r_data.buffer->calculate_stride();
-		
-		r_data.vertex_array->add_buffer(r_data.buffer);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  }
 
-		unsigned int *quad_indices = new unsigned int[RENDERER_INDICES_SIZE];
-		unsigned int offset = 0;
-		for (unsigned int i = 0; i < RENDERER_INDICES_SIZE; i += 6)
-		{
-			quad_indices[i + 0] = offset + 0;
-			quad_indices[i + 1] = offset + 1;
-			quad_indices[i + 2] = offset + 2;
+  // Camera / projection
+  // Call once per frame before submitting sprites.
+  // view_projection = projection_matrix * view_matrix
+  void Renderer2D::begin_scene(const glm::mat4& view_projection)
+  {
+    m_view_projection = view_projection;
+    begin_batch();
+  }
 
-			quad_indices[i + 3] = offset + 2;
-			quad_indices[i + 4] = offset + 3;
-			quad_indices[i + 5] = offset + 0;
+  void Renderer2D::end_scene()
+  {
+    flush();
+  }
 
-			offset += 4;
-		}
+  void Renderer2D::draw_sprite(glm::vec2& position, glm::vec2& size, std::shared_ptr<Texture2D> texture, float rotation, const glm::vec4& color, const glm::vec4& uv_rect)
+  {
+    if (m_quad_count >= MAX_QUADS)
+      flush_and_begin();
 
-		r_data.index_buffer = new IndexBuffer(quad_indices, RENDERER_INDICES_SIZE);
-		r_data.vertex_array->set_index_buffer(r_data.index_buffer);
-		r_data.vertex_array->unbind();
-	}
+    float tex_idx = get_or_bind_texture(texture);
+    push_quad(position, size, rotation, color, uv_rect, tex_idx);
+  }
 
-	void Renderer2D::begin()
-	{
-		r_data.buffer->bind();
-		r_data.quad_buffer = (QuadVertexData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	}
+  void Renderer2D::draw_rect(glm::vec2& position, glm::vec2& size, glm::vec4& color, float rotation)
+  {
+    draw_sprite(position, size, std::make_shared<Texture2D>(m_white_texture), rotation, color, { 0,0,1,1 });
+  }
 
-	void Renderer2D::end()
-	{
-		glUnmapBuffer(GL_ARRAY_BUFFER);
-		r_data.buffer->unbind();
-	}
+  void Renderer2D::begin_batch()
+  {
+    m_quad_count = 0;
+    m_vertex_write_ptr = m_vertex_staging.data();
+    m_texture_slot_idx = 1;   // slot 0 = white texture, always bound
+  }
 
-	float Renderer2D::submit_texture(const unsigned int &tid)
-	{
-		float ts = 0.0f;
-		if (tid > 0)
-		{
-			bool found = false;
-			// Search for texture ID
-			for (int i = 0; i < r_data.texture_slots.size(); i++)
-			{
-				if (r_data.texture_slots[i] == tid)
-				{
-					ts = (float)(i + 1);
-					found = true;
-					break;
-				}
-			}
+  void Renderer2D::flush()
+  {
+    if (m_quad_count == 0)
+      return;
 
-			if (!found)
-			{
-				// If the texture slots are full
-				if (r_data.texture_slots.size() >= 32)
-				{
-					end();
-					flush();
-					begin();
-				}
-				// Else add the new texture ID to a slot
-				r_data.texture_slots.push_back(tid);
-				ts = (float)(r_data.texture_slots.size());
-			}
-		}
+    // Upload only the vertices we actually wrote this batch
+    uint32_t vertex_count = m_quad_count * 4;
+    std::size_t data_size = vertex_count * sizeof(Vertex);
 
-		return ts;
-	}
+    m_vao.bind();
+    m_vbo.bind();
+    m_vbo.upload_sub(m_vertex_staging.data(), data_size);
 
-	void Renderer2D::draw_quad(const glm::vec2 &position, const glm::vec2 &size, const glm::vec4 &color)
-	{
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 1.0f))
-			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+    // Bind all textures used this batch, slot 0 always white
+    m_white_texture.bind(0);
+    for (unsigned int i = 1; i < m_texture_slot_idx; i++)
+      m_texture_slots[i]->bind(i);
 
-		for (int i = 0; i < 4; i++)
-		{
-			r_data.quad_buffer->position = transform * r_data.vertex_positions[i];
-			r_data.quad_buffer->color = color;
-			r_data.quad_buffer->texture_coord = r_data.texture_coords[i];
-			r_data.quad_buffer->texture_id = 0;
-			r_data.quad_buffer++;
-		}
+    // One draw call for the entire batch
+    m_shader.bind();
+    m_shader.set_mat4("u_view_projection", m_view_projection);
 
-		r_data.index_count += 6;
-	}
+    glDrawElements(GL_TRIANGLES, m_quad_count * 6, GL_UNSIGNED_INT, nullptr);
 
-	void Renderer2D::draw_quad(const glm::vec2 &position, const glm::vec2 &size, const Texture2D *texture)
-	{
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 1.0f))
-			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
-		float ts = 0;
-		if (texture != NULL)
-			ts = submit_texture(texture->get_tid());
+    ++m_stats.draw_calls;
+    m_stats.quad_count += m_quad_count;
+  }
 
-		for (int i = 0; i < 4; i++)
-		{
-			r_data.quad_buffer->position = transform * r_data.vertex_positions[i];
-			r_data.quad_buffer->color = glm::vec4(0, 0, 0, 0);
-			r_data.quad_buffer->texture_coord = r_data.texture_coords[i];
-			r_data.quad_buffer->texture_id = ts;
-			r_data.quad_buffer++;
-		}
-		
-		r_data.index_count += 6;
-	}
+  void Renderer2D::flush_and_begin()
+  {
+    flush();
+    begin_batch();
+  }
 
-	void Renderer2D::draw_quad(const glm::vec2 &position, const glm::vec2 &size, const Texture2D::SubTexture2D *sub_texture)
-	{
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 1.0f))
-			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
-		float ts = 0;
-		if (sub_texture->get_texture() != NULL)
-			ts = submit_texture(sub_texture->get_texture()->get_tid());
+  // Write 4 vertices into the CPU staging buffer
+  //
+  // The quad corners in local space (before rotation):
+  //   3 ---- 2
+  //   |      |    center = (0,0), half-extents = size/2
+  //   0 ---- 1
+  void Renderer2D::push_quad(glm::vec2& center,glm::vec2& size, float rotation, const glm::vec4& color, const glm::vec4& uv, float tex_idx)
+  {
+    glm::vec2 half = size * 0.5f;
 
-		for (int i = 0; i < 4; i++)
-		{
-			r_data.quad_buffer->position = transform * r_data.vertex_positions[i];
-			r_data.quad_buffer->color = glm::vec4(0, 0, 0, 0);
-			r_data.quad_buffer->texture_coord = sub_texture->get_tex_coords()[i];
-			r_data.quad_buffer->texture_id = ts;
-			r_data.quad_buffer++;
-		}
+    // Local corners
+    glm::vec2 corners[4] = {
+        { -half.x, -half.y },   // 0 bottom-left
+        {  half.x, -half.y },   // 1 bottom-right
+        {  half.x,  half.y },   // 2 top-right
+        { -half.x,  half.y },   // 3 top-left
+    };
 
-		r_data.index_count += 6;
-	}
+    // Apply rotation if needed (avoid trig when rotation == 0)
+    if (rotation != 0.0f)
+    {
+      float c = std::cos(rotation);
+      float s = std::sin(rotation);
+      for (auto& p : corners)
+        p = { p.x * c - p.y * s, p.x * s + p.y * c };
+    }
 
-	void Renderer2D::draw_label(const std::string& text, const glm::vec2& position, const float scale, const std::string& font_path, const glm::vec4& color) {
-		TextureLabel* font = FontManager::get_font(font_path);
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position, 1.0f)) *
-                      glm::scale(glm::mat4(1.0f), glm::vec3(scale, scale, 1.0f)); // Scale down
+    // UVs per corner
+    glm::vec2 uvs[4] = {
+        { uv.x, uv.y },   // 0 bottom-left
+        { uv.z, uv.y },   // 1 bottom-right
+        { uv.z, uv.w },   // 2 top-right
+        { uv.x, uv.w },   // 3 top-left
+    };
 
-		for (const char& c : text) {
-			const TextureLabel::Character& ch = font->get_characters().at(c);
+    for (int i = 0; i < 4; ++i)
+    {
+      m_vertex_write_ptr->position = center + corners[i];
+      m_vertex_write_ptr->color = color;
+      m_vertex_write_ptr->uv = uvs[i];
+      m_vertex_write_ptr->tex_index = tex_idx;
+      ++m_vertex_write_ptr;
+    }
 
-			int xpos = ch.c_bearing.x;
-			int ypos = ch.c_size.y - ch.c_bearing.y;
-			int width = ch.c_size.x;
-			int height = ch.c_size.y;
+    ++m_quad_count;
+  }
 
-			// Apply transform to each character position
-			glm::vec4 top_left = transform * glm::vec4(xpos, ypos, 0.0f, 1.0f);
-			glm::vec4 top_right = transform * glm::vec4(xpos + width, ypos, 0.0f, 1.0f);
-			glm::vec4 bottom_left = transform * glm::vec4(xpos, ypos + height, 0.0f, 1.0f);
-			glm::vec4 bottom_right = transform * glm::vec4(xpos + width, ypos + height, 0.0f, 1.0f);
+  // Check if this texture is already in our slot list.
+  // If yes, return its slot index.
+  // If no, assign it the next free slot, return that index.
+  // If all 32 slots full, flush first, then assign slot 1.
+  float Renderer2D::get_or_bind_texture(std::shared_ptr<Texture2D> tex)
+  {
+    // if texture is null, use white (slot 0)
+    if (!tex)
+      return 0.0f;
 
-			float ts = submit_texture(ch.c_texture_id);
+    for (unsigned int i = 1; i < m_texture_slot_idx; ++i)
+    {
+      if (m_texture_slots[i]->get_tid() == tex->get_tid())
+        return static_cast<float>(i);
+    }
 
-			r_data.quad_buffer->position = top_left;
-			r_data.quad_buffer->texture_coord = { 0.0f, 1.0f };
-			r_data.quad_buffer->texture_id = ts;
-			r_data.quad_buffer->color = color;
-			r_data.quad_buffer++;
+    if (m_texture_slot_idx >= MAX_TEXTURES)
+      flush_and_begin();
 
-			r_data.quad_buffer->position = bottom_left;
-			r_data.quad_buffer->texture_coord = { 0.0f, 0.0f };
-			r_data.quad_buffer->texture_id = ts;
-			r_data.quad_buffer->color = color;
-			r_data.quad_buffer++;
-
-			r_data.quad_buffer->position = bottom_right;
-			r_data.quad_buffer->texture_coord = { 1.0f, 0.0f };
-			r_data.quad_buffer->texture_id = ts;
-			r_data.quad_buffer->color = color;
-			r_data.quad_buffer++;
-
-			r_data.quad_buffer->position = top_right;
-			r_data.quad_buffer->texture_coord = { 1.0f, 1.0f };
-			r_data.quad_buffer->texture_id = ts;
-			r_data.quad_buffer->color = color;
-			r_data.quad_buffer++;
-
-			r_data.index_count += 6;
-
-			transform = glm::translate(transform, glm::vec3((ch.c_advance >> 6), 0.0f, 0.0f));
-		}
-	}
-
-	void Renderer2D::flush()
-	{
-		for (int i = 0; i < r_data.texture_slots.size(); i++)
-		{
-			glActiveTexture(GL_TEXTURE0 + i);
-			glBindTexture(GL_TEXTURE_2D, r_data.texture_slots[i]);
-		}
-		
-		r_data.vertex_array->bind();
-		r_data.index_buffer->bind();
-		glDrawElements(GL_TRIANGLES, r_data.index_count, GL_UNSIGNED_INT, NULL);
-		r_data.index_buffer->unbind();
-		r_data.vertex_array->unbind();
-		
-		r_data.index_count = 0;
-	}
+    m_texture_slots[m_texture_slot_idx] = tex;
+    return static_cast<float>(m_texture_slot_idx++);
+  }
 }}

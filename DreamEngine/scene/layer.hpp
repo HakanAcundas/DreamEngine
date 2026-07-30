@@ -1,24 +1,24 @@
 #pragma once
 #include <memory>
-#include "scene_object.hpp"
+#include <string>
+#include <vector>
+#include "entity.hpp"
 
 namespace dream { namespace graphics {
+	class Layer
+	{
+	protected:
+		std::string m_layer_name;
+		std::vector<std::shared_ptr<Entity>> m_entities;
+	public:
+		Layer(const std::string &name);
+		virtual ~Layer() = default;
 
-		class Layer
-		{
-		protected:
-			std::string m_layer_name;
-			std::vector<std::shared_ptr<SceneObject>> m_scene_objects;
-		public:
-			Layer(const std::string &name);
-			virtual ~Layer() = default;
+		virtual void add_entity_object(std::shared_ptr<Entity> entity);
+		virtual void remove_entity_object(std::shared_ptr<Entity> entity);
+		virtual void on_update() = 0;
+		// virtual void on_event(Event &e) = 0;
 
-			virtual void add_scene_object(SceneObject *object);
-			virtual void remove_scene_object(SceneObject *object);
-			virtual void on_update() = 0;
-			// virtual void on_event(Event &e) = 0;
-
-			const std::string& get_name() const { return m_layer_name; }
-
-		};
+		const std::string& get_name() const { return m_layer_name; }
+	};
 }}

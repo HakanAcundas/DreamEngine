@@ -16,6 +16,12 @@ Texture2D::Texture2D(const std::string& path)
 	stbi_image_free(data);
 }
 
+Texture2D::Texture2D(unsigned int width, unsigned int height, uint8_t* rgba_pixels) 
+	: m_width(width), m_height(height)
+{
+	create(rgba_pixels, GL_RGBA);
+}
+
 Texture2D::~Texture2D()
 {
 	if (m_tid)
@@ -44,7 +50,7 @@ void Texture2D::upload_sub_region(int x, int y, int w, int h, const uint8_t* pix
 	glTexSubImage2D(GL_TEXTURE_2D, 0, x, y, w, h, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 }
 
-void Texture2D::bind(unsigned int slot = 0)
+void Texture2D::bind(unsigned int slot)
 {
 	glActiveTexture(GL_TEXTURE0 + slot);
 	glBindTexture(GL_TEXTURE_2D, m_tid);

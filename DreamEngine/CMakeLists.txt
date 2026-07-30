@@ -24,6 +24,7 @@ file(GLOB_RECURSE DREAM_ENGINE_SOURCES
     window/*.cpp
     application.hpp
     application.cpp
+    renderer/shaders/*.shader
 )
 
 source_group("event" FILES

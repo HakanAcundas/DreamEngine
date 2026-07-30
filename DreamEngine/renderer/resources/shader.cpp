@@ -38,7 +38,7 @@ namespace dream { namespace graphics {
 		return s;
 	}
 
-	unsigned int Shader::compile(const char* vert_src, const char* frag_src)
+	void Shader::compile(const char* vert_src, const char* frag_src)
 	{
 		unsigned int vert = compile_stage(vert_src, GL_VERTEX_SHADER);
 		unsigned int frag = compile_stage(frag_src, GL_FRAGMENT_SHADER);

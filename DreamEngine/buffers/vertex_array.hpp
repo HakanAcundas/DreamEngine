@@ -10,6 +10,8 @@ namespace dream { namespace buffer {
 		~VertexArray();
 
 		void set_sprite_layout();
+		void bind();
+		void unbind();
 
 	private:
 		unsigned int m_vao;

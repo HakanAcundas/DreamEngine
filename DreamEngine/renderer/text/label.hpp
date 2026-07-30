@@ -1,10 +1,10 @@
 #pragma once
 #include <string>
-#include "scene_object.hpp"
+#include <glm/glm.hpp>
 
 namespace dream { namespace graphics {
 
-	class Label : public SceneObject
+	class Label
 	{
 	private:
 		std::string m_text;

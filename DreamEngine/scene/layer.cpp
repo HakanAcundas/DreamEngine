@@ -3,23 +3,20 @@
 namespace dream { namespace graphics {
 
 	Layer::Layer(const std::string &name = "Dream Layer")
-		: m_layer_name(name)
-	{
+		: m_layer_name(name) { }
 
+	void Layer::add_entity_object(std::shared_ptr<Entity> entity)
+	{
+		m_entities.emplace_back(entity);
 	}
 
-	void Layer::add_scene_object(SceneObject *object)
+	void Layer::remove_entity_object(std::shared_ptr<Entity> entity)
 	{
-		m_scene_objects.emplace_back(object);
-	}
-
-	void Layer::remove_scene_object(SceneObject *object)
-	{
-		auto it = std::find_if(m_scene_objects.begin(), m_scene_objects.end(),
-			[object](const std::shared_ptr<SceneObject>& ptr) {
-				return ptr.get() == object;
+		auto it = std::find_if(m_entities.begin(), m_entities.end(),
+			[e](const std::shared_ptr<Entity> ptr) {
+				return ptr == e;
 			});
-		if (it != m_scene_objects.end())
-			m_scene_objects.erase(it);
+		if (it != m_entities.end())
+			m_entities.erase(it);
 	}
 }}

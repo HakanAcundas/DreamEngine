@@ -30,4 +30,9 @@ namespace dream { namespace buffer {
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
+
+	void VertexBuffer::upload_sub(const void* data, size_t size_bytes, size_t offset)
+	{
+		glBufferSubData(GL_ARRAY_BUFFER, offset, size_bytes, data);
+	}
 }}

@@ -1,11 +1,11 @@
 #include <random>
 #include <string>
 #include <log.hpp>
-#include "renderer2D.hpp"
-#include "game_layer.hpp"
-#include "metric_utils.hpp"
+#include <renderer2D.hpp>
 #include <ec/components/transform.hpp>
 #include <ec/components/rigid_body.hpp>
+#include "game_layer.hpp"
+#include "metric_utils.hpp"
 
 using namespace dream;
 using namespace graphics;
@@ -17,11 +17,6 @@ GameLayer::GameLayer(Shader& shader, Camera& camera, ECManager& ecm, EventDispat
 	m_shader.set_uniformMat4("pr_matrix", camera.get_projection_mat());
 	m_shader.set_uniformMat4("ml_matrix", glm::translate(camera.get_view_mat(), camera.get_position()));
 	m_shader.set_uniform2f("light_pos", glm::vec2(0.0f, 0.0f));
-	int texIDs[] =
-	{
-		0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
-	};
-	m_shader.set_uniform1iv("textures", texIDs, 12);
 	m_shader.disable();
 
 	m_event_dispatcher.listen(EventType::MouseMovedEvent, std::bind(&Camera::on_event, m_camera, std::placeholders::_1));
