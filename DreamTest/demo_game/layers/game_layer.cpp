@@ -10,8 +10,20 @@
 using namespace dream;
 using namespace graphics;
 
-GameLayer::GameLayer(Renderer2D& renderer, Shader& shader, Camera& camera, ECManager& ecm, EventDispatcher& event_dispatcher, PhysicsEngine2D& physics_engine2D)
-	: Layer("GameLayer"), m_renderer(renderer), m_shader(shader), m_camera(camera), m_ecm(ecm), m_event_dispatcher(event_dispatcher), m_physics_engine2D(physics_engine2D)
+GameLayer::GameLayer(
+	Renderer2D& renderer,
+	Shader& shader,
+	Camera& camera,
+	ECManager& ecm,
+	EventDispatcher& event_dispatcher,
+	PhysicsEngine2D& physics_engine)
+	: Layer("GameLayer"),
+		m_renderer(renderer),
+		m_shader(shader),
+		m_camera(camera),
+		m_ecm(ecm),
+		m_event_dispatcher(event_dispatcher),
+		m_physics_engine2D(physics_engine)
 {
 	m_shader.enable();
 	m_shader.set_mat4("pr_matrix", camera.get_projection_mat());

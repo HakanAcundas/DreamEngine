@@ -28,17 +28,17 @@ namespace dream
 		void push_layer(std::shared_ptr<graphics::Layer> spLayer);
 		void pop_layer(std::shared_ptr<graphics::Layer> spLayer);
 		
-		void set_shader(Shader& shader)	{ m_shader = shader; }
-		void set_camera(Camera& camera)	{ m_camera = camera; }
+		void set_shader(const std::shared_ptr<Shader>& shader) { m_shader = shader; }
+		void set_camera(const std::shared_ptr<Camera>& camera) { m_camera = camera; }
 
-		inline Window& get_window() { return *m_window; }
 		inline static Application& get_application() { return *s_application; }
-		inline Renderer2D get_renderer() { return m_renderer; }
-		inline Shader& get_shader() { return m_shader; }
-		inline Camera& get_camera() { return m_camera; }
-		inline ECManager& get_ecs_manager() { return m_ecm; }
-		inline PhysicsEngine2D& get_physic_engine() { return m_physics_engine; }
-		inline EventDispatcher& get_event_dispatcher() { return m_dispatcher; }
+		inline Window& get_window() { return *m_window; }
+		inline Renderer2D& get_renderer() { return *m_renderer; }
+		inline Shader& get_shader() { return *m_shader; }
+		inline Camera& get_camera() { return *m_camera; }
+		inline ECManager& get_ecs_manager() { return *m_ecm; }
+		inline PhysicsEngine2D& get_physic_engine() { return *m_physics_engine; }
+		inline EventDispatcher& get_event_dispatcher() { return *m_dispatcher; }
 
 	private:
 		// Singleton
@@ -47,13 +47,13 @@ namespace dream
 		bool m_running = true;
 		float m_last_frame = 0.0f;
 		std::unique_ptr<Window> m_window;
-		Renderer2D m_renderer;
-		Shader m_shader;
-		Camera m_camera;
-		ECManager m_ecm;
-		PhysicsEngine2D m_physics_engine;
-		
-		EventDispatcher m_dispatcher;
+		std::unique_ptr<Renderer2D> m_renderer;
+		std::shared_ptr<Shader> m_shader;
+		std::shared_ptr<Camera> m_camera;
+		std::unique_ptr<ECManager> m_ecm;
+		std::unique_ptr<PhysicsEngine2D> m_physics_engine;
+		std::unique_ptr<EventDispatcher> m_dispatcher;
+
 		std::vector<std::shared_ptr<graphics::Layer>> m_layers;
 	};
 }

@@ -9,18 +9,18 @@ namespace dream
 	Application::Application()
 	{
 		s_application = this;
-		m_window = std::make_unique<Window>();
+
+		m_window = std::make_unique<Window>("Dream Engine", 1280, 720);
 		m_window->set_event_callback([this](Event& e)
 		{
 			this->on_event(e);
 		});
-
-		m_renderer = Renderer2D();
-		m_ecm = ECManager();
-		m_dispatcher = EventDispatcher();
-		m_physics_engine = PhysicsEngine2D(m_ecm);
+		m_renderer = std::make_unique<Renderer2D>();
+		m_ecm = std::make_unique<ECManager>();
+		m_dispatcher = std::make_unique<EventDispatcher>();
+		m_physics_engine = std::make_unique<PhysicsEngine2D>(m_ecm);
 		
-		m_ecm.init();
+		m_ecm->init();
 	}
 
 	Application::~Application()
@@ -42,7 +42,7 @@ namespace dream
 
 	void Application::on_event(Event& event)
 	{
-		m_dispatcher.post(event);
+		m_dispatcher->post(event);
 	}
 
 	bool Application::on_key_pressed()
