@@ -3,6 +3,7 @@
 #include <shader.hpp>
 #include <camera.hpp>
 #include <layer.hpp>
+#include <renderer/renderer2D.hpp>
 #include <event_dispatcher.hpp>
 #include <physics/physics_engine2D.hpp>
 #include <ec/ec_manager.hpp>
@@ -14,7 +15,7 @@ class GameLayer : public Layer
 {
 public:
 	GameLayer() = default;
-	GameLayer(Shader& shader, Camera& camera, ECManager& ecm, EventDispatcher& event_dispatcher, PhysicsEngine2D& physics_engine2D);
+	GameLayer(Renderer2D& renderer, Shader& shader, Camera& camera, ECManager& ecm, EventDispatcher& event_dispatcher, PhysicsEngine2D& physics_engine2D);
 	~GameLayer();
 
 	void on_update() override;
@@ -26,6 +27,7 @@ public:
 	void set_camera(Camera& camera) { m_camera = camera; }
 
 private:
+	Renderer2D& m_renderer;
 	Shader& m_shader;
 	Camera& m_camera;
 	ECManager& m_ecm;

@@ -9,13 +9,13 @@ namespace dream { namespace graphics {
 	{
 	protected:
 		std::string m_layer_name;
-		std::vector<std::shared_ptr<Entity>> m_entities;
+		std::vector<Entity> m_entities;
 	public:
 		Layer(const std::string &name);
 		virtual ~Layer() = default;
 
-		virtual void add_entity_object(std::shared_ptr<Entity> entity);
-		virtual void remove_entity_object(std::shared_ptr<Entity> entity);
+		virtual void add_entity_object(Entity entity);
+		virtual void remove_entity_object(Entity entity);
 		virtual void on_update() = 0;
 		// virtual void on_event(Event &e) = 0;
 

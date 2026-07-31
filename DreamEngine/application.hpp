@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include "window/window.hpp"
 #include "ec/ec_manager.hpp"
 #include "renderer/renderer2D.hpp"
@@ -10,6 +9,8 @@
 #include "events/event.hpp"
 #include "events/event_dispatcher.hpp"
 #include "camera/camera.hpp"
+#include <memory>
+#include <vector>
 
 namespace dream
 {
@@ -24,14 +25,15 @@ namespace dream
 		void run();
 		void on_event(Event& event);
 		bool on_key_pressed();
-		void push_layer(graphics::Layer* layer);
-		void pop_layer(graphics::Layer* layer);
+		void push_layer(std::shared_ptr<graphics::Layer> spLayer);
+		void pop_layer(std::shared_ptr<graphics::Layer> spLayer);
 		
 		void set_shader(Shader& shader)	{ m_shader = shader; }
 		void set_camera(Camera& camera)	{ m_camera = camera; }
 
 		inline Window& get_window() { return *m_window; }
 		inline static Application& get_application() { return *s_application; }
+		inline Renderer2D get_renderer() { return m_renderer; }
 		inline Shader& get_shader() { return m_shader; }
 		inline Camera& get_camera() { return m_camera; }
 		inline ECManager& get_ecs_manager() { return m_ecm; }
@@ -45,12 +47,13 @@ namespace dream
 		bool m_running = true;
 		float m_last_frame = 0.0f;
 		std::unique_ptr<Window> m_window;
+		Renderer2D m_renderer;
 		Shader m_shader;
 		Camera m_camera;
 		ECManager m_ecm;
 		PhysicsEngine2D m_physics_engine;
 		
 		EventDispatcher m_dispatcher;
-		std::vector<graphics::Layer*> m_layers;
+		std::vector<std::shared_ptr<graphics::Layer>> m_layers;
 	};
 }

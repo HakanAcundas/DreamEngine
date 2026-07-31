@@ -1,8 +1,5 @@
 ﻿#pragma once
-#include <cstddef>
-#include <memory>
-#include <array>
-#include <map>
+
 #include "../buffers/vertex_buffer.hpp"
 #include "../buffers/index_buffer.hpp"
 #include "../buffers/vertex_array.hpp"
@@ -10,6 +7,12 @@
 #include "resources/texture2d.hpp"
 #include "text/texture_label.hpp"
 #include "text/font_manager.hpp"
+#include <glm/glm.hpp>
+#include <cstddef>
+#include <memory>
+#include <array>
+#include <vector>
+#include <map>
 
 using namespace dream::buffer;
 

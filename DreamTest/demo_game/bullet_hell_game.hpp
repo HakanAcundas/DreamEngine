@@ -13,7 +13,7 @@ public:
 
 private:
     Application m_dream_engine;
-    Layer* m_game_layer;
+    std::shared_ptr<GameLayer> m_game_layer;
     // TODO: UI Layer
     //Layer* m_ui_layer;
 };
