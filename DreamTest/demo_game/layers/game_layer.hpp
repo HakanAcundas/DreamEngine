@@ -15,7 +15,12 @@ class GameLayer : public Layer
 {
 public:
 	GameLayer() = default;
-	GameLayer(Renderer2D& renderer, Shader& shader, Camera& camera, ECManager& ecm, EventDispatcher& event_dispatcher, PhysicsEngine2D& physics_engine2D);
+	GameLayer(
+		Renderer2D& renderer,
+		ECManager& ecm,
+		PhysicsEngine2D& physics_engine,
+		EventDispatcher& event_dispatcher
+	);
 	~GameLayer();
 
 	void on_update() override;
@@ -23,13 +28,13 @@ public:
 	bool on_mouse_moved();
 
 	// Getter & Setter
-	Shader& get_shader() { return m_shader; }
-	void set_camera(Camera& camera) { m_camera = camera; }
+	Shader get_shader() { return m_shader; }
+	void set_camera(Camera camera) { m_camera = camera; }
 
 private:
 	Renderer2D& m_renderer;
-	Shader& m_shader;
-	Camera& m_camera;
+	Shader m_shader;
+	Camera m_camera;
 	ECManager& m_ecm;
 	EventDispatcher& m_event_dispatcher;
 	PhysicsEngine2D& m_physics_engine2D;

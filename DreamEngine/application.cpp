@@ -16,16 +16,15 @@ namespace dream
 			this->on_event(e);
 		});
 		m_renderer = std::make_unique<Renderer2D>();
-		m_ecm = std::make_unique<ECManager>();
 		m_dispatcher = std::make_unique<EventDispatcher>();
 		m_physics_engine = std::make_unique<PhysicsEngine2D>(m_ecm);
-		
+		m_ecm = std::make_unique<ECManager>();
 		m_ecm->init();
 	}
 
 	Application::~Application()
 	{
-		delete s_application;
+		s_application = nullptr;
 	}
 
 	void Application::push_layer(std::shared_ptr<Layer> spLayer)

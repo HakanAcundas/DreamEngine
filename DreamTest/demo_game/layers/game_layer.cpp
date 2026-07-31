@@ -12,22 +12,21 @@ using namespace graphics;
 
 GameLayer::GameLayer(
 	Renderer2D& renderer,
-	Shader& shader,
-	Camera& camera,
 	ECManager& ecm,
-	EventDispatcher& event_dispatcher,
-	PhysicsEngine2D& physics_engine)
+	PhysicsEngine2D& physics_engine,
+	EventDispatcher& event_dispatcher)
 	: Layer("GameLayer"),
 		m_renderer(renderer),
-		m_shader(shader),
-		m_camera(camera),
 		m_ecm(ecm),
 		m_event_dispatcher(event_dispatcher),
 		m_physics_engine2D(physics_engine)
 {
+	m_shader = Shader("../DreamTest/shaders/vertex.shader", "../DreamTest/shaders/fragment.shader");
+	m_camera = Camera(0.0f, 16.0f, 0.0f, 9.0f);
+
 	m_shader.enable();
-	m_shader.set_mat4("pr_matrix", camera.get_projection_mat());
-	m_shader.set_mat4("ml_matrix", glm::translate(camera.get_view_mat(), camera.get_position()));
+	m_shader.set_mat4("pr_matrix", m_camera.get_projection_mat());
+	m_shader.set_mat4("ml_matrix", glm::translate(m_camera.get_view_mat(), m_camera.get_position()));
 	m_shader.set_vec2("light_pos", glm::vec2(0.0f, 0.0f));
 	m_shader.disable();
 
