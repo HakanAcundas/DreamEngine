@@ -17,6 +17,6 @@ public:
 	void update(const Entity& entity);
 
 private:
-	std::shared_ptr<ECManager> m_ecm;
+	ECManager& m_ecm;
 	float m_delta_time = 0.016f; // 60 FPS
 };
