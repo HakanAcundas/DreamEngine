@@ -1,6 +1,5 @@
 #pragma once
 
-#include <shader.hpp>
 #include <camera.hpp>
 #include <layer.hpp>
 #include <renderer/renderer2D.hpp>
@@ -28,19 +27,17 @@ public:
 	bool on_mouse_moved();
 
 	// Getter & Setter
-	Shader get_shader() { return m_shader; }
 	void set_camera(Camera camera) { m_camera = camera; }
 
 private:
 	Renderer2D& m_renderer;
-	Shader m_shader;
 	Camera m_camera;
 	ECManager& m_ecm;
 	EventDispatcher& m_event_dispatcher;
 	PhysicsEngine2D& m_physics_engine2D;
 
 	glm::mat4 m_projection_mat;
-	glm::vec2 m_light_pos;
+	glm::vec2 m_light_pos = { 0.0f, 0.0f };
 
 	Entity player;
 	float scale;

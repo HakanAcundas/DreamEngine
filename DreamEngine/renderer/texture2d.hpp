@@ -12,6 +12,11 @@ public:
 	Texture2D(unsigned int width, unsigned int height, uint8_t* rgba_pixels);
 	~Texture2D();
 
+	Texture2D(const Texture2D&) = delete;
+	Texture2D& operator=(const Texture2D&) = delete;
+	Texture2D(Texture2D&& other) noexcept;
+	Texture2D& operator=(Texture2D&& other) noexcept;
+
 	void bind(unsigned int slot = 0);
 	void unbind();
 	void upload_sub_region(int x, int y, int w, int h, const uint8_t* pixels) const;

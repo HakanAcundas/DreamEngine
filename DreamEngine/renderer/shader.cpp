@@ -21,6 +21,27 @@ namespace dream { namespace graphics {
 			glDeleteProgram(m_shader_id);
 	}
 
+	Shader::Shader(Shader&& other) noexcept
+		: m_shader_id(other.m_shader_id)
+		, m_uniform_cache(std::move(other.m_uniform_cache))
+	{
+		other.m_shader_id = 0;
+	}
+
+	Shader& Shader::operator=(Shader&& other) noexcept
+	{
+		if (this != &other)
+		{
+			if (m_shader_id)
+				glDeleteProgram(m_shader_id);
+
+			m_shader_id = other.m_shader_id;
+			m_uniform_cache = std::move(other.m_uniform_cache);
+			other.m_shader_id = 0;
+		}
+		return *this;
+	}
+
 	unsigned int Shader::compile_stage(const char* src, unsigned int type)
 	{
 		unsigned int s = glCreateShader(type);
@@ -53,7 +74,7 @@ namespace dream { namespace graphics {
 		if (!ok)
 		{
 			char log[512]; glGetProgramInfoLog(m_shader_id, 512, nullptr, log);
-			DREAM_LOG_TAG_ERROR("[SHADER]", " Link error: {}", log);
+			DREAM_LOG_TAG_ERROR("SHADER", " Link error: {}", log);
 		}
 
 		glDeleteShader(vert);
@@ -80,15 +101,21 @@ namespace dream { namespace graphics {
 		glUseProgram(0);
 	}
 
-	int Shader::get_uniform_location(const std::string& name)
+	GLint Shader::get_uniform_location(const std::string& name)
 	{
+		// Check cache first — avoids a glGetUniformLocation call (a driver round-trip) every frame
 		auto it = m_uniform_cache.find(name);
 		if (it != m_uniform_cache.end())
 			return it->second;
 
-		int location = glGetUniformLocation(m_shader_id, name.c_str());
-		m_uniform_cache[name] = location;
-		return location;
+		GLint loc = glGetUniformLocation(m_shader_id, name.c_str());
+		if (loc == -1)
+		{
+			DREAM_LOG_TAG_WARN("SHADER", "Uniform '{}' not found in shader (typo, or optimized out by GLSL compiler)", name);
+		}
+
+		m_uniform_cache[name] = loc;   // cache even -1, so we don't re-warn every call
+		return loc;
 	}
 
 #pragma region Uniform set functions

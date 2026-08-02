@@ -12,7 +12,7 @@ namespace dream { namespace buffer {
 	{
 		glGenBuffers(1, &m_vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-		glBufferData(GL_ARRAY_BUFFER, size_bytes, nullptr, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, size_bytes, data, GL_STATIC_DRAW);
 	}
 
 	VertexBuffer::~VertexBuffer()

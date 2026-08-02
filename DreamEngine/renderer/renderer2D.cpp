@@ -15,9 +15,7 @@ namespace dream { namespace graphics {
     m_vao.set_sprite_layout();
     m_vao.unbind();
 
-    std::string vert_src = utils::FileUtils::read_file("shader/vertex.shader");
-    std::string frag_src = utils::FileUtils::read_file("shader/vertex.shader");
-    m_shader = Shader(vert_src, frag_src);
+    m_shader = Shader("shaders/vertex.shader", "shaders/fragment.shader");
     m_shader.bind();
 
     int samplers[MAX_TEXTURES];
@@ -29,18 +27,19 @@ namespace dream { namespace graphics {
 
     // Slot 0 is always a white pixel.
     uint8_t white[4] = { 255, 255, 255, 255 };
-    m_white_texture = Texture2D(1, 1, white);
+    m_white_texture = std::make_shared<Texture2D>(1, 1, white);
 
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //glEnable(GL_BLEND);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   }
 
   // Camera / projection
   // Call once per frame before submitting sprites.
   // view_projection = projection_matrix * view_matrix
-  void Renderer2D::begin_scene(const glm::mat4& view_projection)
+  void Renderer2D::begin_scene(const SceneData& scene)
   {
-    m_view_projection = view_projection;
+    m_view_projection = scene.view_projection;
+    m_light_pos = scene.light_pos;
     begin_batch();
   }
 
@@ -60,7 +59,12 @@ namespace dream { namespace graphics {
 
   void Renderer2D::draw_rect(glm::vec2& position, glm::vec2& size, glm::vec4& color, float rotation)
   {
-    draw_sprite(position, size, std::make_shared<Texture2D>(m_white_texture), rotation, color, { 0,0,1,1 });
+    draw_sprite(position, size, m_white_texture, rotation, color, { 0,0,1,1 });
+  }
+
+  void Renderer2D::draw_rect(glm::vec2&& position, glm::vec2&& size, glm::vec4&& color, float rotation)
+  {
+    draw_sprite(position, size, m_white_texture, rotation, color, { 0,0,1,1 });
   }
 
   void Renderer2D::begin_batch()
@@ -84,13 +88,14 @@ namespace dream { namespace graphics {
     m_vbo.upload_sub(m_vertex_staging.data(), data_size);
 
     // Bind all textures used this batch, slot 0 always white
-    m_white_texture.bind(0);
+    m_white_texture->bind(0);
     for (unsigned int i = 1; i < m_texture_slot_idx; i++)
       m_texture_slots[i]->bind(i);
 
     // One draw call for the entire batch
     m_shader.bind();
     m_shader.set_mat4("u_view_projection", m_view_projection);
+    m_shader.set_vec2("u_light_pos", m_light_pos);
 
     glDrawElements(GL_TRIANGLES, m_quad_count * 6, GL_UNSIGNED_INT, nullptr);
 
@@ -122,7 +127,7 @@ namespace dream { namespace graphics {
         { -half.x,  half.y },   // 3 top-left
     };
 
-    // Apply rotation if needed (avoid trig when rotation == 0)
+    // Apply rotation if needed
     if (rotation != 0.0f)
     {
       float c = std::cos(rotation);
@@ -142,9 +147,9 @@ namespace dream { namespace graphics {
     for (int i = 0; i < 4; ++i)
     {
       m_vertex_write_ptr->position = center + corners[i];
-      m_vertex_write_ptr->color = color;
       m_vertex_write_ptr->uv = uvs[i];
       m_vertex_write_ptr->tex_index = tex_idx;
+      m_vertex_write_ptr->color = color;
       ++m_vertex_write_ptr;
     }
 

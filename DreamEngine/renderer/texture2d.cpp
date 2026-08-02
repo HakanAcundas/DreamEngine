@@ -28,6 +28,24 @@ Texture2D::~Texture2D()
 		glDeleteTextures(1, &m_tid);
 }
 
+Texture2D::Texture2D(Texture2D&& other) noexcept
+	: m_tid(other.m_tid) /* + width/height/channels if you store them */
+{
+	other.m_tid = 0;
+}
+
+Texture2D& Texture2D::operator=(Texture2D&& other) noexcept
+{
+	if (this != &other)
+	{
+		if (m_tid)
+			glDeleteTextures(1, &m_tid);
+		m_tid = other.m_tid;
+		other.m_tid = 0;
+	}
+	return *this;
+}
+
 void Texture2D::create(const uint8_t* pixels, GLenum format)
 {
 	glGenTextures(1, &m_tid);

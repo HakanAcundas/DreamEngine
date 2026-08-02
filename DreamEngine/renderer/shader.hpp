@@ -12,6 +12,11 @@ namespace dream { namespace graphics {
 		Shader(const std::string& vertex_path, const std::string& frag_path);
 		~Shader();
 
+		Shader(const Shader&) = delete;
+		Shader& operator=(const Shader&) = delete;
+		Shader(Shader&& other) noexcept;
+		Shader& operator=(Shader&& other) noexcept;
+
 		void bind();
 		void unbind();
 

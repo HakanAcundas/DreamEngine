@@ -1,10 +1,10 @@
 ﻿#pragma once
 
+#include "../buffers/vertex_array.hpp"
 #include "../buffers/vertex_buffer.hpp"
 #include "../buffers/index_buffer.hpp"
-#include "../buffers/vertex_array.hpp"
-#include "resources/shader.hpp"
-#include "resources/texture2d.hpp"
+#include "shader.hpp"
+#include "texture2d.hpp"
 #include "text/texture_label.hpp"
 #include "text/font_manager.hpp"
 #include <glm/glm.hpp>
@@ -22,9 +22,9 @@ namespace dream { namespace graphics {
 	struct Vertex
 	{
 		glm::vec2 position; //  8 bytes — world position
-		glm::vec4 color;    // 16 bytes — tint (1,1,1,1 = no tint)
 		glm::vec2 uv;       //  8 bytes — texture coordinate (0..1)
 		float tex_index;		//  4 bytes — which of the 32 slots to sample
+		glm::vec4 color;    // 16 bytes — tint (1,1,1,1 = no tint)
 	};
 
 	// Sprite descriptor
@@ -39,6 +39,12 @@ namespace dream { namespace graphics {
 		int z_layer = 0;									// higher = drawn on top (sort before flush)
 	};
 
+	struct SceneData
+	{
+		glm::mat4 view_projection;
+		glm::vec2 light_pos = { 0.0f, 0.0f };
+	};
+
 	class Renderer2D
 	{
 	public:
@@ -48,10 +54,11 @@ namespace dream { namespace graphics {
 		static constexpr unsigned int MAX_TEXTURES = 32;  // OpenGL guarantees >= 32 slots
 
 		Renderer2D();
-		void begin_scene(const glm::mat4& view_projection);
+		void begin_scene(const SceneData& scene);
 		void end_scene();
 		void draw_sprite(glm::vec2& position, glm::vec2& size, std::shared_ptr<Texture2D> texture, float rotation = 0.0f, const glm::vec4& color = { 1,1,1,1 }, const glm::vec4& uv_rect = { 0,0,1,1 });
 		void draw_rect(glm::vec2& position, glm::vec2& size, glm::vec4& color, float rotation = 0.0f);
+		void draw_rect(glm::vec2&& position, glm::vec2&& size, glm::vec4&& color, float rotation = 0.0f);
 		
 #pragma region Stats
 		// Stats — useful during development
@@ -81,7 +88,7 @@ namespace dream { namespace graphics {
 		VertexBuffer m_vbo;
 		IndexBuffer m_ibo;
 		Shader m_shader;
-		Texture2D m_white_texture;
+		std::shared_ptr<Texture2D> m_white_texture;
 
 		// CPU staging buffer — we write here, then upload once per flush
 		std::vector<Vertex> m_vertex_staging;
@@ -93,6 +100,7 @@ namespace dream { namespace graphics {
 
 		uint32_t  m_quad_count = 0;
 		glm::mat4 m_view_projection = glm::mat4(1.0f);
+		glm::vec2 m_light_pos = glm::vec2(0.0f);
 
 		// For debug
 		Stats m_stats;

@@ -21,15 +21,7 @@ GameLayer::GameLayer(
 		m_event_dispatcher(event_dispatcher),
 		m_physics_engine2D(physics_engine)
 {
-	m_shader = Shader("../DreamTest/shaders/vertex.shader", "../DreamTest/shaders/fragment.shader");
 	m_camera = Camera(0.0f, 16.0f, 0.0f, 9.0f);
-
-	m_shader.enable();
-	m_shader.set_mat4("pr_matrix", m_camera.get_projection_mat());
-	m_shader.set_mat4("ml_matrix", glm::translate(m_camera.get_view_mat(), m_camera.get_position()));
-	m_shader.set_vec2("light_pos", glm::vec2(0.0f, 0.0f));
-	m_shader.disable();
-
 	m_event_dispatcher.listen(EventType::MouseMovedEvent, std::bind(&Camera::on_event, m_camera, std::placeholders::_1));
 
 	ecm.register_component<Transform>();
@@ -70,21 +62,13 @@ GameLayer::~GameLayer()
 void GameLayer::on_update()
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	m_shader.set_mat4("pr_matrix", m_camera.get_projection_mat());
-	m_shader.set_mat4("ml_matrix", glm::translate(m_camera.get_view_mat(), m_camera.get_position()));
-	m_shader.set_vec2("light_pos", m_light_pos);
-	m_renderer.begin_scene(m_camera.get_projection_mat());
+	m_renderer.begin_scene({ m_camera.get_projection_view_mat(), m_light_pos });
 	m_camera.on_update();
-	set_camera(m_camera);
-	on_mouse_moved();
-	m_shader.enable();
-	unsigned int fps = get_FPS();
-	//m_renderer.draw_label(std::to_string(fps), glm::vec2(0.0f, 8.5f), 0.010f, "assets/Fonts/Arial.ttf", glm::vec4(1.0f, 1.0f, 1.0f, 0.0f));
 	//m_renderer.draw_label("Hello World!", glm::vec2(4.5f, 8.0f), 0.025f, "assets/Fonts/Arial.ttf", glm::vec4(1.0f, 1.0f, 0.5f, 0.0f));
-	
+	m_renderer.draw_rect(glm::vec2(2, 2), glm::vec2(2.0f, 2.0), glm::vec4(1, 1, 1, 1));
+	m_renderer.end_scene();
 	m_physics_engine2D.update(player);
 	Transform t = m_ecm.get_component<Transform>(player);
-	DREAM_LOG_TAG_INFO("GAME LAYER", "Player Position: x[{}], y[{}], z[{}]", t.position.x, t.position.y, t.position.z);
 }
 
 bool GameLayer::on_mouse_moved()

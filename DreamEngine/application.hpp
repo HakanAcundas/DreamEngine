@@ -3,7 +3,7 @@
 #include "window/window.hpp"
 #include "ec/ec_manager.hpp"
 #include "renderer/renderer2D.hpp"
-#include "renderer/resources/shader.hpp"
+#include "renderer/shader.hpp"
 #include "physics/physics_engine2D.hpp"
 #include "scene/layer.hpp"
 #include "events/event.hpp"
