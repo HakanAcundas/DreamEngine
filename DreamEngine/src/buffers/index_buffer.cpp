@@ -1,0 +1,63 @@
+#include <dream/buffers/index_buffer.hpp>
+#include <vector>
+
+namespace dream { namespace buffer {
+	IndexBuffer::IndexBuffer(unsigned int max_quads) : m_count(max_quads * 6)
+	{
+		std::vector<unsigned int> indices;
+		indices.reserve(m_count);
+
+		for (unsigned int i = 0; i < max_quads; i++)
+		{
+			unsigned int base = i * 4;   // each quad has 4 vertices
+			indices.push_back(base + 0);
+			indices.push_back(base + 1);
+			indices.push_back(base + 2);
+			indices.push_back(base + 0);
+			indices.push_back(base + 2);
+			indices.push_back(base + 3);
+		}
+
+		glGenBuffers(1, &m_ibo);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(uint32_t), indices.data(), GL_STATIC_DRAW);
+	}
+
+	IndexBuffer::~IndexBuffer()
+	{
+		if (m_ibo)
+			glDeleteBuffers(1, &m_ibo);
+	}
+
+	IndexBuffer::IndexBuffer(IndexBuffer&& other) noexcept
+		: m_ibo(other.m_ibo), m_count(other.m_count)
+	{
+		other.m_ibo = 0;
+		other.m_count = 0;
+	}
+
+	IndexBuffer& IndexBuffer::operator=(IndexBuffer&& other) noexcept
+	{
+		if (this != &other)
+		{
+			if (m_ibo)
+				glDeleteBuffers(1, &m_ibo);
+
+			m_ibo = other.m_ibo;
+			m_count = other.m_count;
+			other.m_ibo = 0;
+			other.m_count = 0;
+		}
+		return *this;
+	}
+
+	void IndexBuffer::bind()
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
+	}
+
+	void IndexBuffer::unbind()
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
+}}

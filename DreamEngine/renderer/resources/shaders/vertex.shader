@@ -11,7 +11,7 @@ out DATA
 {
   vec4 position;
   vec2 uv;
-  float tid;
+  flat float tid;
   vec4 color;
 } vs_out;
 
