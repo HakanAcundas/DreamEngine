@@ -2,7 +2,7 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include <dream/ec/entity.hpp>
+#include <ec/entity.hpp>
 
 namespace dream { namespace graphics {
 	class Layer

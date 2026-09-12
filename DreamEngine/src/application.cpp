@@ -1,4 +1,4 @@
-#include <dream/application.hpp>
+#include <application.hpp>
 #include <algorithm>
 
 using namespace dream::graphics;

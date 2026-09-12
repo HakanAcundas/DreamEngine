@@ -1,10 +1,10 @@
 #pragma once
 
-#include <dream/buffers/vertex_array.hpp>
-#include <dream/buffers/vertex_buffer.hpp>
-#include <dream/buffers/index_buffer.hpp>
-#include <dream/renderer/shader.hpp>
-#include <dream/renderer/texture2d.hpp>
+#include <buffers/vertex_array.hpp>
+#include <buffers/vertex_buffer.hpp>
+#include <buffers/index_buffer.hpp>
+#include <renderer/shader.hpp>
+#include <renderer/texture2d.hpp>
 #include <glm/glm.hpp>
 #include <cstddef>
 #include <memory>

@@ -10,7 +10,7 @@ file(GLOB_RECURSE DREAM_ENGINE_SOURCES
 # Mirrors the on-disk layout
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${DREAM_ENGINE_SOURCES})
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/renderer/resources/shaders
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/shaders
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 add_library(DreamEngine ${DREAM_ENGINE_SOURCES})

@@ -2,8 +2,8 @@
 
 #include <memory>
 #include <glm/glm.hpp>
-#include <dream/ec/entity.hpp>
-#include <dream/ec/ec_manager.hpp>
+#include <ec/entity.hpp>
+#include <ec/ec_manager.hpp>
 
 
 class PhysicsEngine2D

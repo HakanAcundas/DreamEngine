@@ -1,4 +1,4 @@
-#include <dream/buffers/vertex_buffer.hpp>
+#include <buffers/vertex_buffer.hpp>
 
 namespace dream { namespace buffer { 
 	VertexBuffer::VertexBuffer(size_t size_bytes)

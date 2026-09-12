@@ -1,5 +1,5 @@
 #include <assert.h>
-#include <dream/ec/entity_manager.hpp>
+#include <ec/entity_manager.hpp>
 
 EntityManager::EntityManager()
 {

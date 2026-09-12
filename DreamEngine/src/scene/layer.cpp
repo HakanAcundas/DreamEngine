@@ -1,4 +1,4 @@
-#include <dream/scene/layer.hpp>
+#include <scene/layer.hpp>
 #include <algorithm>
 
 namespace dream { namespace graphics {

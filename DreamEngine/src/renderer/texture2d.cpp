@@ -1,4 +1,4 @@
-#include <dream/renderer/texture2d.hpp>
+#include <renderer/texture2d.hpp>
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <dream/ec/entity.hpp>
+#include <ec/entity.hpp>
 #include <string>
 #include <glm/glm.hpp>
 

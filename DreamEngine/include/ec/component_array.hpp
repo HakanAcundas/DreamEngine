@@ -1,7 +1,7 @@
 #pragma once
 
 #include <unordered_map>
-#include <dream/ec/entity.hpp>
+#include <ec/entity.hpp>
 #include <assert.h>
 
 class IComponentArray

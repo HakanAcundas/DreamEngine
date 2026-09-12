@@ -1,10 +1,10 @@
 #pragma once
 
 #include <memory>
-#include <dream/ec/signature.hpp>
-#include <dream/ec/entity.hpp>
-#include <dream/ec/entity_manager.hpp>
-#include <dream/ec/component_manager.hpp>
+#include <ec/signature.hpp>
+#include <ec/entity.hpp>
+#include <ec/entity_manager.hpp>
+#include <ec/component_manager.hpp>
 
 class ECManager
 {

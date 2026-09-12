@@ -3,7 +3,7 @@
 #include <vector>
 #include <unordered_map>
 #include <functional>
-#include <dream/events/event.hpp>
+#include <events/event.hpp>
 
 class EventDispatcher
 {

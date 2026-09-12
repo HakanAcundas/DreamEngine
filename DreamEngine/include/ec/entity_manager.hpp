@@ -2,8 +2,8 @@
 
 #include <array>
 #include <queue>
-#include <dream/ec/signature.hpp>
-#include <dream/ec/entity.hpp>
+#include <ec/signature.hpp>
+#include <ec/entity.hpp>
 
 class EntityManager
 {

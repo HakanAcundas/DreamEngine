@@ -1,6 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
-#include <dream/events/event.hpp>
+#include <events/event.hpp>
 
 namespace dream {
 	class Camera

@@ -2,8 +2,8 @@
 #include <memory>
 #include <assert.h>
 #include <unordered_map>
-#include <dream/ec/entity.hpp>
-#include <dream/ec/component_array.hpp>
+#include <ec/entity.hpp>
+#include <ec/component_array.hpp>
 
 using ComponentType = std::uint8_t;
 

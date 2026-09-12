@@ -2,8 +2,8 @@
 #include <vector>
 #include <glm/gtc/type_ptr.hpp>
 #include <glad/glad.h>
-#include <dream/renderer/shader.hpp>
-#include <dream/utils/log.hpp>
+#include <renderer/shader.hpp>
+#include <utils/log.hpp>
 #include "utils/file_utils.hpp"
 
 namespace dream { namespace graphics {

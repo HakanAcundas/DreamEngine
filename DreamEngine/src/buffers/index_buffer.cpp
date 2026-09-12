@@ -1,4 +1,4 @@
-#include <dream/buffers/index_buffer.hpp>
+#include <buffers/index_buffer.hpp>
 #include <vector>
 
 namespace dream { namespace buffer {

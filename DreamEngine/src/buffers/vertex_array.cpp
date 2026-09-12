@@ -1,4 +1,4 @@
-#include <dream/buffers/vertex_array.hpp>
+#include <buffers/vertex_array.hpp>
 
 namespace dream { namespace buffer {
 

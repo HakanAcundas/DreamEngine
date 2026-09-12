@@ -1,11 +1,11 @@
 #include <random>
 #include <string>
-#include <dream/utils/log.hpp>
-#include <dream/renderer/renderer2D.hpp>
-#include <dream/ec/components/transform.hpp>
-#include <dream/ec/components/rigid_body.hpp>
+#include <utils/log.hpp>
+#include <renderer/renderer2D.hpp>
+#include <ec/components/transform.hpp>
+#include <ec/components/rigid_body.hpp>
 #include "game_layer.hpp"
-#include <dream/utils/metric_utils.hpp>
+#include <utils/metric_utils.hpp>
 
 using namespace dream;
 using namespace graphics;

@@ -1,14 +1,14 @@
 #pragma once
 
-#include <dream/window/window.hpp>
-#include <dream/ec/ec_manager.hpp>
-#include <dream/renderer/renderer2D.hpp>
-#include <dream/renderer/shader.hpp>
-#include <dream/physics/physics_engine2D.hpp>
-#include <dream/scene/layer.hpp>
-#include <dream/events/event.hpp>
-#include <dream/events/event_dispatcher.hpp>
-#include <dream/camera/camera.hpp>
+#include <window/window.hpp>
+#include <ec/ec_manager.hpp>
+#include <renderer/renderer2D.hpp>
+#include <renderer/shader.hpp>
+#include <physics/physics_engine2D.hpp>
+#include <scene/layer.hpp>
+#include <events/event.hpp>
+#include <events/event_dispatcher.hpp>
+#include <camera/camera.hpp>
 #include <memory>
 #include <vector>
 

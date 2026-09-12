@@ -1,6 +1,6 @@
-#include <dream/physics/physics_engine2D.hpp>
-#include <dream/ec/components/transform.hpp>
-#include <dream/ec/components/rigid_body.hpp>
+#include <physics/physics_engine2D.hpp>
+#include <ec/components/transform.hpp>
+#include <ec/components/rigid_body.hpp>
 
 PhysicsEngine2D::PhysicsEngine2D(ECManager& ecsm) : m_ecm(ecsm) { }
 

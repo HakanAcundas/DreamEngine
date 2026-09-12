@@ -1,4 +1,4 @@
-#include <dream/renderer/renderer2D.hpp>
+#include <renderer/renderer2D.hpp>
 #include "utils/file_utils.hpp"
 
 namespace dream { namespace graphics {

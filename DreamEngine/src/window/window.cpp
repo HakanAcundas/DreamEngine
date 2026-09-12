@@ -1,6 +1,6 @@
-#include <dream/window/window.hpp>
-#include <dream/events/event.hpp>
-#include <dream/events/event_dispatcher.hpp>
+#include <window/window.hpp>
+#include <events/event.hpp>
+#include <events/event_dispatcher.hpp>
 
 namespace dream {
 

@@ -1,11 +1,11 @@
 #pragma once
 
-#include <dream/camera/camera.hpp>
-#include <dream/scene/layer.hpp>
-#include <dream/renderer/renderer2D.hpp>
-#include <dream/events/event_dispatcher.hpp>
-#include <dream/physics/physics_engine2D.hpp>
-#include <dream/ec/ec_manager.hpp>
+#include <camera/camera.hpp>
+#include <scene/layer.hpp>
+#include <renderer/renderer2D.hpp>
+#include <events/event_dispatcher.hpp>
+#include <physics/physics_engine2D.hpp>
+#include <ec/ec_manager.hpp>
 
 using namespace dream;
 using namespace graphics;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <dream/application.hpp>
+#include <application.hpp>
 #include "layers/game_layer.hpp"
 #include <iostream>
 
