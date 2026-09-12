@@ -1,0 +1,14 @@
+#include "renderer/text/label.hpp"
+
+namespace dream { namespace graphics {
+	Label::Label(std::string text, float x, float y, glm::vec4 color)
+		: m_text(text)
+	{
+
+	}
+
+	Label::~Label()
+	{
+
+	}
+}}

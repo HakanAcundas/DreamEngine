@@ -2,8 +2,8 @@
 
 int main(void)
 {
-    BulletHellGame game;
-    game.run();
+  BulletHellGame game;
+  game.run();
 
-    return 0;
+  return 0;
 }

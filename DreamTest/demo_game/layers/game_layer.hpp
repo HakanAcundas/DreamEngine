@@ -1,9 +1,9 @@
 #pragma once
 
-#include <shader.hpp>
-#include <camera.hpp>
-#include <layer.hpp>
-#include <event_dispatcher.hpp>
+#include <camera/camera.hpp>
+#include <scene/layer.hpp>
+#include <renderer/renderer2D.hpp>
+#include <events/event_dispatcher.hpp>
 #include <physics/physics_engine2D.hpp>
 #include <ec/ec_manager.hpp>
 
@@ -14,7 +14,12 @@ class GameLayer : public Layer
 {
 public:
 	GameLayer() = default;
-	GameLayer(Shader& shader, Camera& camera, ECManager& ecm, EventDispatcher& event_dispatcher, PhysicsEngine2D& physics_engine2D);
+	GameLayer(
+		Renderer2D& renderer,
+		ECManager& ecm,
+		PhysicsEngine2D& physics_engine,
+		EventDispatcher& event_dispatcher
+	);
 	~GameLayer();
 
 	void on_update() override;
@@ -22,18 +27,17 @@ public:
 	bool on_mouse_moved();
 
 	// Getter & Setter
-	Shader& get_shader() { return m_shader; }
-	void set_camera(Camera& camera) { m_camera = camera; }
+	void set_camera(Camera camera) { m_camera = camera; }
 
 private:
-	Shader& m_shader;
-	Camera& m_camera;
+	Renderer2D& m_renderer;
+	Camera m_camera;
 	ECManager& m_ecm;
 	EventDispatcher& m_event_dispatcher;
 	PhysicsEngine2D& m_physics_engine2D;
 
 	glm::mat4 m_projection_mat;
-	glm::vec2 m_light_pos;
+	glm::vec2 m_light_pos = { 0.0f, 0.0f };
 
 	Entity player;
 	float scale;
