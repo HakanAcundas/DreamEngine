@@ -21,6 +21,25 @@ namespace dream { namespace buffer {
 			glDeleteBuffers(1, &m_vbo);
 	}
 
+	VertexBuffer::VertexBuffer(VertexBuffer&& other) noexcept
+		: m_vbo(other.m_vbo)
+	{
+		other.m_vbo = 0;
+	}
+
+	VertexBuffer& VertexBuffer::operator=(VertexBuffer&& other) noexcept
+	{
+		if (this != &other)
+		{
+			if (m_vbo)
+				glDeleteBuffers(1, &m_vbo);
+
+			m_vbo = other.m_vbo;
+			other.m_vbo = 0;
+		}
+		return *this;
+	}
+
 	void VertexBuffer::bind()
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_vbo);

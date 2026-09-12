@@ -22,6 +22,9 @@ public:
 	);
 	~GameLayer();
 
+	void fill_quads();
+	void draw_quads();
+
 	void on_update() override;
 	bool on_key_pressed();
 	bool on_mouse_moved();
@@ -38,6 +41,7 @@ private:
 
 	glm::mat4 m_projection_mat;
 	glm::vec2 m_light_pos = { 0.0f, 0.0f };
+	std::vector<glm::vec4> m_quads;
 
 	Entity player;
 	float scale;

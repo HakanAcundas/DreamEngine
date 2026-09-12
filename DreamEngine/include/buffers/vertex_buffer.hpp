@@ -7,11 +7,18 @@ namespace dream { namespace buffer {
 	{
 	public:
 		VertexBuffer() = default;
+		~VertexBuffer();
+
 		// Dynamic Buffer
 		VertexBuffer(size_t size_bytes);
 		// Static Buffer
 		VertexBuffer(void* data, size_t size_bytes);
-		~VertexBuffer();
+
+		VertexBuffer(const VertexBuffer&) = delete;
+		VertexBuffer& operator=(const VertexBuffer&) = delete;
+
+		VertexBuffer(VertexBuffer&& other) noexcept;
+		VertexBuffer& operator=(VertexBuffer&& other) noexcept;
 
 		void bind();
 		void unbind();

@@ -1,11 +1,11 @@
-#include <random>
-#include <string>
 #include <utils/log.hpp>
 #include <renderer/renderer2D.hpp>
 #include <ec/components/transform.hpp>
 #include <ec/components/rigid_body.hpp>
 #include "game_layer.hpp"
 #include <utils/metric_utils.hpp>
+#include <random>
+#include <string>
 
 using namespace dream;
 using namespace graphics;
@@ -49,6 +49,8 @@ GameLayer::GameLayer(
 
 	glm::vec2 gravity = glm::vec2(0.0f, 1.0f);
 	m_physics_engine2D.apply_force(gravity, player);
+
+	fill_quads();
 }
 
 GameLayer::~GameLayer()
@@ -65,7 +67,7 @@ void GameLayer::on_update()
 	m_renderer.begin_scene({ m_camera.get_projection_view_mat(), m_light_pos });
 	m_camera.on_update();
 	//m_renderer.draw_label("Hello World!", glm::vec2(4.5f, 8.0f), 0.025f, "assets/Fonts/Arial.ttf", glm::vec4(1.0f, 1.0f, 0.5f, 0.0f));
-	m_renderer.draw_rect(glm::vec2(2, 2), glm::vec2(2.0f, 2.0), glm::vec4(1, 1, 1, 1));
+	draw_quads();
 	m_renderer.end_scene();
 	m_physics_engine2D.update(player);
 	Transform t = m_ecm.get_component<Transform>(player);
@@ -79,4 +81,32 @@ bool GameLayer::on_mouse_moved()
 bool GameLayer::on_key_pressed()
 {
 	return true;
+}
+
+void GameLayer::fill_quads()
+{
+	for (float y = 0.0f; y < 9.0f; y += 0.5f)
+	{
+		for (float x = 0.0f; x < 16.0f; x += 0.5f)
+		{
+			unsigned color = std::rand() % 4;
+			switch (color)
+			{
+			case 0: m_quads.push_back(glm::vec4(0, 0, 0, 1)); continue;
+			case 1: m_quads.push_back(glm::vec4(1, 1, 1, 1)); continue;
+			case 2: m_quads.push_back(glm::vec4(1, 0.92f, 0, 1)); continue;
+			case 3: m_quads.push_back(glm::vec4(0, 0.1f, 0.4f, 1)); continue;
+			}
+		}
+	}
+}
+
+void GameLayer::draw_quads()
+{
+	size_t i = 0;
+	for (float y = 0.0f; y < 9.0f; y += 0.5f)
+	{
+		for (float x = 0.0f; x < 16.0f; x += 0.5f)
+			m_renderer.draw_rect(glm::vec2(x, y), glm::vec2(0.5f, 0.5f), glm::vec4(m_quads[i++]));
+	}
 }

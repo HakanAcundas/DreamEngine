@@ -52,14 +52,14 @@ namespace dream { namespace buffer {
 
 		// uv
 		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, stride, (const void*)0);
-		
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, stride, (const void*)8);
+
 		// texture index
 		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, stride, (const void*)0);
+		glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, stride, (const void*)16);
 
 		// color
 		glEnableVertexAttribArray(3);
-		glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, stride, (const void*)0);
+		glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, stride, (const void*)20);
 	}
 }}
