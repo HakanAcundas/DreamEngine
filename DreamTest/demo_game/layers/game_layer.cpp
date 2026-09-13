@@ -4,6 +4,7 @@
 #include <renderer/renderer2D.hpp>
 #include <ec/components/transform.hpp>
 #include <ec/components/rigid_body.hpp>
+#include <ec/components/texture2d.hpp>
 #include "game_layer.hpp"
 #include <utils/metric_utils.hpp>
 
@@ -26,6 +27,7 @@ GameLayer::GameLayer(
 
 	ecm.register_component<Transform>();
 	ecm.register_component<RigidBody>();
+	ecm.register_component<Texture2D>();
 
 	std::default_random_engine generator;
 	std::uniform_real_distribution<float> randPosition(-100.0f, 100.0f);
@@ -45,6 +47,16 @@ GameLayer::GameLayer(
 	ecm.add_component(player, RigidBody{
 			.velocity = glm::vec2(0),
 			.mass = 1.0f,
+		});
+	
+	// Branch <texture_component_migration> notes: 
+	// TextureManager should hold a key-value list for handle to path, to avoid duplicate texture submisson.
+	// TextureManager hold handle-path relation, while ECManager holds entity-handle relation.
+	// Question: TextureManager ? handle-path(+1) : path-handle.
+	
+	// TextureManager.create(path); --> returns a handle;
+	ecm.add_component(player, Texture2D{
+			.handle // <-- Feed the returned handle to here
 		});
 
 	glm::vec2 gravity = glm::vec2(0.0f, 1.0f);

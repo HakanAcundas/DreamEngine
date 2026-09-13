@@ -1,8 +1,8 @@
-#include <renderer/texture2d.hpp>
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
+#include <renderer/texture2d.hpp>
 
-Texture2D::Texture2D(const std::string& path)
+Texture_Manager::Texture_Manager(const std::string& path)
 {
 	stbi_set_flip_vertically_on_load(true);  // OpenGL UV origin is bottom-left
 
@@ -16,25 +16,25 @@ Texture2D::Texture2D(const std::string& path)
 	stbi_image_free(data);
 }
 
-Texture2D::Texture2D(unsigned int width, unsigned int height, uint8_t* rgba_pixels) 
+Texture_Manager::Texture_Manager(unsigned int width, unsigned int height, uint8_t* rgba_pixels)
 	: m_width(width), m_height(height)
 {
 	create(rgba_pixels, GL_RGBA);
 }
 
-Texture2D::~Texture2D()
+Texture_Manager::~Texture_Manager()
 {
 	if (m_tid)
 		glDeleteTextures(1, &m_tid);
 }
 
-Texture2D::Texture2D(Texture2D&& other) noexcept
+Texture_Manager::Texture_Manager(Texture2D&& other) noexcept
 	: m_tid(other.m_tid) /* + width/height/channels if you store them */
 {
 	other.m_tid = 0;
 }
 
-Texture2D& Texture2D::operator=(Texture2D&& other) noexcept
+Texture_Manager& Texture_Manager::operator=(Texture2D&& other) noexcept
 {
 	if (this != &other)
 	{
@@ -46,7 +46,7 @@ Texture2D& Texture2D::operator=(Texture2D&& other) noexcept
 	return *this;
 }
 
-void Texture2D::create(const uint8_t* pixels, GLenum format)
+void Texture_Manager::create(const uint8_t* pixels, GLenum format)
 {
 	glGenTextures(1, &m_tid);
 	glBindTexture(GL_TEXTURE_2D, m_tid);
@@ -62,19 +62,19 @@ void Texture2D::create(const uint8_t* pixels, GLenum format)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_width, m_height, 0, format, GL_UNSIGNED_BYTE, pixels);
 }
 
-void Texture2D::upload_sub_region(int x, int y, int w, int h, const uint8_t* pixels) const
+void Texture_Manager::upload_sub_region(int x, int y, int w, int h, const uint8_t* pixels) const
 {
 	glBindTexture(GL_TEXTURE_2D, m_tid);
 	glTexSubImage2D(GL_TEXTURE_2D, 0, x, y, w, h, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 }
 
-void Texture2D::bind(unsigned int slot)
+void Texture_Manager::bind(unsigned int slot)
 {
 	glActiveTexture(GL_TEXTURE0 + slot);
 	glBindTexture(GL_TEXTURE_2D, m_tid);
 }
 
-void Texture2D::unbind()
+void Texture_Manager::unbind()
 {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
